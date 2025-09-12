@@ -34,31 +34,78 @@ export const GetLapso = async (req, res) => {
 }
 
 
-async function crear_plobacion_aux(datos) {
+
+/* export const crearPoblacion = async (req, res) => {
+    const { nombre, apellidos, tipoPoblacion, ci } = req.body
+    
+    const {
+        N_M, ci_M, NR_M, ocupacion_M,
+        N_P, ci_P, NR_P, ocupacion_P,
+        casados, Pareja_echo, viven_junto, NR_Her, edad
+    } = req.body.padres;
+
+    try {
+        const resultado = crear_plobacion_aux(req.body)
+        console.log('aaaa ' + resultado)
+        if (!resultado.ok) {
+            return res.status(resultado.status).json({message:resultado.mensaje})
+        }
+    } catch {
+        return res.status(404).json({message:'eeerror inesperado'})
+    }
+
+    try {
+        const [result] = await pool.query(
+            `INSERT INTO padres (ci, N_M, ci_M, NR_M, ocupacion_M, N_P, ci_P, NR_P, ocupacion_P, casados, Pareja_echo, viven_junto, NR_Her, edad)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                ci, N_M || null, ci_M || null, NR_M || null, ocupacion_M || null,
+                N_P || null, ci_P || null, NR_P || null, ocupacion_P || null,
+                casados || 'no', Pareja_echo !== undefined ? Pareja_echo : null,
+                viven_junto !== undefined ? viven_junto : null,
+                NR_Her || null, edad || null
+            ]
+        );
+        res.status(201).json({ id: result.insertId, nombre, apellidos, tipoPoblacion, ci });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al crear la población' });
+    }
+
+
+} */
+
+
+    async function crear_plobacion_aux(datos) {
     const { nombre, apellidos, tipoPoblacion, ci, } = datos
     if (!nombre || !apellidos || !tipoPoblacion || !ci) {
-        return {status:400,mensaje:'datos incompletos'}
+        return { status: 400, mensaje: 'datos incompletos' }
     }
 
     const [existing] = await pool.query('SELECT id FROM poblacion WHERE ci = ?', [ci]);
     if (existing.length > 0) {
-        return {status:falso,mensaje:'la cedula ya esta siento utilizado para este estudiante'}
+        // Se cambió `status: false` por `status: 409` (Conflict)
+        return { status: 409, ok: false, mensaje: 'la cedula ya esta siendo utilizada para este estudiante' }
     }
  
     const tipo = tipoPoblacion.toLowerCase()
-    if ( tipo != 'estudiante' && tipo != 'profesor' ) {
-        return {ok:false ,mensaje:'tipo de poblacion erroneo'}
+    if (tipo != 'estudiante' && tipo != 'profesor') {
+        // Se agregó el código de estado HTTP `status: 400`
+        return { ok: false, mensaje: 'tipo de poblacion erroneo', status: 400 }
     }
 
+    // **CORRECCIÓN**: Se descomentó la línea de la consulta a la base de datos
     const [result] = await pool.query(
         'INSERT INTO poblacion (nombre, apellidos, tipoPoblacion, ci) VALUES (?, ?, ?, ?)',
         [nombre, apellidos, tipoPoblacion, ci]
     );
-
+ 
+    console.log("bien")
     return {
-        ok:true,
-        mensaje:'poblacion creada existosmanete',
+        ok: true,
+        mensaje: 'poblacion creada existosmanete',
         payload: {
+            // **CORRECCIÓN**: La variable `result` ahora existe
             id: result.insertId,
             nombre,
             apellidos,
@@ -69,18 +116,19 @@ async function crear_plobacion_aux(datos) {
 }
 
 export const crearPoblacion = async (req, res) => {
-    const { nombre, apellidos, tipoPoblacion, ci, } = req.body
-
     try {
-        const resultado = crear_plobacion_aux(req.body)
-        console.log(resultado)
+        const resultado = await crear_plobacion_aux(req.body); 
+        console.log('aaaa ' + JSON.stringify(resultado)); 
         if (!resultado.ok) {
-            return res.status(resultado.status).json({message:resultado.mensaje})
+            return res.status(resultado.status).json({ message: resultado.mensaje });
         }
-    } catch {
-        return res.status(404).json({message:'error inesperado'})
+        
+        return res.status(201).json({ message: resultado.mensaje, data: resultado.payload });
+    } catch (error) {
+        console.error(error);
+        
+        return res.status(500).json({ message: 'error inesperado' });
     }
-
 }
 
 export const getfindPoblacionByCI = async (req, res) => {
