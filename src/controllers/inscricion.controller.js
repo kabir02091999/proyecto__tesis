@@ -2,18 +2,34 @@ import { pool } from "../db/db.js";
 import bcrypt from "bcryptjs";
 import { crateToken } from "../libs/jwt.js";
 
+/* recordar que la fecha estan mmmm/mm/dd*/
 export const RegistroLapso = async (req, res) => {
-    const { Inicio, fin, TipoDeLapso } = req.body;
-    if (!Inicio || !fin || !TipoDeLapso) {
+    const { inicio, fin, tipo_inscripcion } = req.body;
+    console.log(req.body)
+    if (!inicio || !fin || !tipo_inscripcion) {
+        console.log("inicio " + inicio)
+        console.log("fin " + fin)
+        console.log("tipo_inscripcion " + tipo_inscripcion)
         return res.status(400).json({ message: "Todos los campos son obligatorios" });
     }
 
     try {
-        const [result] = await pool.query('INSERT INTO lapso (Inicio, fin, TipoDeLapso) VALUES (?, ?, ?)', [Inicio, fin, TipoDeLapso]);
-        res.status(201).json({ id: result.insertId, Inicio, fin, TipoDeLapso });
+        const [result] = await pool.query('INSERT INTO lapso (inicio, fin, tipo_inscripcion) VALUES (?, ?, ?)', [inicio, fin, tipo_inscripcion]);
+        res.status(201).json({ id: result.insertId, inicio, fin, tipo_inscripcion });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al crear el lapso' });
+    }
+}
+/* TipoDeLapso */
+
+export const GetLapso = async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM lapso');
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener los lapsos' });
     }
 }
 
@@ -57,18 +73,30 @@ export const crearPoblacion = async (req, res) => {
 
     try {
         const resultado = crear_plobacion_aux(req.body)
-
-
-
+        console.log(resultado)
+        if (!resultado.ok) {
+            return res.status(resultado.status).json({message:resultado.mensaje})
+        }
     } catch {
         return res.status(404).json({message:'error inesperado'})
     }
 
-    
-
-
-
 }
+
+export const getfindPoblacionByCI = async (req, res) => {
+    const { CI } = req.params;
+    try {
+        const [rows] = await pool.query('SELECT * FROM poblacion WHERE ci = ?', [CI]);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'Población no encontrada' });
+        }
+        res.json(rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener la población' });
+    }
+};
+
 // request para verificar si entidad población existe por id 
 export const getfindPoblacionByID = async (req, res) => {
     const { id } = req.params;
