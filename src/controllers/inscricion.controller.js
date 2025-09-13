@@ -75,8 +75,7 @@ export const GetLapso = async (req, res) => {
 
 } */
 
-
-    async function crear_plobacion_aux(datos) {
+async function crear_plobacion_aux(datos, padres) {
     const { nombre, apellidos, tipoPoblacion, ci, } = datos
     if (!nombre || !apellidos || !tipoPoblacion || !ci) {
         return { status: 400, mensaje: 'datos incompletos' }
@@ -84,50 +83,90 @@ export const GetLapso = async (req, res) => {
 
     const [existing] = await pool.query('SELECT id FROM poblacion WHERE ci = ?', [ci]);
     if (existing.length > 0) {
-        // Se cambió `status: false` por `status: 409` (Conflict)
         return { status: 409, ok: false, mensaje: 'la cedula ya esta siendo utilizada para este estudiante' }
     }
  
     const tipo = tipoPoblacion.toLowerCase()
     if (tipo != 'estudiante' && tipo != 'profesor') {
-        // Se agregó el código de estado HTTP `status: 400`
         return { ok: false, mensaje: 'tipo de poblacion erroneo', status: 400 }
     }
 
-    // **CORRECCIÓN**: Se descomentó la línea de la consulta a la base de datos
     const [result] = await pool.query(
         'INSERT INTO poblacion (nombre, apellidos, tipoPoblacion, ci) VALUES (?, ?, ?, ?)',
         [nombre, apellidos, tipoPoblacion, ci]
     );
+    
+    
+    if(padres){
+        const resultadoPadres = await crear_padres_aux(padres, ci);
+        if (!resultadoPadres.ok) {        
+            return { status: resultadoPadres.status, ok: false, mensaje: resultadoPadres.mensaje }
+        }
+    }
  
     console.log("bien")
     return {
         ok: true,
         mensaje: 'poblacion creada existosmanete',
         payload: {
-            // **CORRECCIÓN**: La variable `result` ahora existe
             id: result.insertId,
             nombre,
             apellidos,
             tipoPoblacion,
-            ci
+            ci,
+            padres:{...padres}
         }
     }
 }
 
+const crear_padres_aux = async (datos, ci_hijo) => {
+    if (!datos) {
+        return { ok: true, mensaje: 'no hay datos de padres para crear', status: 200 }
+    }
+    const { N_M, ci_M, NR_M, ocupacion_M,
+        N_P, ci_P, NR_P, ocupacion_P,
+        casados, Pareja_echo, viven_junto, NR_Her, edad
+    } = datos;
+    if (!N_M && !N_P) {
+        return { status: 400, ok: false, mensaje: 'datos incompletos' }
+    }
+    await pool.query(
+        `INSERT INTO padres (ci, N_M, ci_M, NR_M, ocupacion_M, N_P, ci_P, NR_P, ocupacion_P, casados, Pareja_echo, viven_junto, NR_Her, edad)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+            ci_hijo, // CI del hijo/a, FK a 'poblacion'
+            N_M || null,
+            ci_M || null,
+            NR_M || null,
+            ocupacion_M || null,
+            N_P || null,
+            ci_P || null,
+            NR_P || null,
+            ocupacion_P || null,
+            casados || 'no',
+            Pareja_echo !== undefined ? Pareja_echo : null,
+            viven_junto !== undefined ? viven_junto : null,
+            NR_Her || null,
+            edad || null
+        ]
+    );
+    return { ok: true, mensaje: 'padres creados existosamente', status: 201 }
+}
+
 export const crearPoblacion = async (req, res) => {
     try {
-        const resultado = await crear_plobacion_aux(req.body); 
-        console.log('aaaa ' + JSON.stringify(resultado)); 
+        const resultado = await crear_plobacion_aux(req.body, req.body.padres); 
+        
+        
         if (!resultado.ok) {
             return res.status(resultado.status).json({ message: resultado.mensaje });
         }
         
         return res.status(201).json({ message: resultado.mensaje, data: resultado.payload });
+
     } catch (error) {
-        console.error(error);
-        
-        return res.status(500).json({ message: 'error inesperado' });
+        console.error('Error inesperado en crearPoblacion:', error);
+        return res.status(500).json({ message: 'Error inesperado en el servidor' });
     }
 }
 
