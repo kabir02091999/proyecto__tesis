@@ -75,7 +75,7 @@ export const GetLapso = async (req, res) => {
 
 } */
 
-async function crear_plobacion_aux(datos, padres) {
+async function crear_plobacion_aux(datos, padres,datos_poblacion) {
     const { nombre, apellidos, tipoPoblacion, ci, } = datos
     if (!nombre || !apellidos || !tipoPoblacion || !ci) {
         return { status: 400, mensaje: 'datos incompletos' }
@@ -101,6 +101,11 @@ async function crear_plobacion_aux(datos, padres) {
         const resultadoPadres = await crear_padres_aux(padres, ci);
         if (!resultadoPadres.ok) {        
             return { status: resultadoPadres.status, ok: false, mensaje: resultadoPadres.mensaje }
+        }
+    }if(datos_poblacion){
+        const resultadoDatosPoblacion = await crear_datos_poblacion_aux(datos.datos_poblacion, ci);
+        if (!resultadoDatosPoblacion.ok) {        
+            return { status: resultadoDatosPoblacion.status, ok: false, mensaje: resultadoDatosPoblacion.mensaje }
         }
     }
  
@@ -153,9 +158,39 @@ const crear_padres_aux = async (datos, ci_hijo) => {
     return { ok: true, mensaje: 'padres creados existosamente', status: 201 }
 }
 
+const crear_datos_poblacion_aux = async (datos,ci_hijo) => { // 1. Validar que se hayan proporcionado los datos necesarios
+    const { lugar_nacimiento, fecha_nacimiento, lugar_bautizo, fecha_bautizo, direccion_habitacion, instituto, grado, turno } = datos;
+    if (!ci_hijo || !lugar_nacimiento || !fecha_nacimiento || !direccion_habitacion) {
+        return { ok: false, mensaje: 'datos adicionales de población incompletos', status: 400 };
+    }
+
+    try {
+        await pool.query(
+            `INSERT INTO datospoblacion (
+                ci, lugar_nacimiento, fecha_nacimiento, lugar_bautizo, fecha_bautizo,
+                direccion_habitacion, instituto, grado, turno
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                ci_hijo,
+                lugar_nacimiento,
+                fecha_nacimiento,
+                lugar_bautizo || null,
+                fecha_bautizo || null,
+                direccion_habitacion,
+                instituto || null,
+                grado || null,
+                turno || null
+            ]
+        );
+        return { ok: true, mensaje: 'datos de población adicionales creados exitosamente', status: 201 };
+    } catch (error) {
+        console.error('Error al crear los datos adicionales de población:', error);
+        return { ok: false, mensaje: 'Error al crear los datos adicionales de población', status: 500 };
+    }}
+
 export const crearPoblacion = async (req, res) => {
     try {
-        const resultado = await crear_plobacion_aux(req.body, req.body.padres); 
+        const resultado = await crear_plobacion_aux(req.body, req.body.padres, req.body.datos_poblacion); 
         
         
         if (!resultado.ok) {
