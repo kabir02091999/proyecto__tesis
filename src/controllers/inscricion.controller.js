@@ -34,47 +34,6 @@ export const GetLapso = async (req, res) => {
 }
 
 
-
-/* export const crearPoblacion = async (req, res) => {
-    const { nombre, apellidos, tipoPoblacion, ci } = req.body
-    
-    const {
-        N_M, ci_M, NR_M, ocupacion_M,
-        N_P, ci_P, NR_P, ocupacion_P,
-        casados, Pareja_echo, viven_junto, NR_Her, edad
-    } = req.body.padres;
-
-    try {
-        const resultado = crear_plobacion_aux(req.body)
-        console.log('aaaa ' + resultado)
-        if (!resultado.ok) {
-            return res.status(resultado.status).json({message:resultado.mensaje})
-        }
-    } catch {
-        return res.status(404).json({message:'eeerror inesperado'})
-    }
-
-    try {
-        const [result] = await pool.query(
-            `INSERT INTO padres (ci, N_M, ci_M, NR_M, ocupacion_M, N_P, ci_P, NR_P, ocupacion_P, casados, Pareja_echo, viven_junto, NR_Her, edad)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [
-                ci, N_M || null, ci_M || null, NR_M || null, ocupacion_M || null,
-                N_P || null, ci_P || null, NR_P || null, ocupacion_P || null,
-                casados || 'no', Pareja_echo !== undefined ? Pareja_echo : null,
-                viven_junto !== undefined ? viven_junto : null,
-                NR_Her || null, edad || null
-            ]
-        );
-        res.status(201).json({ id: result.insertId, nombre, apellidos, tipoPoblacion, ci });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error al crear la población' });
-    }
-
-
-} */
-
 async function crear_plobacion_aux(datos, padres,datos_poblacion) {
     const { nombre, apellidos, tipoPoblacion, ci, } = datos
     if (!nombre || !apellidos || !tipoPoblacion || !ci) {
@@ -158,7 +117,7 @@ const crear_padres_aux = async (datos, ci_hijo) => {
     return { ok: true, mensaje: 'padres creados existosamente', status: 201 }
 }
 
-const crear_datos_poblacion_aux = async (datos,ci_hijo) => { // 1. Validar que se hayan proporcionado los datos necesarios
+const crear_datos_poblacion_aux = async (datos,ci_hijo) => { 
     const { lugar_nacimiento, fecha_nacimiento, lugar_bautizo, fecha_bautizo, direccion_habitacion, instituto, grado, turno } = datos;
     if (!ci_hijo || !lugar_nacimiento || !fecha_nacimiento || !direccion_habitacion) {
         return { ok: false, mensaje: 'datos adicionales de población incompletos', status: 400 };
@@ -191,8 +150,7 @@ const crear_datos_poblacion_aux = async (datos,ci_hijo) => { // 1. Validar que s
 export const crearPoblacion = async (req, res) => {
     try {
         const resultado = await crear_plobacion_aux(req.body, req.body.padres, req.body.datos_poblacion); 
-        
-        
+       
         if (!resultado.ok) {
             return res.status(resultado.status).json({ message: resultado.mensaje });
         }
@@ -233,6 +191,26 @@ export const getfindPoblacionByID = async (req, res) => {
         res.status(500).json({ message: 'Error al obtener la población' });
     }
 };
+
+
+export const aprobacion = async (req, res) => {
+    const {ci,id_lapso,aprovacion}= req.body;
+    if (!ci || !id_lapso || !aprovacion) {
+        return res.status(400).json({ message: "Todos los campos son obligatorios" });
+    }
+    try {
+        const [existing] = await pool.query('SELECT ID_lapso FROM aprobacion WHERE CI = ? AND ID_lapso = ?', [ci, id_lapso]);
+        if (existing.length > 0) {
+            return res.status(409).json({ message: 'Ya existe una aprobación para este CI y lapso' });
+        }
+
+        const [result] = await pool.query('INSERT INTO aprobacion (CI,ID_lapso, aprobado_Reprobado) VALUES (?, ?, ?)', [ci, id_lapso, aprovacion]);
+        res.status(201).json({ id: result.insertId, ci, id_lapso, aprovacion });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al crear la aprobación' });
+    }
+}
 
 export const CrearPoblacionConRegistrosRelacionados = async (req, res) => {
     const { poblacionData, padresData, inscripcionData } = req.body;
