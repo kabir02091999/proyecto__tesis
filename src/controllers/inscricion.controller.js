@@ -212,101 +212,23 @@ export const aprobacion = async (req, res) => {
     }
 }
 
-export const CrearPoblacionConRegistrosRelacionados = async (req, res) => {
-    const { poblacionData, padresData, inscripcionData } = req.body;
+export const inscripto = async (req, res) => {
 
-    let connection;
-
-    try {
-        // --- Validaciones iniciales ---
-        // Validación para 'poblacion' sigue igual
-        if (!poblacionData || !poblacionData.nombre || !poblacionData.apellidos || !poblacionData.ci || !poblacionData.tipoPoblacion) {
-            return res.status(400).json({ message: "Datos de población incompletos. Se requieren: nombre, apellidos, ci, tipoPoblacion." });
-        }
-
-        // VALIDACIÓN DE INSCRIPCION CORREGIDA:
-        // Ahora fecha_nacimiento es obligatorio en inscripcion, no en poblacionData (si es su único lugar)
-        if (inscripcionData && (!inscripcionData.instituto || !inscripcionData.grado || !inscripcionData.turno || !inscripcionData.fecha_nacimiento)) {
-            return res.status(400).json({ message: "Datos de inscripción incompletos. Se requieren: instituto, grado, turno, fecha_nacimiento." });
-        }
-
-        // Validación de padres sigue igual
-        if (padresData && (!padresData.N_M && !padresData.N_P)) {
-            return res.status(400).json({ message: "Datos de padres incompletos. Se requiere al menos el nombre de la madre o el padre." });
-        }
-
-        connection = await pool.getConnection();
-        await connection.beginTransaction();
-
-        // --- 3. Insertar en la tabla 'poblacion' ---
-        // NOTA: Si los campos de nacimiento/direccion NO van en poblacion, quítalos del INSERT de poblacion.
-        // Asumiendo que poblacion solo tiene 'nombre', 'apellidos', 'ci', 'tipoPoblacion'
-        const [poblacionResult] = await connection.query(
-            `INSERT INTO poblacion (nombre, apellidos, ci, tipoPoblacion)
-             VALUES (?, ?, ?, ?)`, // QUITADOS lugar_nacimiento, fecha_nacimiento, direccion_habitacion
-            [
-                poblacionData.nombre,
-                poblacionData.apellidos,
-                poblacionData.ci,
-                poblacionData.tipoPoblacion
-            ]
-        );
-        const insertedPoblacionCI = poblacionData.ci;
-
-        // --- 4. Insertar en la tabla 'inscripcion' (CORREGIDO) ---
-        if (inscripcionData) {
-            const [inscripcionResult] = await connection.query(
-                `INSERT INTO inscripcion (ci, lugar_nacimiento, fecha_nacimiento, lugar_bautizo, fecha_bautizo, direccion_habitacion, instituto, grado, turno)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [
-                    insertedPoblacionCI, // CI del estudiante
-                    inscripcionData.lugar_nacimiento || null, // ¡Ahora de inscripcionData!
-                    inscripcionData.fecha_nacimiento,        // ¡Ahora de inscripcionData! (NOT NULL)
-                    inscripcionData.lugar_bautizo || null,   // ¡Ahora de inscripcionData!
-                    inscripcionData.fecha_bautizo || null,   // ¡Ahora de inscripcionData!
-                    inscripcionData.direccion_habitacion || null, // ¡Ahora de inscripcionData!
-                    inscripcionData.instituto,
-                    inscripcionData.grado,
-                    inscripcionData.turno
-                ]
-            );
-            console.log("Datos de inscripción insertados con ID:", inscripcionResult.insertId);
-        }
-
-        // --- 5. Insertar en la tabla 'padres' (sigue igual) ---
-        // ... (el código de padresData sigue siendo el mismo) ...
-        if (padresData) {
-            const [padresResult] = await connection.query(
-                `INSERT INTO padres (ci, N_M, ci_M, NR_M, ocupacion_M, N_P, ci_P, NR_P, ocupacion_P, casados, Pareja_echo, viven_junto, NR_Her, edad)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [
-                    insertedPoblacionCI, // CI del hijo/a, FK a 'poblacion'
-                    padresData.N_M || null,
-                    padresData.ci_M || null,
-                    padresData.NR_M || null,
-                    padresData.ocupacion_M || null,
-                    padresData.N_P || null,
-                    padresData.ci_P || null,
-                    padresData.NR_P || null,
-                    padresData.ocupacion_P || null,
-                    padresData.casados || 'no',
-                    padresData.Pareja_echo !== undefined ? padresData.Pareja_echo : null,
-                    padresData.viven_junto !== undefined ? padresData.viven_junto : null,
-                    padresData.NR_Her || null,
-                    padresData.edad || null
-                ]
-            );
-            console.log("Datos de padres insertados con ID:", padresResult.insertId);
-        }
-
-
-        // ... (Commit, response, catch, finally siguen igual) ...
-
-    } catch (error) {
-        // ... (manejo de errores sigue igual) ...
-    } finally {
-        if (connection) {
-            connection.release();
-        }
+    const {ID_lapso,CI,seccion,nivel} = req.body;
+    if (!ID_lapso || !CI || !seccion || !nivel) {
+        return res.status(400).json({ message: "Todos los campos son obligatorios" });
     }
-};
+    try {
+        const [existing] = await pool.query('SELECT ID_lapso FROM inscripcion WHERE CI = ? AND ID_lapso = ?', [CI, ID_lapso]);
+        if (existing.length > 0) {
+            return res.status(409).json({ message: 'Ya existe una inscripción para este CI y lapso' });
+        }
+        const [result] = await pool.query('INSERT INTO inscripcion (ID_lapso,CI,seccion,nivel) VALUES (?, ?, ?, ?)', [ID_lapso, CI, seccion, nivel]);
+        res.status(201).json({ id: result.insertId, ID_lapso, CI, seccion, nivel });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al crear la inscripción' });
+    }
+
+}
+

@@ -1,15 +1,18 @@
 import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToke.js';
 
-import { RegistroLapso,GetLapso, CrearPoblacionConRegistrosRelacionados, getfindPoblacionByID, crearPoblacion ,getfindPoblacionByCI, aprobacion} from '../controllers/inscricion.controller.js';
+import { RegistroLapso,GetLapso, getfindPoblacionByID, crearPoblacion ,getfindPoblacionByCI, aprobacion, inscripto} from '../controllers/inscricion.controller.js';
+
 
 const router = Router();
 
 router.post('/Registro-Lapso', RegistroLapso)
 router.get('/get-lapso', GetLapso) 
 
+router.post('/inscripto', inscripto)//listo
 
-router.post('/crear-poblacion', crearPoblacion)//listo
+
+router.post('/crear-poblacion', crearPoblacion)//listo recordar en este est proseso men agregar en la tabla de poblacion , padres , datos_poblacion
 router.get('/find-poblacion/:id', getfindPoblacionByID)
 router.get('/getfind-poblacion/:CI', getfindPoblacionByCI)
 
