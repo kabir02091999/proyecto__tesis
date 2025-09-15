@@ -2,37 +2,6 @@ import { pool } from "../db/db.js";
 import bcrypt from "bcryptjs";
 import { crateToken } from "../libs/jwt.js";
 
-/* recordar que la fecha estan mmmm/mm/dd*/
-export const RegistroLapso = async (req, res) => {
-    const { inicio, fin, tipo_inscripcion } = req.body;
-    console.log(req.body)
-    if (!inicio || !fin || !tipo_inscripcion) {
-        console.log("inicio " + inicio)
-        console.log("fin " + fin)
-        console.log("tipo_inscripcion " + tipo_inscripcion)
-        return res.status(400).json({ message: "Todos los campos son obligatorios" });
-    }
-
-    try {
-        const [result] = await pool.query('INSERT INTO lapso (inicio, fin, tipo_inscripcion) VALUES (?, ?, ?)', [inicio, fin, tipo_inscripcion]);
-        res.status(201).json({ id: result.insertId, inicio, fin, tipo_inscripcion });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error al crear el lapso' });
-    }
-}
-/* TipoDeLapso */
-
-export const GetLapso = async (req, res) => {
-    try {
-        const [rows] = await pool.query('SELECT * FROM lapso');
-        res.json(rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error al obtener los lapsos' });
-    }
-}
-
 
 async function crear_plobacion_aux(datos, padres,datos_poblacion) {
     const { nombre, apellidos, tipoPoblacion, ci, } = datos
@@ -167,10 +136,21 @@ export const getfindPoblacionByCI = async (req, res) => {
     const { CI } = req.params;
     try {
         const [rows] = await pool.query('SELECT * FROM poblacion WHERE ci = ?', [CI]);
+        const [rows2] = await pool.query('SELECT * FROM padres WHERE ci = ?', [CI]);
+        const [rows3] = await pool.query('SELECT * FROM datospoblacion WHERE ci = ?', [CI]);
         if (rows.length === 0) {
             return res.status(404).json({ message: 'Población no encontrada' });
         }
-        res.json(rows[0]);
+        if (rows2.length === 0) {
+            return res.status(404).json({ message: 'Padres no encontrados' });
+        }
+        if (rows3.length === 0) {
+            return res.status(404).json({ message: 'Datos de población no encontrados' });
+        }
+            const resultado = { ...rows[0], padres: rows2[0], datos_poblacion: rows3[0] };
+            return res.status(200).json(resultado);
+        //res.json(rows[0]);
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al obtener la población' });
@@ -192,6 +172,36 @@ export const getfindPoblacionByID = async (req, res) => {
     }
 };
 
+/* recordar que la fecha estan mmmm/mm/dd*/
+export const RegistroLapso = async (req, res) => {
+    const { inicio, fin, tipo_inscripcion } = req.body;
+    console.log(req.body)
+    if (!inicio || !fin || !tipo_inscripcion) {
+        console.log("inicio " + inicio)
+        console.log("fin " + fin)
+        console.log("tipo_inscripcion " + tipo_inscripcion)
+        return res.status(400).json({ message: "Todos los campos son obligatorios" });
+    }
+
+    try {
+        const [result] = await pool.query('INSERT INTO lapso (inicio, fin, tipo_inscripcion) VALUES (?, ?, ?)', [inicio, fin, tipo_inscripcion]);
+        res.status(201).json({ id: result.insertId, inicio, fin, tipo_inscripcion });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al crear el lapso' });
+    }
+}
+
+/* TipoDeLapso */
+export const GetLapso = async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM lapso');
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener los lapsos' });
+    }
+}
 
 export const aprobacion = async (req, res) => {
     const {ci,id_lapso,aprovacion}= req.body;
@@ -219,11 +229,11 @@ export const inscripto = async (req, res) => {
         return res.status(400).json({ message: "Todos los campos son obligatorios" });
     }
     try {
-        const [existing] = await pool.query('SELECT ID_lapso FROM inscripcion WHERE CI = ? AND ID_lapso = ?', [CI, ID_lapso]);
+        const [existing] = await pool.query('SELECT ID_lapso FROM inscrito WHERE CI = ? AND ID_lapso = ?', [CI, ID_lapso]);
         if (existing.length > 0) {
-            return res.status(409).json({ message: 'Ya existe una inscripción para este CI y lapso' });
+            return res.status(409).json({ message: 'Ya existe una inscrito  para este CI y lapso' });
         }
-        const [result] = await pool.query('INSERT INTO inscripcion (ID_lapso,CI,seccion,nivel) VALUES (?, ?, ?, ?)', [ID_lapso, CI, seccion, nivel]);
+        const [result] = await pool.query('INSERT INTO inscrito (ID_lapso,CI,seccion,nivel) VALUES (?, ?, ?, ?)', [ID_lapso, CI, seccion, nivel]);
         res.status(201).json({ id: result.insertId, ID_lapso, CI, seccion, nivel });
     } catch (error) {
         console.error(error);
@@ -232,3 +242,17 @@ export const inscripto = async (req, res) => {
 
 }
 
+export const getinscript_CI = async (req, res) => {
+    const { ci } = req.params;
+    console.log("ci "+ci)   
+    try {
+        const [rows] = await pool.query('SELECT * FROM inscrito WHERE CI = ?', [ci]);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'Inscripción no encontrada' });
+        }
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener la inscripción' });
+    }
+}
