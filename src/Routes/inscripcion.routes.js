@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToke.js';
 
-import { RegistroLapso,GetLapso, getfindPoblacionByID, crearPoblacion ,getfindPoblacionByCI, aprobacion, inscripto,getinscript_CI} from '../controllers/inscricion.controller.js';
+import { RegistroLapso,GetLapso, getfindPoblacionByID, crearPoblacion ,getfindPoblacionByCI, aprobacion, inscripto,getinscript_CI, getAprobacionByCI_Inner} from '../controllers/inscricion.controller.js';
 
 
 const router = Router();
@@ -10,7 +10,7 @@ router.post('/Registro-Lapso', RegistroLapso)
 router.get('/get-lapso', GetLapso) 
 
 router.post('/inscripto', inscripto)//listo
-router.get('/inscripto/:ci', getinscript_CI)//listo probar
+router.get('/inscripto/:ci', getinscript_CI)//listo probar octener lo inscrito
 
 
 router.post('/crear-poblacion', crearPoblacion)//listo recordar en este est proseso men agregar en la tabla de poblacion , padres , datos_poblacion
@@ -18,6 +18,8 @@ router.get('/find-poblacion/:id', getfindPoblacionByID)
 router.get('/getfind-poblacion/:CI', getfindPoblacionByCI)///ojojo
 
 router.post('/aprobacion', aprobacion)
+router.get('/aprobacion/:ci', getAprobacionByCI_Inner)// este me busca la tabla aprbacion i tre los datos de lapso y incrito
+
 //para la crear-poblacion
  /* {
         "nombre": "Pedro",

@@ -222,6 +222,20 @@ export const aprobacion = async (req, res) => {
     }
 }
 
+export const getAprobacionByCI_Inner = async (req, res) => {
+    const { ci } = req.params;
+    try {
+        const [rows] = await pool.query('SELECT inicio , aprobado_Reprobado , seccion , nivel FROM inscrito INNER JOIN lapso ON inscrito.ID_lapso = lapso.ID INNER JOIN aprobacion ON lapso.ID = aprobacion.aprobado_Reprobado  WHERE inscrito.CI = ? ', [ci]);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'Aprobación no encontrada' });
+        }
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener la aprobación' });
+    }
+}
+
 export const inscripto = async (req, res) => {
 
     const {ID_lapso,CI,seccion,nivel} = req.body;
