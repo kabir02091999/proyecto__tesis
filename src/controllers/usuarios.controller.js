@@ -1,6 +1,7 @@
 import {pool} from '../db/db.js';
 import bcrypt from 'bcryptjs';
 import {crateToken} from '../libs/jwt.js'
+import jwt from 'jsonwebtoken';
 
 /* ojo ya esto desecita la contraseña ojo falta los token */
 export const loginUsuario = async (req, res) => {
@@ -35,7 +36,7 @@ export const getUsuarios = async (req, res) => {
         res.status(500).json({message: 'Error al obtener los usuarios'});
     }
 }
-
+//ojo aqui con la inseccion 
 export const createUsuario = async (req, res) => {  
     const {nombre, apellido , email, contrasena,tipoUsuario } = req.body;
     try {
@@ -70,3 +71,16 @@ export const logout =  (req, res) => {
 
     return res.sendStatus(200);
 };
+
+export const verifyToken = (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+
+        if (err) {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+
+})}

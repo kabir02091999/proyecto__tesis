@@ -6,10 +6,18 @@ import {getUsuarios,createUsuario,loginUsuario,deleteUsuario, logout} from '../c
 const router = Router();
 
 router.post('/login', loginUsuario)/* ojo ya esta listo esto  */
-router.post('/usuarios', authRequired , createUsuario);/* comprovacion de token */
+router.post('/usuarios', authRequired  , createUsuario);/* comprovacion de token */
 router.get('/usuarios', authRequired ,  getUsuarios);/* comprovacion de token */
 router.delete('/usuarios/:id', authRequired , deleteUsuario);/* falta implementar la eliminacion de usuario */
 router.post('/logout', logout);
 
 
 export default router;
+
+/* {
+    "nombre":"kabir",
+    "apellido":"quiroz",
+    "email": "kabir.2@hotmail.com",
+    "contrasena":"kabir",
+    "tipoUsuario":"financiero"
+} */
