@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import {BrowserRouter as Router, Routes, Route } from 'react-router'
 
+import {AuthProvider} from './context/AuthContext'
+
 import Login from './pages/login'
 import Inicion from './pages/Inicion'
 
@@ -10,12 +12,14 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Inicion/>}/>
-        <Route path='/login' element={<Login/>}/>
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Inicion/>}/>
+          <Route path='/login' element={<Login/>}/>
+        </Routes>
+      </Router>
+    </AuthProvider>
   )
 }
 
