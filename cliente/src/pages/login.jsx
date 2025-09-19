@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 
+import { AseAuth }  from '../context/AuthContext'
+
 //css
 import '../css/login.css'
 
 function login()    {
 
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [contrasena, setcontrasena] = useState('');
+
+  const {login} = AseAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Email:', email);
-    console.log('Password:', password);
+    console.log('Password:', contrasena);
+    login({email, contrasena});
     alert(`Iniciando sesión con el correo: ${email}`);
     // Aquí podrías agregar la lógica para la autenticación
   };
@@ -31,12 +36,12 @@ function login()    {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Contraseña</label>
+          <label htmlFor="contrasena">Contraseña</label>
           <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="contrasena"
+            id="contrasena"
+            value={contrasena}
+            onChange={(e) => setcontrasena(e.target.value)}
             required
           />
         </div>
