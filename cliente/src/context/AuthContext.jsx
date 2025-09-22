@@ -28,6 +28,8 @@ export const AuthProvider = ({ children }) => {
             // Aquí guardamos el token en una cookie después del login
             if (response.data.token) {
                 console.log("token "+ response.data.token)
+                // Guardar el token en una local storage
+                localStorage.setItem('token', response.data.token);
             }
 
             setUser(response.data);
@@ -46,31 +48,28 @@ export const AuthProvider = ({ children }) => {
     
     // Este efecto se encarga de verificar la autenticación cuando la app se carga
     useEffect(() => {
-        const checkLogin = async () => {
-            const token = cookie.get('token');
-            if (!token) {
+        // Verificar si hay un token en local storage
+        const token = localStorage.getItem('token');
+        
+        if (token) {
+            setLoading(true);
+            verifyTokenService(token).then(response => {
+                console.log("response verify token " + JSON.stringify(response.data))
+                setUser(response.data.user);
+                //alert("Bienvenido " + response.data.user.nombre)
+                setIsAuthenticated(true);
                 setLoading(false);
-                return;
-            }
-
-            try {
-                // Llama a la API del backend para verificar el token
-                const response = await verifyTokenService();
-                console.log('Token verification response:', response);
-                if (response.data) {
-                    setUser(response.data);
-                    setIsAuthenticated(true);
-                }
-            } catch (error) {
-                console.error('Token verification failed:', error);
-                cookie.remove('token'); // Si falla, borramos el token
+            }).catch(error => {
+                console.error('Error verifying token:', error);
                 setUser(null);
                 setIsAuthenticated(false);
-            } finally {
                 setLoading(false);
-            }
-        };
-        checkLogin();
+            });
+        } else {
+            setLoading(false);
+            setIsAuthenticated(false);
+            
+        }
     }, []);
 
     return (

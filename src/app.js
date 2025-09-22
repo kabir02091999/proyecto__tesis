@@ -15,9 +15,9 @@ app.use('/api', usuariosRoutes);
 app.use('/api/inscripcion', inscripcionRoutes); // Assuming you have inscripcionRoutes defined
 
 export default app;
+/*  {
 
-/* { 
-    "email": "kabir.11@gmail.com",
-    "password":"hola7"
-        
-} */
+    "email": "kabir.2@hotmail.com",
+    "contrasena":"kabir"
+
+ } */
