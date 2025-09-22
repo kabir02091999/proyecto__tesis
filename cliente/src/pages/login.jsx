@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 import { AseAuth }  from '../context/AuthContext'
 
+import { useNavigate, useLocation } from "react-router-dom"
+
+
 //css
 import '../css/login.css'
 
@@ -9,15 +12,20 @@ function login()    {
 
   const [email, setEmail] = useState('');
   const [contrasena, setcontrasena] = useState('');
+const navigate = useNavigate();
+const location = useLocation();
 
   const {login} = AseAuth();
+
+   const from = location.state?.from || "/admin"
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Email:', email);
     console.log('Password:', contrasena);
     login({email, contrasena});
-    alert(`Iniciando sesión con el correo: ${email}`);
+    //alert(`Iniciando sesión con el correo: ${email}`);
+    navigate(from, { replace: true })
     // Aquí podrías agregar la lógica para la autenticación
   };
 
