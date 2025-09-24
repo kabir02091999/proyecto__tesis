@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
     const [token , setToken] = useState(null);
+    //const navigate = useNavigate();
 
     const login = async (userData) => {
         try {
@@ -25,6 +26,7 @@ export const AuthProvider = ({ children }) => {
             setErrors([]);
             const response = await loginService(userData);
             
+            console.log("tipo usuario " + response.data.tipoUsuario)
             // Aquí guardamos el token en una cookie después del login
             if (response.data.token) {
                 console.log("token "+ response.data.token)
@@ -36,13 +38,14 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(true);
             setLoading(false);
             // quiero que me mandes a la ruta admin
-            
+            return response.data;
 
         } catch (error) {
             console.error('Error during login:', error);
             setErrors(error.response?.data?.message || 'Login failed');
             setLoading(false);
             setIsAuthenticated(false);
+            return error;
         }
     };
     
@@ -56,7 +59,8 @@ export const AuthProvider = ({ children }) => {
             verifyTokenService(token).then(response => {
                 console.log("response verify token " + JSON.stringify(response.data))
                 setUser(response.data.user);
-                //alert("Bienvenido " + response.data.user.nombre)
+                //console.log("usuario " + JSON.stringify(response.data.user.tipoUsuario))
+                //alert("Bienvenido " + response.data.user.tipoUsuario)
                 setIsAuthenticated(true);
                 setLoading(false);
             }).catch(error => {
@@ -70,10 +74,12 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(false);
             
         }
+
+        
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, isAuthenticated, errors, login }}>
+        <AuthContext.Provider value={{ user, loading, isAuthenticated, errors, login}}>
             {children}
         </AuthContext.Provider>
     );

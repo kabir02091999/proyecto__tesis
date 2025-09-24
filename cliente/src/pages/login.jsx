@@ -1,32 +1,46 @@
 import React, { useState } from 'react';
-
-import { AseAuth }  from '../context/AuthContext'
-
-import { useNavigate, useLocation } from "react-router-dom"
-
+import { AseAuth } from '../context/AuthContext';
+import { useNavigate, useLocation } from "react-router-dom";
 
 //css
-import '../css/login.css'
+import '../css/login.css';
 
-function login()    {
-
+function login() {
   const [email, setEmail] = useState('');
-  const [contrasena, setcontrasena] = useState('');
-const navigate = useNavigate();
-const location = useLocation();
+  const [contrasena, setContrasena] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const {login} = AseAuth();
+  const { login, user } = AseAuth();
 
-   const from = location.state?.from || "/admin"
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => { // Agrega 'async' aquí
     e.preventDefault();
     console.log('Email:', email);
     console.log('Password:', contrasena);
-    login({email, contrasena});
-    //alert(`Iniciando sesión con el correo: ${email}`);
-    navigate(from, { replace: true })
-    // Aquí podrías agregar la lógica para la autenticación
+
+    try {
+      // Usa 'await' para esperar la respuesta completa de la promesa
+      const result = await login({ email, contrasena });
+
+      // Ahora puedes acceder a la propiedad tipoUsuario
+      const tipo = result.tipoUsuario;
+      console.log('Tipo de usuario:', tipo);
+
+      // Redirige basándote en el tipo de usuario
+      if (tipo === 'admin') {
+        navigate("/admin");
+      } else if (tipo === 'financiero') {
+        navigate("/financiero");
+      } else {
+        // Redirige a una página por defecto si el tipo no coincide
+        navigate("/"); 
+      }
+
+    } catch (error) {
+      console.error("Error en el inicio de sesión:", error);
+      // Aquí puedes mostrar un mensaje de error al usuario
+      // Por ejemplo, con un estado local
+    }
   };
 
   return (
@@ -46,10 +60,10 @@ const location = useLocation();
         <div className="form-group">
           <label htmlFor="contrasena">Contraseña</label>
           <input
-            type="contrasena"
+            type="password" // Cambié el tipo a 'password' por seguridad
             id="contrasena"
             value={contrasena}
-            onChange={(e) => setcontrasena(e.target.value)}
+            onChange={(e) => setContrasena(e.target.value)}
             required
           />
         </div>
