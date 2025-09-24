@@ -1,0 +1,69 @@
+.usuarios-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.usuarios-form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.usuarios-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.usuarios-form input,
+.usuarios-form select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box; /* Ensures padding doesn't affect the element's total width/height */
+}
+
+.usuarios-form input:focus,
+.usuarios-form select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.usuarios-form button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background-color: #28a745; /* A pleasant green color */
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.usuarios-form button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.usuarios-form button:active {
+    background-color: #1e7e34;
+    transform: translateY(0);
+}

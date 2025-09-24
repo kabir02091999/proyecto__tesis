@@ -35,6 +35,9 @@ export const getUsuarios = async () => {
     return api.get(`/usuarios`);
 };
 
+export const createUsuario = async (usuarioData) => {
+    return api.post(`/usuarios`, usuarioData);
+}
 
 export const verifyToken = async () => {
     return api.post(`/verifyToken`);

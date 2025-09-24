@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToke.js';
 
+
 import { RegistroLapso,GetLapso, getfindPoblacionByID, crearPoblacion ,getfindPoblacionByCI, aprobacion, inscripto,getinscript_CI, getAprobacionByCI_Inner} from '../controllers/inscricion.controller.js';
 
 

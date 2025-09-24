@@ -27,11 +27,16 @@ function login() {
       console.log('Tipo de usuario:', tipo);
 
       // Redirige basándote en el tipo de usuario
-      if (tipo === 'admin') {
+      if (tipo === 'administrador') {
         navigate("/admin");
       } else if (tipo === 'financiero') {
         navigate("/financiero");
-      } else {
+      } else if (tipo === "contenido"){
+        navigate("/contenido")
+      } else if (tipo ==='catequesis') {
+        navigate("/catequesis")
+      }
+      else {
         // Redirige a una página por defecto si el tipo no coincide
         navigate("/"); 
       }
