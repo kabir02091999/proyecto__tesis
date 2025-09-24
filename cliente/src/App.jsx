@@ -8,6 +8,7 @@ import Login from './pages/login'
 import Inicion from './pages/Inicion'
 import Administracion from './pages/adminitracion'
 import Financiero from './pages/financiero'
+import Inscri from './pages/inscri'
 
 import ProtectedRoute from './pages/protectedRoute'
 
@@ -23,7 +24,7 @@ function App() {
 
           <Route element={<ProtectedRoute/>}>
             <Route path='/admin' element={<Administracion/>}/>
-            <Route path='/inscri' element={<h2>inscricion</h2>}/>
+            <Route path='/inscri' element={<Inscri/>}/>
             <Route path='/financiero' element={<Financiero/>}/>
           </Route>
         </Routes>

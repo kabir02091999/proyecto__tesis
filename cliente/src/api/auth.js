@@ -1,8 +1,50 @@
-/* import axios from '.axio.js' */
+
 import axios from 'axios';
 
-const API ="http://localhost:3000/api"
+const API = "http://localhost:3000/api";
 
-export const login = user => axios.post(`${API}/login`, user);
-// función verifyToken post que envia un token por json    
-export const verifyToken = token => axios.post(`${API}/verifyToken`, { token });
+
+const api = axios.create({
+    baseURL: API,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
+export const setAuthToken = (token) => {
+    if (token) {
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        localStorage.setItem('token', token);
+    } else {
+        delete api.defaults.headers.common['Authorization'];
+        localStorage.removeItem('token');
+    }
+};
+
+// Función para el inicio de sesión.
+// Ahora solo se enfoca en la petición y llama a setAuthToken.
+export const login = async (user) => {
+    const response = await api.post(`/login`, user);
+    if (response.data.token) {
+        setAuthToken(response.data.token);
+    }
+    return response;
+};
+
+export const getUsuarios = async () => {
+    return api.get(`/usuarios`);
+};
+
+
+export const verifyToken = async () => {
+    return api.post(`/verifyToken`);
+};
+
+// Al cargar la aplicación, verificamos si hay un token en el localStorage
+// y lo configuramos en los encabezados de Axios.
+const tokenFromStorage = localStorage.getItem('token');
+if (tokenFromStorage) {
+    setAuthToken(tokenFromStorage);
+}
+
+export default api;

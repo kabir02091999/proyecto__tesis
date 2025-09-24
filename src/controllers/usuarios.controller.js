@@ -73,9 +73,12 @@ export const logout =  (req, res) => {
     return res.sendStatus(200);
 };
 
-export const verifyToken = async (req, res) => {
-    // extraer el token del post body
-    const { token } = req.body;
+//export const verifyToken = async (req, res) => {
+    // extraer el token del post header
+
+
+
+    /* const { token } = req.body;
     console.log("verificando token: "+ token)
     if (!token) {
         return res.status(401).json({ message: 'No token provided' });
@@ -104,4 +107,53 @@ export const verifyToken = async (req, res) => {
 
         }
 
-})}
+}) }*/
+
+export const verifyToken = async (req, res) => {
+    try {
+        const authHeader = req.headers['authorization'];
+
+        // 1. Verificar si el encabezado existe y tiene el formato "Bearer "
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ message: 'No token, autorización denegada' });
+        }
+
+        // 2. Extraer el token del encabezado
+        const token = authHeader.split(' ')[1];
+        
+        console.log("verificando token: " + token);
+
+        if (!token) {
+            return res.status(401).json({ message: 'No se pudo extraer el token' });
+        }
+
+        // 3. Usamos una promesa para envolver la verificación del JWT
+        const decoded = await new Promise((resolve, reject) => {
+            jwt.verify(token, TOKEN_SECRET, (err, decoded) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(decoded);
+            });
+        });
+
+        console.log("Token decodificado:", decoded);
+        const [rows] = await pool.execute('SELECT * FROM usuarios WHERE id = ?', [decoded.userId]);
+        const [user] = rows;
+
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        console.log("Usuario encontrado:", JSON.stringify(user));
+        return res.status(200).json({ message: 'Token es válido', user });
+
+    } catch (error) {
+        console.error('Error en el controlador verifyToken:', error);
+        // Si hay un error, el token es inválido o ha expirado.
+        if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+            return res.status(401).json({ message: 'Token inválido o expirado' });
+        }
+        return res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
