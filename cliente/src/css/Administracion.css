@@ -1,0 +1,37 @@
+/* Contenedor principal del formulario */
+
+.administracion-page-container{
+    margin-top: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem; 
+    padding: 3rem 1rem;
+    background-color: #f0f2f5;
+  
+    min-height: auto; 
+    flex-grow: 1;
+    font-family: Arial, sans-serif;
+}
+
+.usuarios-form-container {
+  
+  padding: 20px;
+  box-sizing: border-box; 
+  font-family: Arial, sans-serif;
+  width: 100%; 
+}
+
+
+.usuarios-form {
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box; /* ¡CLAVE! Asegura que el padding se incluya en el ancho */
+}
