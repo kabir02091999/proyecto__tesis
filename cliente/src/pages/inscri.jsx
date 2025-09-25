@@ -1,6 +1,13 @@
 function inscri() {
   return (
-    <div>inscri</div>
+    <div>
+
+        <form method="post" action="/send/">
+        {/* Selecciona la fecha deseada: */}
+        <input type="date"></input>
+        </form>
+
+    </div>
   )
 }
 export default inscri;

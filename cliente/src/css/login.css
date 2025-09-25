@@ -1,14 +1,25 @@
-body {
+/* body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f0f2f5; /* Un gris muy claro para el fondo */
+  background-color: #f0f2f5; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
+
+
+.login-container1 {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5; 
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.login-container {
+.login-container2 {
   background-color: #ffffff; /* Fondo blanco para el contenedor */
   padding: 40px;
   border-radius: 10px;

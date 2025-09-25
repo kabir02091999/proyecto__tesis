@@ -24,7 +24,7 @@ function App() {
 
           <Route element={<ProtectedRoute/>}>
             <Route path='/admin' element={<Administracion/>}/>
-            <Route path='/inscri' element={<Inscri/>}/>
+            <Route path='/catequesis' element={<Inscri/>}/>
             <Route path='/financiero' element={<Financiero/>}/>
           </Route>
         </Routes>

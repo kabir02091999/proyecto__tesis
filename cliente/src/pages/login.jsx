@@ -49,7 +49,8 @@ function login() {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container1">
+        <div className="login-container2">
       <form className="login-form" onSubmit={handleSubmit}>
         <h2>Iniciar Sesión</h2>
         <div className="form-group">
@@ -76,6 +77,7 @@ function login() {
           Iniciar sesión
         </button>
       </form>
+      </div>
     </div>
   );
 }

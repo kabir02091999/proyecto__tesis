@@ -1,9 +1,10 @@
 .usuarios-container {
-  display: flex;
+   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background-color: #f0f2f5;
+  /* Cambia el color de fondo aquí */
+  background-color: #e6f7ff; /* Un azul muy claro */
   min-height: 100vh;
   font-family: Arial, sans-serif;
 }

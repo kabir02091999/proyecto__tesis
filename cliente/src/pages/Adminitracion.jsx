@@ -5,7 +5,7 @@ import GetUsuarios from '../components/GetUsuarios';
 import '../css/Administracion.css';
 
 function Administracion() {
-  return (
+  return (//ojo tengo que crar un usecontes donde se reinicia formularion
     <div className="administracion-page-container">
       <PostUsuarios className="post-usuarios-top-margin" />
       <GetUsuarios />
