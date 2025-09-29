@@ -1,0 +1,140 @@
+/* --- Contenedor Principal y Título --- */
+.search-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f7f9fc;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    text-align: center;
+    color: #334e68;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* --- Formulario de Búsqueda --- */
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.ci-input {
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #c8d7e6;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+}
+
+.ci-input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.search-button {
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.search-button:disabled {
+    background-color: #9cb8d4;
+    cursor: not-allowed;
+}
+
+/* --- Mensajes de Estado --- */
+.status-message {
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.status-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.status-message.loading {
+    background-color: #cfe2ff;
+    color: #0d6efd;
+}
+
+.status-message.no-result {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* --- Panel de Resultados (Cards) --- */
+.result-panel {
+    margin-top: 30px;
+}
+
+.result-panel > h3 {
+    color: #28a745;
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+.data-card {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.data-card h4 {
+    border-bottom: 2px solid;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    font-size: 1.25em;
+    font-weight: 600;
+}
+
+/* Estilos específicos por tarjeta */
+.primary-data h4 { border-color: #007bff; color: #007bff; }
+.secondary-data h4 { border-color: #28a745; color: #28a745; }
+.tertiary-data h4 { border-color: #ffc107; color: #ffc107; }
+
+.detalle-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    padding: 5px 0;
+    border-bottom: 1px dotted #e9ecef;
+}
+
+.detalle-item strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.detalle-item span {
+    color: #555;
+    text-align: right;
+}

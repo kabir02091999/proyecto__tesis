@@ -16,7 +16,7 @@ router.get('/inscripto/:ci',authRequired, getinscript_CI)//listo probar octener 
 
 router.post('/crear-poblacion',authRequired, crearPoblacion)//listo recordar en este est proseso men agregar en la tabla de poblacion , padres , datos_poblacion
 router.get('/find-poblacion/:id',authRequired, getfindPoblacionByID)
-router.get('/getfind-poblacion/:CI'/* ,authRequired */, getfindPoblacionByCI)///ojojo
+router.get('/getfind-poblacion/:CI',authRequired, getfindPoblacionByCI)///ojojo
 
 router.post('/aprobacion',authRequired, aprobacion)
 router.get('/aprobacion/:ci',authRequired, getAprobacionByCI_Inner)// este me busca la tabla aprbacion i tre los datos de lapso y incrito
