@@ -1,8 +1,8 @@
 import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-
-import {AuthProvider} from './context/AuthContext'
+import { AuthProvider } from './context/AuthContext'
+import { PoblacionProvider } from './context/PoblacionContext' // Lo necesitamos
 
 import Login from './pages/login'
 import Inicion from './pages/Inicion'
@@ -13,19 +13,43 @@ import Inscri from './pages/inscri'
 import ProtectedRoute from './pages/protectedRoute'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // El useState(0) no se usa, lo puedes dejar o quitar.
+  const [count, setCount] = useState(0) 
 
   return (
+    // 1. AuthProvider envuelve todo, ya que la autenticación se usa en ProtectedRoute
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path='/' element={<Inicion/>}/>
-          <Route path='/login' element={<Login/>}/>
+          {/* Rutas Públicas */}
+          <Route path='/' element={<Inicion />} />
+          <Route path='/login' element={<Login />} />
 
-          <Route element={<ProtectedRoute/>}>
-            <Route path='/admin' element={<Administracion/>}/>
-            <Route path='/catequesis' element={<Inscri/>}/>
-            <Route path='/financiero' element={<Financiero/>}/>
+          {/* 2. Rutas Protegidas: ProtectedRoute actúa como layout/padre */}
+          <Route element={<ProtectedRoute />}>
+            
+            {/* 3. Las rutas hijas de ProtectedRoute DEBEN ser <Route>s directas */}
+            
+            {/* Si Administracion, Inscri y Financiero necesitan PoblacionProvider,
+               lo envolvemos en el componente final, no aquí. */}
+            <Route path='/admin' element={
+              <PoblacionProvider>
+                <Administracion />
+              </PoblacionProvider>
+            } />
+            
+            <Route path='/catequesis' element={
+              <PoblacionProvider>
+                <Inscri />
+              </PoblacionProvider>
+            } />
+            
+            <Route path='/financiero' element={
+              <PoblacionProvider>
+                <Financiero />
+              </PoblacionProvider>
+            } />
+            
           </Route>
         </Routes>
       </Router>

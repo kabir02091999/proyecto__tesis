@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import '../css/inscri.css'; 
 
+import { usePoblacion } from '../context/PoblacionContext';
+
+
 
 const LapsoRegistro = ({ onSubmit }) => (
     <form onSubmit={onSubmit} className="content-form">
@@ -27,7 +30,7 @@ const ReporteGeneral = () => (
 
 const GestionUsuarios = () => (
     <div className="content-view">
-        <h3>🧑‍💻 Gestión de Usuarios</h3>
+        <h3>🧑‍💻 Gestión de estudiantes o profesor</h3>
         <p>Formulario para crear, editar o eliminar usuarios del sistema (Administrador, Financiero, etc.).</p>
         <button>Crear Nuevo Usuario</button>
     </div>
@@ -36,26 +39,27 @@ const GestionUsuarios = () => (
 
 
 function Inscri() {
-    // Definir el estado: 'contenidoActivo' guarda qué componente se debe mostrar.
+    
     const [contenidoActivo, setContenidoActivo] = useState('lapso');
+    const { getPoblacionByCI } = usePoblacion();
 
-    // Función que se llama al hacer clic en un botón para cambiar el estado.
+   
     const handleButtonClick = (opcion) => {
         setContenidoActivo(opcion);
     };
 
-    // Función para manejar el envío del formulario (ejemplo)
+    
     const handleFormSubmit = (e) => {
         e.preventDefault();
         alert(`Formulario de ${contenidoActivo} enviado. Revisa la consola.`);
-        // **AQUÍ VA TU LÓGICA DE FETCH PARA EL BACKEND**
+        
     };
 
-    // Función para renderizar el componente activo basado en el estado
+    
     const renderContent = () => {
         switch (contenidoActivo) {
             case 'lapso':
-                // Pasamos la función de manejo de envío al componente LapsoRegistro
+                
                 return <LapsoRegistro onSubmit={handleFormSubmit} />;
             case 'reporte':
                 return <ReporteGeneral />;

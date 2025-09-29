@@ -7,19 +7,19 @@ import { RegistroLapso,GetLapso, getfindPoblacionByID, crearPoblacion ,getfindPo
 
 const router = Router();
 
-router.post('/Registro-Lapso', RegistroLapso)
-router.get('/get-lapso', GetLapso) 
+router.post('/Registro-Lapso',authRequired, RegistroLapso) //ojo en el fron se tiene que enviar la fecha en formato ISO 8601 "YYYY-MM-DD"
+router.get('/get-lapso',authRequired, GetLapso) 
 
-router.post('/inscripto', inscripto)//listo
-router.get('/inscripto/:ci', getinscript_CI)//listo probar octener lo inscrito
+router.post('/inscripto',authRequired, inscripto)//listo
+router.get('/inscripto/:ci',authRequired, getinscript_CI)//listo probar octener lo inscrito
 
 
-router.post('/crear-poblacion', crearPoblacion)//listo recordar en este est proseso men agregar en la tabla de poblacion , padres , datos_poblacion
-router.get('/find-poblacion/:id', getfindPoblacionByID)
-router.get('/getfind-poblacion/:CI', getfindPoblacionByCI)///ojojo
+router.post('/crear-poblacion',authRequired, crearPoblacion)//listo recordar en este est proseso men agregar en la tabla de poblacion , padres , datos_poblacion
+router.get('/find-poblacion/:id',authRequired, getfindPoblacionByID)
+router.get('/getfind-poblacion/:CI',authRequired, getfindPoblacionByCI)///ojojo
 
-router.post('/aprobacion', aprobacion)
-router.get('/aprobacion/:ci', getAprobacionByCI_Inner)// este me busca la tabla aprbacion i tre los datos de lapso y incrito
+router.post('/aprobacion',authRequired, aprobacion)
+router.get('/aprobacion/:ci',authRequired, getAprobacionByCI_Inner)// este me busca la tabla aprbacion i tre los datos de lapso y incrito
 
 //para la crear-poblacion
  /* {

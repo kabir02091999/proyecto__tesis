@@ -43,6 +43,14 @@ export const verifyToken = async () => {
     return api.post(`/verifyToken`);
 };
 
+export const getPoblacion = async () => {
+    return api.get(`/find-poblacion`);
+};
+
+export const createPoblacion = async (poblacionData) => {
+    return api.post(`/crear-poblacion`, poblacionData);
+};
+
 // Al cargar la aplicación, verificamos si hay un token en el localStorage
 // y lo configuramos en los encabezados de Axios.
 const tokenFromStorage = localStorage.getItem('token');
