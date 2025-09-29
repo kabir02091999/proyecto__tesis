@@ -3,6 +3,10 @@ import '../css/inscri.css';
 
 import { usePoblacion } from '../context/PoblacionContext';
 
+// Componentes para cada sección
+
+import GetPoblacion from '../components/GetPoblacion';
+
 
 
 const LapsoRegistro = ({ onSubmit }) => (
@@ -99,10 +103,11 @@ function Inscri() {
                 </button>
             </div>
             
-            {/* --- Contenido Dinámico --- */}
+            
             <div className="dynamic-content">
                 {renderContent()}
             </div>
+            <GetPoblacion/>
         </div>
     );
 }

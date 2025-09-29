@@ -43,8 +43,6 @@ function login() {
 
     } catch (error) {
       console.error("Error en el inicio de sesión:", error);
-      // Aquí puedes mostrar un mensaje de error al usuario
-      // Por ejemplo, con un estado local
     }
   };
 
@@ -66,7 +64,7 @@ function login() {
         <div className="form-group">
           <label htmlFor="contrasena">Contraseña</label>
           <input
-            type="password" // Cambié el tipo a 'password' por seguridad
+            type="password" 
             id="contrasena"
             value={contrasena}
             onChange={(e) => setContrasena(e.target.value)}

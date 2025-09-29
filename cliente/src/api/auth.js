@@ -43,8 +43,8 @@ export const verifyToken = async () => {
     return api.post(`/verifyToken`);
 };
 
-export const getPoblacion = async () => {
-    return api.get(`/find-poblacion`);
+export const getPoblacion = async (CI) => {
+    return api.get('/inscripcion/getfind-poblacion/' + CI);
 };
 
 export const createPoblacion = async (poblacionData) => {
