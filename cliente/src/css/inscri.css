@@ -1,0 +1,102 @@
+/* Estilos del Contenedor Principal */
+.page-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #343a40;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+/* --- Estilos del Menú de Botones --- */
+.menu-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.menu-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid #007bff;
+    background-color: #fff;
+    color: #007bff;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s, transform 0.1s;
+}
+
+.menu-buttons button:hover {
+    background-color: #e2f0ff;
+}
+
+/* Estilo para el botón ACTIVO */
+.menu-buttons button.active {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.5);
+    transform: translateY(-1px); /* Efecto 3D ligero */
+}
+
+/* --- Estilos del Contenido Dinámico --- */
+.dynamic-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    min-height: 200px; /* Para que no se colapse */
+}
+
+/* Estilos internos para los contenidos (formularios y vistas) */
+.content-form, .content-view {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.content-form h3, .content-view h3 {
+    color: #495057;
+    margin-bottom: 20px;
+}
+
+.content-form label {
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.content-form input[type="date"],
+.content-form input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content-form button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.content-form button[type="submit"]:hover {
+    background-color: #218838;
+}
