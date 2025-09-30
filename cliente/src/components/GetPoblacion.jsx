@@ -39,7 +39,7 @@ function GetPoblacion() {
             await getPoblacionByCI(ci);
             
         } catch (err) {
-            // Solo se llega aquí si el contexto lanza un error grave (no un 404)
+            
             setError('Error grave al conectar con el servidor.'); 
         } finally {
             setLoading(false); 

@@ -56,13 +56,17 @@ export const PoblacionProvider = ({ children }) => {
         setLoading(false);
     };
 
+    const createPoblacion = async (poblacionData) => {
+        console.log(poblacionData);
+    }
+
 
     useEffect(() => {
         console.log("poblacion en context " + JSON.stringify(poblacion))
     }, [poblacion]);
 
     return (
-        <PoblacionContext.Provider value={{ poblacion, loading, error, getPoblacionByCI }}>
+        <PoblacionContext.Provider value={{ poblacion, loading, error, getPoblacionByCI, createPoblacion}}>
             {children}
         </PoblacionContext.Provider>
     );

@@ -4,7 +4,7 @@ import '../css/inscri.css';
 import { usePoblacion } from '../context/PoblacionContext';
 
 // Componentes para cada sección
-
+import CrearPoblacion from '../components/CrearPoblacion';
 import GetPoblacion from '../components/GetPoblacion';
 
 
@@ -108,6 +108,7 @@ function Inscri() {
                 {renderContent()}
             </div>
             <GetPoblacion/>
+            <CrearPoblacion/>
         </div>
     );
 }
