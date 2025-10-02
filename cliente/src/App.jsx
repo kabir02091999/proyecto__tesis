@@ -10,6 +10,7 @@ import Administracion from './pages/adminitracion'
 import Financiero from './pages/financiero'
 import Inscri from './pages/inscri'
 import Buscar_poblacion from './pages/buscar_poblacion'
+import Crear_poblacion from './pages/crear_poblacion'
 
 import ProtectedRoute from './pages/protectedRoute'
 
@@ -45,6 +46,10 @@ function App() {
             <Route path='/catequesis/buscar-poblacion' element={
               <PoblacionProvider>
                 <Buscar_poblacion />
+              </PoblacionProvider>}/>
+              <Route path='/catequesis/crear-poblacion' element={
+              <PoblacionProvider>
+                <Crear_poblacion />
               </PoblacionProvider>}/>
             
             <Route path='/financiero' element={

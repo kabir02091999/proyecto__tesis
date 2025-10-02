@@ -13,7 +13,7 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
     // Función que se ejecuta al hacer clic en la Opción 1
     const handleOpcionUno = () => {
         console.log("Mensaje de la Opción 1: ¡Navegando a la creación!");
-        // Aquí podrías llamar a onOptionSelect('crear') si usaras props
+        navigate('/catequesis/crear-poblacion');
     };
     
     // Función que se ejecuta al hacer clic en la Opción 2
