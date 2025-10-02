@@ -9,6 +9,7 @@ import Inicion from './pages/Inicion'
 import Administracion from './pages/adminitracion'
 import Financiero from './pages/financiero'
 import Inscri from './pages/inscri'
+import Buscar_poblacion from './pages/buscar_poblacion'
 
 import ProtectedRoute from './pages/protectedRoute'
 
@@ -28,10 +29,7 @@ function App() {
           {/* 2. Rutas Protegidas: ProtectedRoute actúa como layout/padre */}
           <Route element={<ProtectedRoute />}>
             
-            {/* 3. Las rutas hijas de ProtectedRoute DEBEN ser <Route>s directas */}
             
-            {/* Si Administracion, Inscri y Financiero necesitan PoblacionProvider,
-               lo envolvemos en el componente final, no aquí. */}
             <Route path='/admin' element={
               <PoblacionProvider>
                 <Administracion />
@@ -43,6 +41,11 @@ function App() {
                 <Inscri />
               </PoblacionProvider>
             } />
+
+            <Route path='/catequesis/buscar-poblacion' element={
+              <PoblacionProvider>
+                <Buscar_poblacion />
+              </PoblacionProvider>}/>
             
             <Route path='/financiero' element={
               <PoblacionProvider>

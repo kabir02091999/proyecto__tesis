@@ -79,7 +79,7 @@
     color: #666;
     display: block;
     margin-bottom: 5px;
-    grid-column: span 2; /* Las etiquetas ocupan todo el ancho */
+    grid-column: span 2; /* Las etiquetas ocupan todo el ancho por defecto */
 }
 
 .poblacion-form input,
@@ -91,15 +91,71 @@
     box-sizing: border-box;
     font-size: 15px;
     margin-bottom: 10px;
-    grid-column: span 2; /* Los inputs ocupan todo el ancho */
+    grid-column: span 2; /* Los inputs ocupan todo el ancho por defecto */
 }
 
-/* Ajuste específico para la pestaña de padres donde hay más campos en una fila */
+/* Ajuste específico para la pestaña de padres: todo es de 1 columna */
 .padres-tab label, 
 .padres-tab input,
-.padres-tab select {
-    grid-column: span 1; /* Dividir en 2 columnas */
+.padres-tab select,
+.padres-tab .phone-input-group,
+.padres-tab .full-width-label {
+    grid-column: span 1; /* Divide los campos en 2 columnas */
 }
+
+/* CORRECCIÓN CLAVE: Asegura que los campos que siguen a un <h4> vuelvan a la primera columna */
+.padres-tab h4 + label,
+.padres-tab h4 + .phone-input-group {
+    grid-column: 1 / 2;
+}
+
+
+.phone-input-group {
+    /* Usamos Flexbox para ordenar el contenido verticalmente: Label encima del Wrapper */
+    display: flex; 
+    flex-direction: column; 
+    gap: 0;
+    margin-bottom: 20px; 
+}
+
+/* 2. La etiqueta (Label) */
+.phone-input-group .full-width-label {
+    width: 100%;
+    grid-column: unset; 
+    display: block; 
+    margin-bottom: 5px; /* Separación con los inputs */
+}
+
+/* 3. Contenedor (Wrapper) para los inputs de teléfono */
+.phone-inputs-wrapper {
+    width: 100%;
+    display: flex; 
+    flex-direction: row; 
+    gap: 5px; /* Espacio entre el prefijo y el número */
+    align-items: center; 
+}
+
+/* 4. Selector de Prefijo (30%) */
+.phone-inputs-wrapper .phone-prefix {
+    /* Ocupa el 30% fijo del espacio del wrapper */
+    flex: 0 0 30%; 
+}
+
+/* 5. Input del Número (70%) */
+.phone-inputs-wrapper .phone-number {
+    /* Ocupa el 70% restante */
+    flex: 1; 
+}
+
+/* 6. Inputs y Selects internos (Necesitan ancho 100% de su contenedor 30%/70%) */
+.phone-inputs-wrapper select,
+.phone-inputs-wrapper input[type="text"] {
+    width: 100%;
+    margin-bottom: 0; 
+    grid-column: unset !important; 
+}
+
+/* --- Botones y Mensajes --- */
 
 .tab-content button {
     padding: 10px 20px;
@@ -156,7 +212,7 @@
     color: #721c24;
 }
 
-/* Estilos para columnas dentro de una sola pestaña */
+/* Estilos para .row (ejemplo: grado/turno en pestaña personales) */
 .row {
     display: flex;
     gap: 20px;
@@ -167,9 +223,9 @@
     flex: 1;
 }
 .row > div label {
-    grid-column: span 1;
+    grid-column: unset; 
 }
 .row > div input,
 .row > div select {
-    grid-column: span 1;
+    grid-column: unset; 
 }

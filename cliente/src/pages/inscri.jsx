@@ -3,51 +3,20 @@ import '../css/inscri.css';
 
 import { usePoblacion } from '../context/PoblacionContext';
 
-// Componentes para cada sección
+// Importa solo los componentes definidos originalmente (CrearPoblacion y GetPoblacion están fuera del flujo de renderContent)
 import CrearPoblacion from '../components/CrearPoblacion';
 import GetPoblacion from '../components/GetPoblacion';
 
+import Nav_Inscricion from '../components/inscricion/Nav_Inscricion';
 
-
-const LapsoRegistro = ({ onSubmit }) => (
-    <form onSubmit={onSubmit} className="content-form">
-        <h3>📅 Registrar Lapso Académico</h3>
-        <label htmlFor="fecha_inicial">Fecha Inicial:</label>
-        <input type="date" id="fecha_inicial" name="fecha_inicial" required />
-        
-        <label htmlFor="fecha_final">Fecha Final:</label>
-        <input type="date" id="fecha_final" name="fecha_final" required />
-        
-        <button type="submit">Guardar Lapso</button>
-    </form>
-);
-
-
-const ReporteGeneral = () => (
-    <div className="content-view">
-        <h3>📊 Vista de Reporte General</h3>
-        <p>Aquí se cargará un gráfico o una tabla resumen de todos los estudiantes.</p>
-        <button>Generar PDF</button>
-    </div>
-);
-
-
-const GestionUsuarios = () => (
-    <div className="content-view">
-        <h3>🧑‍💻 Gestión de estudiantes o profesor</h3>
-        <p>Formulario para crear, editar o eliminar usuarios del sistema (Administrador, Financiero, etc.).</p>
-        <button>Crear Nuevo Usuario</button>
-    </div>
-);
-
-
+// --- Componente Principal ---
 
 function Inscri() {
     
     const [contenidoActivo, setContenidoActivo] = useState('lapso');
-    const { getPoblacionByCI } = usePoblacion();
+    const { getPoblacionByCI } = usePoblacion(); // Mantenemos la desestructuración por si la necesitas más adelante
 
-   
+    
     const handleButtonClick = (opcion) => {
         setContenidoActivo(opcion);
     };
@@ -56,59 +25,36 @@ function Inscri() {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         alert(`Formulario de ${contenidoActivo} enviado. Revisa la consola.`);
-        
     };
 
     
-    const renderContent = () => {
+   /*  const renderContent = () => {
         switch (contenidoActivo) {
             case 'lapso':
-                
+                // Nota: Usamos LapsoRegistro aquí
                 return <LapsoRegistro onSubmit={handleFormSubmit} />;
             case 'reporte':
+                // Nota: Usamos ReporteGeneral aquí
                 return <ReporteGeneral />;
             case 'usuarios':
+                // Nota: Usamos GestionUsuarios aquí
                 return <GestionUsuarios />;
             default:
-                return <div>Selecciona una opción en el menú superior.</div>;
+                return <div>Selecciona una opción en el menú lateral.</div>;
         }
-    };
+    }; */
 
     return (
-        <div className="page-container">
-            <h1>Panel de Opciones Administrativas</h1>
-            
-            {/* --- Menú de Botones --- */}
-            <div className="menu-buttons">
-                <button 
-                    onClick={() => handleButtonClick('lapso')}
-                    // Clase condicional para resaltar el botón activo
-                    className={contenidoActivo === 'lapso' ? 'active' : ''}
-                >
-                    Registro de Lapso
-                </button>
+        
+        <div className="admin-layout"> 
                 
-                <button 
-                    onClick={() => handleButtonClick('reporte')}
-                    className={contenidoActivo === 'reporte' ? 'active' : ''}
-                >
-                    Ver Reportes
-                </button>
+                
 
-                <button 
-                    onClick={() => handleButtonClick('usuarios')}
-                    className={contenidoActivo === 'usuarios' ? 'active' : ''}
-                >
-                    Administrar Usuarios
-                </button>
-            </div>
+            <Nav_Inscricion onOptionSelect={handleButtonClick} />
             
-            
-            <div className="dynamic-content">
-                {renderContent()}
-            </div>
             <GetPoblacion/>
-            <CrearPoblacion/>
+            {/* <CrearPoblacion/> */}
+            
         </div>
     );
 }

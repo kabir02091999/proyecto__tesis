@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import '../css/CrearPoblacion.css'; 
-import { usePoblacion } from '../context/PoblacionContext'; // Asumo que tienes una función para crear
+import { usePoblacion } from '../context/PoblacionContext';
+
 
 function CrearPoblacion() {
-    const { createPoblacion } = usePoblacion(); // Asume que tienes esta función en tu Context
+    const { createPoblacion } = usePoblacion();
     
-    // Estado para la navegación entre pestañas (tabs)
     const [activeTab, setActiveTab] = useState('basicos');
     
-    // Estados para cada sección de datos
+    // Opciones para el prefijo telefónico
+    const phonePrefixes = ['0414', '0424', '0412', '0416', '0426'];
+    
+    // 1. ESTADO DE DATOS BÁSICOS
     const [datosBasicos, setDatosBasicos] = useState({
         nombre: '',
         apellidos: '',
         ci: '',
-        tipoPoblacion: 'estudiante' // Valor por defecto
+        tipoPoblacion: 'estudiante'
     });
 
+    // 2. ESTADO DE DATOS PERSONALES
     const [datosPersonales, setDatosPersonales] = useState({
         lugar_nacimiento: '',
         fecha_nacimiento: '',
@@ -24,14 +28,23 @@ function CrearPoblacion() {
         direccion_habitacion: '',
         instituto: '',
         grado: '',
-        turno: 'mañana' // Valor por defecto
+        turno: 'mañana'
     });
 
+    // 3. ESTADO DE DATOS DE PADRES (separando prefijos/números)
     const [datosPadres, setDatosPadres] = useState({
-        N_M: '', ci_M: '', NR_M: '', ocupacion_M: '',
-        N_P: '', ci_P: '', NR_P: '', ocupacion_P: '',
-        casados: 'no', // Opciones: 'iglesia', 'civil', 'no'
-        viven_junto: 1,
+        N_M: '', ci_M: '', 
+        NR_M_prefix: phonePrefixes[0], 
+        NR_M_number: '', 
+        ocupacion_M: '',
+        
+        N_P: '', ci_P: '', 
+        NR_P_prefix: phonePrefixes[0], 
+        NR_P_number: '', 
+        ocupacion_P: '',
+        
+        casados: 'no', 
+        viven_junto: 0, 
         NR_Her: 0,
         edad: 0
     });
@@ -40,23 +53,28 @@ function CrearPoblacion() {
     const [submitError, setSubmitError] = useState(null);
     const [success, setSuccess] = useState(false);
 
-    // Función genérica para manejar cambios en los datos básicos
+    // Funciones de manejo de cambios (Basicos y Personales sin cambios)
     const handleChangeBasicos = (e) => {
         const { name, value } = e.target;
         setDatosBasicos(prev => ({ ...prev, [name]: value }));
     };
 
-    // Función genérica para manejar cambios en datos personales
     const handleChangePersonales = (e) => {
         const { name, value } = e.target;
         setDatosPersonales(prev => ({ ...prev, [name]: value }));
     };
     
-    // Función genérica para manejar cambios en datos de padres
+    // FUNCIÓN DE CAMBIO MODIFICADA
     const handleChangePadres = (e) => {
         const { name, value } = e.target;
-        // Convertir a número si es necesario para campos específicos
-        const finalValue = ['viven_junto', 'NR_Her', 'edad'].includes(name) ? Number(value) : value;
+        let finalValue = value;
+
+        if (name === 'viven_junto') {
+            finalValue = value === 'si' ? 1 : 0;
+        } else if (['NR_Her', 'edad'].includes(name)) {
+            finalValue = Number(value);
+        }
+        
         setDatosPadres(prev => ({ ...prev, [name]: finalValue }));
     };
 
@@ -66,27 +84,50 @@ function CrearPoblacion() {
         setSubmitError(null);
         setSuccess(false);
 
-        // 1. Ensamblar el objeto final con la estructura requerida por el backend
+        // --- LÓGICA CLAVE: Reconstruir los números de teléfono antes de enviar ---
+        const NR_M = `${datosPadres.NR_M_prefix}${datosPadres.NR_M_number}`;
+        const NR_P = `${datosPadres.NR_P_prefix}${datosPadres.NR_P_number}`;
+
+        // Crear una copia del estado de padres y eliminar los campos separados
+        const { 
+            NR_M_prefix, NR_M_number, 
+            NR_P_prefix, NR_P_number, 
+            ...padresToSave 
+        } = datosPadres;
+
         const nuevaPoblacion = {
             ...datosBasicos,
             datos_poblacion: datosPersonales,
-            padres: datosPadres,
-            // NOTA: 'id', 'ID', y 'ci' dentro de sub-objetos no se envían
-            // porque deben ser manejados por el backend (auto-incremento o claves foráneas)
+            padres: { 
+                ...padresToSave, 
+                NR_M, // Añadir el número de madre completo
+                NR_P  // Añadir el número de padre completo
+            }, 
         };
+        // ----------------------------------------------------------------------
         
-        console.log("Datos a enviar:", nuevaPoblacion);
-
         try {
-            // Llama a la función del contexto. Asume que toma el objeto ensamblado.
             await createPoblacion(nuevaPoblacion);
             
             setSuccess(true);
-            // Opcional: Limpiar los formularios después del éxito
-            // setDatosBasicos({ nombre: '', apellidos: '', ci: '', tipoPoblacion: 'estudiante' });
-            // ... limpiar el resto
+            
+            // Resetear el formulario después de un envío exitoso
+            setDatosBasicos({ nombre: '', apellidos: '', ci: '', tipoPoblacion: 'estudiante' });
+            setDatosPersonales({
+                lugar_nacimiento: '', fecha_nacimiento: '', lugar_bautizo: '', fecha_bautizo: '', 
+                direccion_habitacion: '', instituto: '', grado: '', turno: 'mañana'
+            });
+            // Resetear el estado de Padres al estado inicial modificado
+            setDatosPadres({
+                N_M: '', ci_M: '', NR_M_prefix: phonePrefixes[0], NR_M_number: '', ocupacion_M: '',
+                N_P: '', ci_P: '', NR_P_prefix: phonePrefixes[0], NR_P_number: '', ocupacion_P: '',
+                casados: 'no', viven_junto: 0, NR_Her: 0, edad: 0
+            });
+            setActiveTab('basicos');
+            
         } catch (error) {
-            setSubmitError(error.message || 'Error al crear la población. Verifique los datos.');
+            const errorMsg = error.response?.data?.message || error.message || 'Error al crear la población. Verifique los datos.';
+            setSubmitError(errorMsg);
         } finally {
             setLoading(false);
         }
@@ -112,8 +153,6 @@ function CrearPoblacion() {
                         <select name="tipoPoblacion" value={datosBasicos.tipoPoblacion} onChange={handleChangeBasicos} required>
                             <option value="estudiante">Estudiante</option>
                             <option value="profesor">Profesor</option>
-                            <option value="catequista">Catequista</option>
-                            <option value="otro">Otro</option>
                         </select>
 
                         <button type="button" onClick={() => setActiveTab('personales')}>Siguiente (Datos Personales)</button>
@@ -151,7 +190,6 @@ function CrearPoblacion() {
                                 <select name="turno" value={datosPersonales.turno} onChange={handleChangePersonales}>
                                     <option value="mañana">Mañana</option>
                                     <option value="tarde">Tarde</option>
-                                    <option value="noche">Noche</option>
                                 </select>
                             </div>
                         </div>
@@ -171,8 +209,34 @@ function CrearPoblacion() {
                         <input type="text" name="N_M" value={datosPadres.N_M} onChange={handleChangePadres} />
                         <label>CI Madre:</label>
                         <input type="text" name="ci_M" value={datosPadres.ci_M} onChange={handleChangePadres} />
-                        <label>Teléfono Madre:</label>
-                        <input type="text" name="NR_M" value={datosPadres.NR_M} onChange={handleChangePadres} />
+                        
+                        {/* CAMPO TELEFÓNICO DE MADRE - CORREGIDO CON WRAPPER */}
+                        {/* IMPORTANTE: QUITAMOS LA CLASE 'row' para que el CSS de phone-input-group funcione bien */}
+                        <div className="phone-input-group">
+                            <label className="full-width-label">Teléfono Madre:</label>
+                            
+                            {/* NUEVO CONTENEDOR PARA LA ALINEACIÓN HORIZONTAL */}
+                            <div className="phone-inputs-wrapper"> 
+                                <div className="phone-prefix">
+                                    <select name="NR_M_prefix" value={datosPadres.NR_M_prefix} onChange={handleChangePadres}>
+                                        {phonePrefixes.map(p => (
+                                            <option key={p} value={p}>{p}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="phone-number">
+                                    <input 
+                                        type="text" 
+                                        name="NR_M_number" 
+                                        value={datosPadres.NR_M_number} 
+                                        onChange={handleChangePadres}
+                                        placeholder="#######"
+                                        maxLength="7"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        
                         <label>Ocupación Madre:</label>
                         <input type="text" name="ocupacion_M" value={datosPadres.ocupacion_M} onChange={handleChangePadres} />
 
@@ -182,8 +246,34 @@ function CrearPoblacion() {
                         <input type="text" name="N_P" value={datosPadres.N_P} onChange={handleChangePadres} />
                         <label>CI Padre:</label>
                         <input type="text" name="ci_P" value={datosPadres.ci_P} onChange={handleChangePadres} />
-                        <label>Teléfono Padre:</label>
-                        <input type="text" name="NR_P" value={datosPadres.NR_P} onChange={handleChangePadres} />
+                        
+                        {/* CAMPO TELEFÓNICO DE PADRE - CORREGIDO CON WRAPPER */}
+                        {/* IMPORTANTE: QUITAMOS LA CLASE 'row' para que el CSS de phone-input-group funcione bien */}
+                        <div className="phone-input-group">
+                            <label className="full-width-label">Teléfono Padre:</label>
+                            
+                            {/* NUEVO CONTENEDOR PARA LA ALINEACIÓN HORIZONTAL */}
+                            <div className="phone-inputs-wrapper">
+                                <div className="phone-prefix">
+                                    <select name="NR_P_prefix" value={datosPadres.NR_P_prefix} onChange={handleChangePadres}>
+                                        {phonePrefixes.map(p => (
+                                            <option key={p} value={p}>{p}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="phone-number">
+                                    <input 
+                                        type="text" 
+                                        name="NR_P_number" 
+                                        value={datosPadres.NR_P_number} 
+                                        onChange={handleChangePadres}
+                                        placeholder="#######"
+                                        maxLength="7"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
                         <label>Ocupación Padre:</label>
                         <input type="text" name="ocupacion_P" value={datosPadres.ocupacion_P} onChange={handleChangePadres} />
 
@@ -195,8 +285,17 @@ function CrearPoblacion() {
                             <option value="civil">Vía Civil</option>
                             <option value="iglesia">Vía Eclesiástica</option>
                         </select>
-                        <label>¿Viven Juntos? (1=Sí, 0=No):</label>
-                        <input type="number" name="viven_junto" value={datosPadres.viven_junto} onChange={handleChangePadres} min="0" max="1" />
+                        
+                        <label>¿Viven Juntos?:</label>
+                        <select 
+                            name="viven_junto" 
+                            value={datosPadres.viven_junto === 1 ? 'si' : 'no'} 
+                            onChange={handleChangePadres}
+                        >
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+
                         <label>Número de Hermanos:</label>
                         <input type="number" name="NR_Her" value={datosPadres.NR_Her} onChange={handleChangePadres} min="0" />
                         <label>Edad Promedio (Opcional):</label>

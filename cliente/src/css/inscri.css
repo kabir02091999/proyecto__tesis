@@ -1,102 +1,74 @@
-/* Estilos del Contenedor Principal */
-.page-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* --- Estilos para el Layout del Panel Administrativo --- */
+.admin-layout {
+    display: flex; /* Habilita el layout de dos columnas */
+    min-height: 100vh; /* Ocupa al menos toda la altura de la pantalla */
+    width: 100%;
 }
 
-h1 {
-    text-align: center;
-    color: #343a40;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 10px;
-}
-
-/* --- Estilos del Menú de Botones --- */
-.menu-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.menu-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    border: 2px solid #007bff;
-    background-color: #fff;
-    color: #007bff;
-    border-radius: 6px;
-    transition: background-color 0.3s, color 0.3s, transform 0.1s;
-}
-
-.menu-buttons button:hover {
-    background-color: #e2f0ff;
-}
-
-/* Estilo para el botón ACTIVO */
-.menu-buttons button.active {
-    background-color: #007bff;
+/* --- Estilos para la Barra Lateral (Menú Selector) --- */
+.sidebar {
+    width: 250px; /* Ancho fijo para el menú */
+    background-color: #333; /* Color oscuro para el fondo */
     color: white;
-    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.5);
-    transform: translateY(-1px); /* Efecto 3D ligero */
-}
-
-/* --- Estilos del Contenido Dinámico --- */
-.dynamic-content {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    min-height: 200px; /* Para que no se colapse */
-}
-
-/* Estilos internos para los contenidos (formularios y vistas) */
-.content-form, .content-view {
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 15px;
 }
 
-.content-form h3, .content-view h3 {
-    color: #495057;
-    margin-bottom: 20px;
+.sidebar h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.5em;
+    color: #f0f0f0;
 }
 
-.content-form label {
-    font-weight: 600;
-    color: #6c757d;
+.menu-list {
+    display: flex;
+    flex-direction: column; /* Apila los botones verticalmente */
+    gap: 10px;
 }
 
-.content-form input[type="date"],
-.content-form input[type="text"] {
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.content-form button[type="submit"] {
-    background-color: #28a745;
+.menu-list button {
+    background-color: transparent;
     color: white;
-    padding: 10px;
     border: none;
-    border-radius: 4px;
+    padding: 12px 15px;
+    text-align: left;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    transition: background-color 0.2s;
+    font-size: 1em;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 4px;
 }
 
-.content-form button[type="submit"]:hover {
-    background-color: #218838;
+.menu-list button:hover {
+    background-color: #555; /* Oscurece al pasar el ratón */
+}
+
+.menu-list button.active {
+    background-color: #007bff; /* Color de resaltado para el botón activo */
+    font-weight: bold;
+    color: white;
+}
+
+/* --- Estilos para el Contenido Principal --- */
+.main-content {
+    flex-grow: 1; /* Ocupa el resto del espacio horizontal */
+    padding: 20px 40px;
+    background-color: #f9f9f9;
+}
+
+.dynamic-content {
+    /* Estilos para el área donde se renderiza el formulario/vista */
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para el nuevo formulario de CI (opcional) */
+.ci-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
 }
