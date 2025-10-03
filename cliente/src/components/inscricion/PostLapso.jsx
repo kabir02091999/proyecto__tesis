@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { PostFechaLapso } from '../../api/auth';
+
 import '../../css/PostLapso.css'; 
 
 function PostLapso() {
@@ -21,6 +23,7 @@ function PostLapso() {
 
         // Muestra los datos capturados en la consola
         console.log('✅ Datos del Lapso a enviar:', datosLapso);
+        PostFechaLapso(datosLapso);
 
         // 🚨 Aquí iría la llamada a tu API o backend (ej: axios.post('/api/lapso', datosLapso))
         

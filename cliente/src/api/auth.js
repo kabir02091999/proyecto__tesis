@@ -51,6 +51,10 @@ export const createPoblacion = async (poblacionData) => {
     return api.post(`/crear-poblacion`, poblacionData);
 };
 
+export const PostFechaLapso = async (lapsoData) => {
+    return api.post(`/inscripcion/Registro-Lapso`, lapsoData);
+};
+
 // Al cargar la aplicación, verificamos si hay un token en el localStorage
 // y lo configuramos en los encabezados de Axios.
 const tokenFromStorage = localStorage.getItem('token');

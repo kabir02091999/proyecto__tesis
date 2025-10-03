@@ -7,7 +7,7 @@ import { RegistroLapso,GetLapso, getfindPoblacionByID, crearPoblacion ,getfindPo
 
 const router = Router();
 
-router.post('/Registro-Lapso',authRequired, RegistroLapso) //ojo en el fron se tiene que enviar la fecha en formato ISO 8601 "YYYY-MM-DD"
+router.post('/Registro-Lapso',authRequired, RegistroLapso) //ojo en el fron se tiene que enviar la fecha en formato ISO 8601 "YYYY-MM-DD" ya esta listo jajajajajja
 router.get('/get-lapso',authRequired, GetLapso) 
 
 router.post('/inscripto',authRequired, inscripto)//listo
