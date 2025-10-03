@@ -5,18 +5,18 @@ import '../../css/PostLapso.css';
 function PostLapso() {
     
     // 1. Variables de estado para almacenar los valores de los inputs
-    const [nombre, setNombre] = useState('');
-    const [fechaInicio, setFechaInicio] = useState('');
-    const [fechaFin, setFechaFin] = useState('');
+    const [tipo_inscripcion, settipo_inscripcion] = useState('');
+    const [inicio, setinicio] = useState('');
+    const [fin, setfin] = useState('');
 
     // 2. Función para manejar el envío del formulario
     const handleSubmit = (e) => {
         e.preventDefault(); // Detiene la recarga de la página
 
         const datosLapso = {
-            nombre,
-            fechaInicio,
-            fechaFin,
+            tipo_inscripcion,
+            inicio,
+            fin,
         };
 
         // Muestra los datos capturados en la consola
@@ -25,9 +25,9 @@ function PostLapso() {
         // 🚨 Aquí iría la llamada a tu API o backend (ej: axios.post('/api/lapso', datosLapso))
         
         // Opcional: Limpiar el formulario después de un envío exitoso
-        setNombre('');
-        setFechaInicio('');
-        setFechaFin('');
+        settipo_inscripcion('');
+        setinicio('');
+        setfin('');
     };
 
     return (
@@ -41,8 +41,8 @@ function PostLapso() {
                 <input 
                     type="text" 
                     placeholder="Nombre del lapso (Ej: 2024-II)" 
-                    value={nombre} // Vincula el valor al estado 'nombre'
-                    onChange={(e) => setNombre(e.target.value)} // Actualiza el estado al escribir
+                    value={tipo_inscripcion} // Vincula el valor al estado 'tipo_inscripcion'
+                    onChange={(e) => settipo_inscripcion(e.target.value)} // Actualiza el estado al escribir
                     required
                 />
                 
@@ -50,8 +50,8 @@ function PostLapso() {
                 <input 
                     type="date" 
                     placeholder="Fecha de inicio"
-                    value={fechaInicio}
-                    onChange={(e) => setFechaInicio(e.target.value)}
+                    value={inicio}
+                    onChange={(e) => setinicio(e.target.value)}
                     required
                 />
                 
@@ -59,8 +59,8 @@ function PostLapso() {
                 <input 
                     type="date" 
                     placeholder="Fecha de fin"
-                    value={fechaFin}
-                    onChange={(e) => setFechaFin(e.target.value)}
+                    value={fin}
+                    onChange={(e) => setfin(e.target.value)}
                     required
                 />
                 
