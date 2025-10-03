@@ -21,29 +21,6 @@ function Inscri() {
         setContenidoActivo(opcion);
     };
 
-    
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        alert(`Formulario de ${contenidoActivo} enviado. Revisa la consola.`);
-    };
-
-    
-   /*  const renderContent = () => {
-        switch (contenidoActivo) {
-            case 'lapso':
-                // Nota: Usamos LapsoRegistro aquí
-                return <LapsoRegistro onSubmit={handleFormSubmit} />;
-            case 'reporte':
-                // Nota: Usamos ReporteGeneral aquí
-                return <ReporteGeneral />;
-            case 'usuarios':
-                // Nota: Usamos GestionUsuarios aquí
-                return <GestionUsuarios />;
-            default:
-                return <div>Selecciona una opción en el menú lateral.</div>;
-        }
-    }; */
-
     return (
         
         <div className="admin-layout"> 

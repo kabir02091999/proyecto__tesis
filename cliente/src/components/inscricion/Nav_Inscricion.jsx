@@ -27,6 +27,11 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
         navigate('/catequesis/buscar-poblacion');
     };
 
+    const handleOpciontres = () => {
+        console.log("Mensaje de la Opción 3: ¡Navegando a la búsqueda!");
+        navigate('/catequesis/crear-lapso');
+    }
+
     return (
         <div className="nav-inscricion-container">
             <h4 className="nav-title">Gestión de Población</h4>
@@ -46,6 +51,13 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
                     className="nav-item-button"
                 >
                     ➕ Crear Nuevo Registro de estudiante 
+                </button>
+
+                <button 
+                    onClick={handleOpciontres}
+                    className="nav-item-button"
+                >
+                    ➕ Crear Nuevo lapso 
                 </button>
                 
                 {/* Opción 2: Buscar */}

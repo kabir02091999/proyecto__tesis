@@ -11,6 +11,7 @@ import Financiero from './pages/financiero'
 import Inscri from './pages/inscri'
 import Buscar_poblacion from './pages/buscar_poblacion'
 import Crear_poblacion from './pages/crear_poblacion'
+import Crear_lapso from './pages/Crear_lapso'
 
 import ProtectedRoute from './pages/protectedRoute'
 
@@ -50,6 +51,11 @@ function App() {
               <Route path='/catequesis/crear-poblacion' element={
               <PoblacionProvider>
                 <Crear_poblacion />
+              </PoblacionProvider>}/>
+
+              <Route path='/catequesis/crear-lapso' element={
+              <PoblacionProvider>
+                <Crear_lapso />
               </PoblacionProvider>}/>
             
             <Route path='/financiero' element={
