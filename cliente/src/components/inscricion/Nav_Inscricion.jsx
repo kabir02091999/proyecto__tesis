@@ -10,13 +10,18 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
 
     const navigate = useNavigate();
     
-    // Función que se ejecuta al hacer clic en la Opción 1
+    const handleInicio = () => {
+        console.log("Mensaje de Inicio: Navegando a la página principal.");
+        navigate('/catequesis'); // 👈 Navega a la ruta raíz
+    };
+
+
     const handleOpcionUno = () => {
         console.log("Mensaje de la Opción 1: ¡Navegando a la creación!");
         navigate('/catequesis/crear-poblacion');
     };
     
-    // Función que se ejecuta al hacer clic en la Opción 2
+    
     const handleOpcionDos = () => {
         console.log("Mensaje de la Opción 2: ¡Navegando a la búsqueda!");
         navigate('/catequesis/buscar-poblacion');
@@ -29,10 +34,18 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
                 
                 {/* Opción 1: Crear */}
                 <button 
+                    onClick={handleInicio}
+                    className="nav-item-button nav-home-button" // Usamos una clase extra para estilos específicos
+                >
+                    🏠 Inicio
+                </button>
+
+
+                <button 
                     onClick={handleOpcionUno}
                     className="nav-item-button"
                 >
-                    ➕ Crear Nuevo Registro
+                    ➕ Crear Nuevo Registro de estudiante 
                 </button>
                 
                 {/* Opción 2: Buscar */}
