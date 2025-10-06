@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 
 import { PostFechaLapso } from '../../api/auth';
 
+import { usePoblacion } from '../../context/PoblacionContext';
+
 import '../../css/PostLapso.css'; 
 
 function PostLapso() {
     
+    const {actuLapso ,setActuLapso} = usePoblacion();
     // 1. Variables de estado para almacenar los valores de los inputs
     const [tipo_inscripcion, settipo_inscripcion] = useState('');
     const [inicio, setinicio] = useState('');
@@ -22,12 +25,11 @@ function PostLapso() {
         };
 
         // Muestra los datos capturados en la consola
-        console.log('✅ Datos del Lapso a enviar:', datosLapso);
+        console.log('✅ Datos del Lapso a enviar:', actuLapso);
         PostFechaLapso(datosLapso);
-
-        // 🚨 Aquí iría la llamada a tu API o backend (ej: axios.post('/api/lapso', datosLapso))
-        
-        // Opcional: Limpiar el formulario después de un envío exitoso
+        // como hacer dependiendo de la respuesta setActuLapso true o false
+        setActuLapso((prev) => !prev); // Cambia el estado para indicar que se ha actualizado el lapso
+    
         settipo_inscripcion('');
         setinicio('');
         setfin('');

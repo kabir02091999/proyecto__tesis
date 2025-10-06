@@ -1,0 +1,18 @@
+/* --- Estilos para la Columna de Contenido dentro del Layout --- */
+
+.lapso-content-area {
+    /* Utiliza Flexbox para apilar el formulario y la tabla verticalmente */
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Espacio entre PostLapso y GetFechas */
+    
+    /* Aseguramos que ocupe todo el ancho disponible en el 'main-content' */
+    width: 100%; 
+}
+
+/* Opcional: Ajustar el padding del sidebar para que Nav_Inscricion se vea mejor */
+.sidebar .nav-inscricion-container {
+    /* Ajusta el padding si Nav_Inscricion tiene un padding interno excesivo */
+    padding: 0; 
+    box-shadow: none; /* Quitamos la sombra si ya está en el 'sidebar' */
+}

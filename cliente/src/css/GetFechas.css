@@ -1,0 +1,82 @@
+/* --- Estilos para la Vista de la Tabla (GetFechas) --- */
+
+.table-lapso-container {
+    width: 100%;
+    margin-top: 20px;
+    padding: 25px;
+    background-color: #f8f9fa; /* Fondo muy claro para contrastar */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.table-lapso-container h2 {
+    color: #343a40;
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #007bff; /* Subrayado con color primario */
+    padding-bottom: 8px;
+}
+
+/* --- Estilo de la Tabla --- */
+
+.table-lapso {
+    width: 100%;
+    border-collapse: collapse; /* Bordes unidos */
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    overflow: hidden; /* Asegura que el borde redondo se aplique bien */
+}
+
+.table-lapso thead {
+    background-color: #007bff; /* Color primario para el encabezado */
+    color: white;
+}
+
+.table-lapso th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95em;
+    letter-spacing: 0.5px;
+}
+
+/* --- Estilo del Cuerpo (Filas) --- */
+
+.table-lapso tbody tr {
+    border-bottom: 1px solid #dee2e6; /* Separador de filas */
+    transition: background-color 0.2s;
+}
+
+.table-lapso tbody tr:last-child {
+    border-bottom: none; /* Sin borde en la última fila */
+}
+
+.table-lapso tbody tr:hover {
+    background-color: #e9f0f6; /* Resaltado suave al pasar el mouse */
+}
+
+.table-lapso td {
+    padding: 12px 15px;
+    color: #495057;
+    font-size: 0.9em;
+}
+
+/* --- Estilos de Estado (Carga y Error) --- */
+.loading-message {
+    padding: 15px;
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.error-message {
+    padding: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-top: 15px;
+}

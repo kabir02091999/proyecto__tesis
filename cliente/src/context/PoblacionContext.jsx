@@ -18,6 +18,7 @@ export const PoblacionProvider = ({ children }) => {
     const [poblacion, setPoblacion] = useState(null); // Iniciar en null para manejar "no encontrado"
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [actuLapso, setActuLapso] = useState(false);
 
     const getPoblacionByCI = async (CI) => {
         setLoading(true);
@@ -66,7 +67,7 @@ export const PoblacionProvider = ({ children }) => {
     }, [poblacion]);
 
     return (
-        <PoblacionContext.Provider value={{ poblacion, loading, error, getPoblacionByCI, createPoblacion}}>
+        <PoblacionContext.Provider value={{ poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion}}>
             {children}
         </PoblacionContext.Provider>
     );

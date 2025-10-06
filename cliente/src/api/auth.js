@@ -55,6 +55,10 @@ export const PostFechaLapso = async (lapsoData) => {
     return api.post(`/inscripcion/Registro-Lapso`, lapsoData);
 };
 
+export const getFechasLapso = async () => {
+    return api.get(`/inscripcion/get-lapso`);
+};
+
 // Al cargar la aplicación, verificamos si hay un token en el localStorage
 // y lo configuramos en los encabezados de Axios.
 const tokenFromStorage = localStorage.getItem('token');

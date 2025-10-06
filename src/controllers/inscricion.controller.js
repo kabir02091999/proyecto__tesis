@@ -195,7 +195,7 @@ export const RegistroLapso = async (req, res) => {
 /* TipoDeLapso */
 export const GetLapso = async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT * FROM lapso');
+        const [rows] = await pool.query('SELECT * FROM lapso ORDER BY id DESC');
         res.json(rows);
     } catch (error) {
         console.error(error);

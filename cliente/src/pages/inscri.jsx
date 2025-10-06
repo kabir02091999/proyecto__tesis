@@ -24,9 +24,6 @@ function Inscri() {
     return (
         
         <div className="admin-layout"> 
-                
-                
-
             <Nav_Inscricion onOptionSelect={handleButtonClick} />
             
             <GetPoblacion/>
