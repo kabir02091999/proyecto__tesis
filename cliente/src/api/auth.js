@@ -48,7 +48,7 @@ export const getPoblacion = async (CI) => {
 };
 
 export const createPoblacion = async (poblacionData) => {
-    return api.post(`/crear-poblacion`, poblacionData);
+    return api.post(`/inscripcion/crear-poblacion`, poblacionData);
 };
 
 export const PostFechaLapso = async (lapsoData) => {

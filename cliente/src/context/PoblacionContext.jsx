@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 
 //api 
-import { getPoblacion, getFechasLapso } from '../api/auth';
+import { getPoblacion, getFechasLapso , createPoblacion as createPoblacion1 } from '../api/auth';
 
 // Crear el contexto
 export const PoblacionContext = createContext();
@@ -20,6 +20,7 @@ export const PoblacionProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [actuLapso, setActuLapso] = useState(false);
     const [Lapso, setLapso] = useState([]);
+    const [ErrorGetPoblacion, setErrorGetPoblacion] = useState(null);
 
     const getPoblacionByCI = async (CI) => {
         setLoading(true);
@@ -58,8 +59,81 @@ export const PoblacionProvider = ({ children }) => {
         setLoading(false);
     };
 
+
+    const Existe_poblacion = async (CI) => {
+        setLoading(true);
+        setError(null); // Limpiar errores anteriores
+        setPoblacion(null); // Limpiar datos anteriores antes de la búsqueda
+        setErrorGetPoblacion(null);
+        try {
+            const response = await getPoblacion(CI);
+            
+            // Si la respuesta es exitosa (código 2xx), procedemos
+            const data = response.data;
+            console.log("Datos de población obtenidos:", data);
+            setPoblacion(data);
+            
+        } catch (err) {
+            setErrorGetPoblacion(true);
+            // 1. Verificar si el error es una respuesta HTTP (Axios)
+            if (err.response) {
+                // 2. Manejar el caso específico 404 (Not Found)
+                if (err.response.status === 404) {
+                    console.log(`CI no encontrada (${CI}). Estableciendo población a null.`);
+                    setPoblacion(null); // Esto dispara el mensaje "No se encontraron resultados" en el frontend
+                    // No establecemos setError(err.message) porque 404 es una respuesta "controlada"
+                } else {
+                    // Manejar otros errores HTTP (400, 500, etc.)
+                    const errorMessage = err.response.data.message || `Error del servidor: ${err.response.status}`;
+                    setError(errorMessage);
+                    console.error('Error de respuesta HTTP:', err.response.data);
+                }
+            } else {
+                // 3. Manejar errores de red (p. ej., servidor apagado)
+                setError("Error de red o el servidor no está disponible.");
+                console.error('Error de red:', err.message);
+            }
+            
+        }
+        setLoading(false);
+    };
+
+    const getPoblacionByCI_Sync = async (CI) => { // Renombramos para diferenciar
+    setLoading(true);
+    setError(null);
+    setPoblacion(null);
+    setErrorGetPoblacion(null);
+    
+    try {
+        const response = await getPoblacion(CI);
+        const data = response.data;
+        
+        // Actualiza el estado del contexto
+        setPoblacion(data);
+        return data; // 👈 Retorna el objeto de población
+        
+    } catch (err) {
+        if (err.response && err.response.status === 404) {
+            console.log(`CI no encontrada (${CI}).`);
+            setPoblacion(null);
+            setErrorGetPoblacion(true); // Indica que NO se encontró
+            return false; // 👈 Retorna false al componente que llama
+        }
+        
+        // Manejo de otros errores...
+        // ... (Tu lógica de error 500/red)
+        
+        throw err; // Relanza el error grave
+    } finally {
+        setLoading(false);
+    }
+};
+
+
+
     const createPoblacion = async (poblacionData) => {
         console.log(poblacionData);
+        return await createPoblacion1(poblacionData);
     }
 
     const fetchLapso = async () => {
@@ -78,13 +152,9 @@ export const PoblacionProvider = ({ children }) => {
         console.log("actulapso en context " + actuLapso)
     }, [actuLapso]);
 
-    useEffect(() => {
-        console.log("poblacion en context " + JSON.stringify(poblacion))
-    
-    }, [poblacion]);
 
     return (
-        <PoblacionContext.Provider value={{ poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
+        <PoblacionContext.Provider value={{ getPoblacionByCI_Sync ,ErrorGetPoblacion, Existe_poblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
             {children}
         </PoblacionContext.Provider>
     );

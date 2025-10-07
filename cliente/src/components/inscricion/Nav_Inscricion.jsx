@@ -36,6 +36,10 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
         console.log("Mensaje de la Opción 4: ¡Navegando a la inscripción de lapso!");
         navigate('/catequesis/incribir-poblacion-lapso');
     }
+    const handleOpcioncinco = () => {
+        console.log("Mensaje de la Opción 5: ¡Navegando a la aprobacion!");
+        navigate('/catequesis/aprobacion-reprobacion');///ojo con el diseño 
+    }
 
     return (
         <div className="nav-inscricion-container">
@@ -70,6 +74,13 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
                     className="nav-item-button"
                 >
                     📝 Inscribir estudiante en lapso 
+                </button>
+
+                <button 
+                    onClick={handleOpcioncinco}
+                    className="nav-item-button"
+                >
+                    📝 aprobacion 
                 </button>
                 
                 {/* Opción 2: Buscar */}

@@ -157,6 +157,45 @@ export const getfindPoblacionByCI = async (req, res) => {
     }
 };
 
+
+/* export const getfindPoblacionByCI = async (req, res) => {
+    const { CI } = req.params;
+    
+    try {
+        // 1. Consultas a la base de datos
+        const [rows] = await pool.query('SELECT * FROM poblacion WHERE ci = ?', [CI]);
+        const [rows2] = await pool.query('SELECT * FROM padres WHERE ci = ?', [CI]);
+        const [rows3] = await pool.query('SELECT * FROM datospoblacion WHERE ci = ?', [CI]);
+
+        // 2. VERIFICACIÓN CRÍTICA (Población Principal)
+        // Si el registro principal (poblacion) no existe, devolvemos 404 y terminamos.
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'Población con CI no registrada.' });
+        }
+
+        // 3. COMBINACIÓN DE DATOS (Adjuntar lo que esté disponible)
+        
+        // rows2 y rows3 pueden ser arrays vacíos (length === 0) si no hay datos.
+        // Usamos [0] para obtener el objeto o 'undefined' si el array está vacío.
+        const datosPadres = rows2.length > 0 ? rows2[0] : null;
+        const datosSecundarios = rows3.length > 0 ? rows3[0] : null;
+
+        const resultado = {
+            ...rows[0],                     // Datos principales (siempre existen aquí)
+            padres: datosPadres,            // Objeto de padres o null
+            datos_poblacion: datosSecundarios // Objeto de datos secundarios o null
+        };
+        
+        // 4. ÉXITO
+        // Devolvemos 200 OK con el objeto combinado, incluso si 'padres' o 'datos_poblacion' son null.
+        return res.status(200).json(resultado);
+
+    } catch (error) {
+        console.error("Error en la DB:", error);
+        res.status(500).json({ message: 'Error al obtener la población' });
+    }
+}; */
+
 // request para verificar si entidad población existe por id 
 export const getfindPoblacionByID = async (req, res) => {
     const { id } = req.params;
