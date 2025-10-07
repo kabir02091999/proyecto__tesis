@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 
 //api 
-import { getPoblacion } from '../api/auth';
+import { getPoblacion, getFechasLapso } from '../api/auth';
 
 // Crear el contexto
 export const PoblacionContext = createContext();
@@ -19,6 +19,7 @@ export const PoblacionProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [actuLapso, setActuLapso] = useState(false);
+    const [Lapso, setLapso] = useState([]);
 
     const getPoblacionByCI = async (CI) => {
         setLoading(true);
@@ -61,13 +62,29 @@ export const PoblacionProvider = ({ children }) => {
         console.log(poblacionData);
     }
 
+    const fetchLapso = async () => {
+        try {
+            const response = await getFechasLapso();
+            setLapso(response.data);
+            console.log("Datos de lapso obtenidos:", response.data);
+        } catch (err) {
+            console.error('Error al obtener los datos de lapso:', err);
+        }
+    };
+
+    // Llamar a fetchLapso cuando el componente se monte o cuando actuLapso cambie
+    useEffect(() => {
+        fetchLapso();
+        console.log("actulapso en context " + actuLapso)
+    }, [actuLapso]);
 
     useEffect(() => {
         console.log("poblacion en context " + JSON.stringify(poblacion))
+    
     }, [poblacion]);
 
     return (
-        <PoblacionContext.Provider value={{ poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion}}>
+        <PoblacionContext.Provider value={{ poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
             {children}
         </PoblacionContext.Provider>
     );

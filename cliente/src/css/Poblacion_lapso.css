@@ -1,0 +1,59 @@
+/* --- Estilos para el Layout de Dos Columnas (inscri.css) --- */
+
+.admin-layout {
+    display: flex; /* Habilita las columnas */
+    flex-direction: row; /* Asegura que se vean lado a lado */
+    min-height: 100vh; /* Ocupa al menos el 100% de la altura de la ventana */
+    width: 100%;
+}
+
+/* 1. Estilos para la Columna de Navegación (Nav_Inscricion) */
+/* Debes aplicar esta clase en el div principal de tu componente Nav_Inscricion */
+.nav-sidebar {
+    /* Anchura Fija: Esto define el ancho de tu columna izquierda */
+    width: 250px; 
+    /* Altura Completa: Esto es CRUCIAL. Ocupa el 100% de la altura del .admin-layout */
+    height: 100%; 
+    
+    /* Si quieres que los elementos de navegación se apilen dentro */
+    display: flex;
+    flex-direction: column;
+    
+    /* background-color: #f0f0f0;  <-- Descomenta si quieres ver la columna */
+}
+
+/* 2. Estilos para la Columna de Contenido Principal (Derecha) */
+.admin-content-main {
+    /* Expansión: Ocupa todo el espacio restante disponible en la fila */
+    flex-grow: 1; 
+    
+    /* Permite el scroll si el contenido es más largo que la ventana */
+    overflow-y: auto;
+    
+    /* Layout para centrar el formulario dentro de esta columna */
+    display: flex;
+    flex-direction: column; 
+    align-items: center; /* Centra el formulario horizontalmente */
+    
+    padding: 20px;
+    /* background-color: #ffffff; <-- Descomenta si quieres ver esta área */
+}
+
+/* Estilos de orden del formulario (para que los campos se apilen dentro del div central) */
+.inscripcion-form {
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.inscripcion-form h2,
+.inscripcion-form select,
+.inscripcion-form input,
+.inscripcion-form button {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+}

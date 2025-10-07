@@ -12,6 +12,7 @@ import Inscri from './pages/inscri'
 import Buscar_poblacion from './pages/buscar_poblacion'
 import Crear_poblacion from './pages/crear_poblacion'
 import Crear_lapso from './pages/Crear_lapso'
+import Poblacion_Lapso from './pages/Poblacion_Lapso'
 
 import ProtectedRoute from './pages/protectedRoute'
 
@@ -58,6 +59,12 @@ function App() {
                 <Crear_lapso />
               </PoblacionProvider>}/>
             
+              
+              <Route path='/catequesis/incribir-poblacion-lapso' element={
+                <PoblacionProvider>
+                  <Poblacion_Lapso />
+                </PoblacionProvider>}/>
+
             <Route path='/financiero' element={
               <PoblacionProvider>
                 <Financiero />

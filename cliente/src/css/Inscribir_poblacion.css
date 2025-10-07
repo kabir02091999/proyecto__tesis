@@ -1,0 +1,75 @@
+/* --- Diseño para el Componente Inscribir_poblacion --- */
+
+/* Contenedor del formulario: El "panel" o tarjeta */
+.inscripcion-form {
+    /* Estructura y Ordenamiento */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio uniforme entre todos los elementos del formulario */
+    
+    /* Dimensiones y Centrado */
+    width: 100%;
+    max-width: 450px; /* Ancho cómodo para formularios */
+    margin: 30px auto; /* Centra el formulario horizontalmente y da espacio superior/inferior */
+    
+    /* Diseño Estético */
+    background-color: #ffffff; /* Fondo blanco */
+    padding: 30px; /* Espacio interior */
+    border-radius: 12px; /* Esquinas ligeramente redondeadas */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra suave para darle profundidad */
+    font-family: Arial, sans-serif;
+}
+
+/* Título */
+.inscripcion-form h2 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 5px; /* Poco espacio debajo del título, el 'gap' del formulario hace el resto */
+    font-size: 1.5rem;
+}
+
+/* Estilos para SELECT e INPUT */
+.inscripcion-form select,
+.inscripcion-form input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #555555;
+    transition: border-color 0.3s;
+    box-sizing: border-box; /* Crucial para que el padding no afecte el ancho */
+}
+
+/* Feedback visual al enfocar */
+.inscripcion-form select:focus,
+.inscripcion-form input[type="text"]:focus {
+    border-color: #007bff; /* Color primario al enfocar */
+    outline: none; /* Quita el borde de enfoque por defecto del navegador */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Sombra de enfoque sutil */
+}
+
+/* Estilo para el botón de acción */
+.inscripcion-form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    background-color: #28a745; /* Verde para la acción de "Inscribir" */
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.inscripcion-form button[type="submit"]:hover {
+    background-color: #218838; /* Verde ligeramente más oscuro al pasar el ratón */
+    transform: translateY(-1px); /* Efecto 3D sutil */
+}
+
+.inscripcion-form button[type="submit"]:active {
+    background-color: #1e7e34;
+    transform: translateY(0);
+}

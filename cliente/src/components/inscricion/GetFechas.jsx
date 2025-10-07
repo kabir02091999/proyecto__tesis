@@ -31,7 +31,7 @@ function GetFechas() {
     }, [actuLapso]);
 
     return (
-        // 🚨 Aplicamos la clase principal para el diseño
+        
         <div className="table-lapso-container">
             
             <h2>Fechas de los lapsos registrados</h2>
