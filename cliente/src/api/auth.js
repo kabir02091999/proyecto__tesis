@@ -59,6 +59,10 @@ export const getFechasLapso = async () => {
     return api.get(`/inscripcion/get-lapso`);
 };
 
+export const inscribirEstudiante = async (inscripcionData) => {
+    return api.post(`/inscripcion/inscripto`, inscripcionData);
+}
+
 // Al cargar la aplicación, verificamos si hay un token en el localStorage
 // y lo configuramos en los encabezados de Axios.
 const tokenFromStorage = localStorage.getItem('token');
