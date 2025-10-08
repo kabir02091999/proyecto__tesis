@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 
 //api 
-import { getPoblacion, getFechasLapso , createPoblacion as createPoblacion1 , inscribirEstudiante} from '../api/auth';
+import { getPoblacion, getFechasLapso , createPoblacion as createPoblacion1 , inscribirEstudiante ,getPoblacionByLapso as getPoblacionByLapso1} from '../api/auth';
 
 // Crear el contexto
 export const PoblacionContext = createContext();
@@ -21,6 +21,7 @@ export const PoblacionProvider = ({ children }) => {
     const [actuLapso, setActuLapso] = useState(false);
     const [Lapso, setLapso] = useState([]);
     const [ErrorGetPoblacion, setErrorGetPoblacion] = useState(null);
+    const [poblacionPorLapso, setPoblacionPorLapso] = useState([]); // Nuevo estado para población por lapso
 
     const getPoblacionByCI = async (CI) => {
         setLoading(true);
@@ -115,6 +116,23 @@ export const PoblacionProvider = ({ children }) => {
         }
     };
 
+    const getPoblacionByLapso = async (lapsoId) => {
+        setLoading(true);
+        setError(null);
+        setPoblacionPorLapso([]); // Limpiar datos anteriores antes de la búsqueda
+
+        try {
+            const response = await getPoblacionByLapso1(lapsoId); // Asegúrate de tener esta función en tu API
+            const data = response.data;
+            console.log("Datos de población por lapso obtenidos:", data);
+            setPoblacionPorLapso(data); // Actualiza el estado con los datos obtenidos
+        } catch (err) {
+            setError("Error al obtener la población por lapso.");
+            console.error('Error al obtener la población por lapso:', err);
+        }
+        setLoading(false);
+    };
+
     // Llamar a fetchLapso cuando el componente se monte o cuando actuLapso cambie
     useEffect(() => {
         fetchLapso();
@@ -123,7 +141,7 @@ export const PoblacionProvider = ({ children }) => {
 
 
     return (
-        <PoblacionContext.Provider value={{ Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
+        <PoblacionContext.Provider value={{getPoblacionByLapso,poblacionPorLapso , Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
             {children}
         </PoblacionContext.Provider>
     );

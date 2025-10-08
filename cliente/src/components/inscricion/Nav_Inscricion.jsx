@@ -38,6 +38,7 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
     }
     const handleOpcioncinco = () => {
         console.log("Mensaje de la Opción 5: ¡Navegando a la aprobacion!");
+        
         navigate('/catequesis/aprobacion-reprobacion');///ojo con el diseño 
     }
 

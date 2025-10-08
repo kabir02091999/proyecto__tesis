@@ -2,13 +2,13 @@ import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToke.js';
 
 
-import { RegistroLapso,GetLapso, getfindPoblacionByID, crearPoblacion ,getfindPoblacionByCI, aprobacion, inscripto,getinscript_CI, getAprobacionByCI_Inner} from '../controllers/inscricion.controller.js';
+import { RegistroLapso,GetLapso, getfindPoblacionByID, crearPoblacion ,getfindPoblacionByCI, aprobacion, inscripto,getinscript_CI, getAprobacionByCI_Inner,getPoblacionByLapso,getEstudiantesPendientesEvaluacion} from '../controllers/inscricion.controller.js';
 
 
 const router = Router();
 
 router.post('/Registro-Lapso',authRequired, RegistroLapso) //ojo en el fron se tiene que enviar la fecha en formato ISO 8601 "YYYY-MM-DD" ya esta listo jajajajajja
-router.get('/get-lapso',authRequired, GetLapso) 
+router.get('/get-lapso',authRequired, GetLapso) //ya lo us
 
 router.post('/inscripto',authRequired, inscripto)//listo
 router.get('/inscripto/:ci',authRequired, getinscript_CI)//listo probar octener lo inscrito
@@ -16,10 +16,14 @@ router.get('/inscripto/:ci',authRequired, getinscript_CI)//listo probar octener 
 
 router.post('/crear-poblacion',authRequired, crearPoblacion)//listo recordar en este est proseso men agregar en la tabla de poblacion , padres , datos_poblacion esta listo el frond
 router.get('/find-poblacion/:id',authRequired, getfindPoblacionByID)
-router.get('/getfind-poblacion/:CI',authRequired, getfindPoblacionByCI)///ojojo esta listo en el fron 
+router.get('/getfind-poblacion/:CI',authRequired, getfindPoblacionByCI)///ojojo esta listo en el fron
+
+router.get('/getpoblacion-lapso/:lapsoId',authRequired, getPoblacionByLapso)///ojojo esta listo en el fron
 
 router.post('/aprobacion',authRequired, aprobacion)
 router.get('/aprobacion/:ci',authRequired, getAprobacionByCI_Inner)// este me busca la tabla aprbacion i tre los datos de lapso y incrito
+
+router.get('/estudiantes-pendientes-evaluacion/:ID_lapso'/* ,authRequired */, getEstudiantesPendientesEvaluacion)// ojo aqui falta al autenticacion
 
 //para la crear-poblacion
  /* {

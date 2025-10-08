@@ -1,0 +1,161 @@
+/* ========================= */
+/* 1. Contenedor Principal   */
+/* ========================= */
+.poblacion-lapso-container {
+    max-width: 900px;
+    margin: 40px auto; 
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.poblacion-lapso-container h2 {
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2rem;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+/* Estilos de la línea separadora */
+hr {
+    border: 0;
+    border-top: 1px solid #dee2e6;
+    margin: 30px 0;
+}
+
+/* ========================= */
+/* 2. Formulario y Controles */
+/* ========================= */
+.inscripcion-form {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.inscripcion-form select,
+.inscripcion-form button {
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.inscripcion-form select {
+    flex-grow: 1; /* Permite que el selector ocupe el espacio disponible */
+    max-width: 350px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    color: #495057;
+}
+
+.inscripcion-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.inscripcion-form button:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.inscripcion-form button:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+}
+
+
+/* ========================= */
+/* 3. Resultados y Tabla     */
+/* ========================= */
+
+.resultados-consulta h3 {
+    margin-top: 30px;
+    color: #28a745;
+    font-size: 1.4rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table-lapso-container {
+    width: 100%;
+    margin-top: 20px;
+    padding: 25px;
+    background-color: #f8f9fa; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.table-lapso {
+    width: 100%;
+    border-collapse: collapse; 
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    overflow: hidden; 
+}
+
+.table-lapso thead {
+    background-color: #007bff;
+    color: white;
+}
+
+.table-lapso th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95em;
+    letter-spacing: 0.5px;
+}
+
+.table-lapso tbody tr {
+    border-bottom: 1px solid #dee2e6;
+    transition: background-color 0.2s;
+}
+
+.table-lapso tbody tr:last-child {
+    border-bottom: none; 
+}
+
+.table-lapso tbody tr:hover {
+    background-color: #e9f0f6;
+}
+
+.table-lapso td {
+    padding: 12px 15px;
+    color: #495057;
+    font-size: 0.9em;
+}
+
+/* --- Estilos de Estado (Carga y Error) --- */
+.loading-message {
+    padding: 15px;
+    background-color: #fff3cd; 
+    color: #856404;
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.error-message {
+    padding: 15px;
+    background-color: #f8d7da; 
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}

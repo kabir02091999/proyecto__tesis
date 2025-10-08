@@ -309,3 +309,88 @@ export const getinscript_CI = async (req, res) => {
         res.status(500).json({ message: 'Error al obtener la inscripción' });
     }
 }
+
+export const getPoblacionByLapso = async (req, res) => {
+    const { lapsoId } = req.params; 
+    const lapsoIdNumerico = parseInt(lapsoId, 10);
+
+    if (isNaN(lapsoIdNumerico) || lapsoIdNumerico <= 0) {
+        return res.status(400).json({ message: "El ID de lapso debe ser un número entero válido." });
+    }
+
+    try {
+        // 🚨 CAMBIO CRÍTICO: Consulta SQL en una ÚNICA línea con comillas dobles (")
+        const sqlQueryLimpia = "SELECT L.ID AS Lapso_ID, L.tipo_inscripcion, P.ci AS Cedula, P.nombre AS Nombre_Estudiante, P.apellidos AS Apellido_Estudiante, P.tipoPoblacion, I.seccion AS Seccion_Inscrita, I.nivel AS Nivel_Inscrito FROM lapso L INNER JOIN inscrito I ON L.ID = I.ID_lapso INNER JOIN poblacion P ON I.CI = P.ci WHERE L.ID = ? ORDER BY P.apellidos";
+        
+        const [rows] = await pool.query(sqlQueryLimpia, [lapsoIdNumerico]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: "No se encontró población inscrita para el ID de lapso especificado." });
+        }
+
+        res.json(rows);
+
+    } catch (error) {
+        console.error("Error al obtener la población por lapso:", error);
+        res.status(500).json({ 
+            message: "Error interno del servidor al consultar la base de datos.",
+            error: error.message
+        });
+    }
+};
+
+export const getEstudiantesPendientesEvaluacion = async (req, res) => {
+    // 1. Extrae el ID_lapso de los parámetros de la URL
+    const { ID_lapso } = req.params;
+
+    try {
+        // 2. Consulta SQL con LEFT JOIN y WHERE IS NULL para exclusión
+        const [rows] = await pool.query(`
+            SELECT
+                -- Información del Lapso (Periodo de Inscripción)
+                L.ID AS Lapso_ID,
+                L.tipo_inscripcion,
+                
+                -- Información del Inscrito (Estudiante/Población)
+                P.ci AS Cedula,
+                P.nombre AS Nombre_Estudiante,
+                P.apellidos AS Apellido_Estudiante,
+                P.tipoPoblacion,
+                
+                -- Información de la Inscripción (Detalle del Curso/Sección)
+                I.seccion AS Seccion_Inscrita,
+                I.nivel AS Nivel_Inscrito
+            FROM 
+                lapso L
+            INNER JOIN 
+                inscrito I ON L.ID = I.ID_lapso       
+            INNER JOIN 
+                poblacion P ON I.CI = P.ci            
+            LEFT JOIN 
+                aprobacion A ON I.CI = A.CI AND L.ID = A.ID_lapso
+            WHERE
+                L.ID = ?  -- Filtra por el Lapso específico
+                AND A.CI IS NULL -- 👈 CLÁUSULA CLAVE: Excluye a quienes YA están en 'aprobacion'
+            ORDER BY
+                P.apellidos;
+        `, [ID_lapso]); // Pasa el valor de ID_lapso de forma segura
+
+        // 3. Verifica y responde
+        if (rows.length === 0) {
+            return res.status(404).json({ 
+                message: "No se encontraron estudiantes pendientes de evaluación para el lapso o el lapso no existe." 
+            });
+        }
+
+        // 4. Retorna la lista de estudiantes pendientes
+        res.json(rows);
+
+    } catch (error) {
+        // 5. Manejo de errores
+        console.error("Error al obtener la población pendiente de evaluación:", error);
+        res.status(500).json({ 
+            message: "Error interno del servidor al consultar la base de datos.",
+            error: error.message
+        });
+    }
+};
