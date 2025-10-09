@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 
 //api 
-import { getPoblacion, getFechasLapso , createPoblacion as createPoblacion1 , inscribirEstudiante ,getPoblacionByLapso as getPoblacionByLapso1} from '../api/auth';
+import { getPoblacion, getFechasLapso , createPoblacion as createPoblacion1 , inscribirEstudiante ,getPoblacionByLapso as getPoblacionByLapso1,getAprobadosReprobados,PostAprobacion} from '../api/auth';
 
 // Crear el contexto
 export const PoblacionContext = createContext();
@@ -22,6 +22,7 @@ export const PoblacionProvider = ({ children }) => {
     const [Lapso, setLapso] = useState([]);
     const [ErrorGetPoblacion, setErrorGetPoblacion] = useState(null);
     const [poblacionPorLapso, setPoblacionPorLapso] = useState([]); // Nuevo estado para población por lapso
+    const [aprobadoReprobado, setAprobadoReprobado] = useState([]); // Nuevo estado para aprobado/reprobado
 
     const getPoblacionByCI = async (CI) => {
         setLoading(true);
@@ -133,6 +134,28 @@ export const PoblacionProvider = ({ children }) => {
         setLoading(false);
     };
 
+    const aprobado_reprobado = async (lapsoId) => {
+        setLoading(true);
+        setError(null);
+        setAprobadoReprobado([]); // Limpiar datos anteriores antes de la búsqueda
+        
+        try {
+            const response = await getAprobadosReprobados(lapsoId);
+            const data = response.data;
+            console.log("Datos de aprobado/reprobado obtenidos:", data);
+            setAprobadoReprobado(data); // Actualiza el estado con los datos obtenidos
+        } catch (err) {
+            setError("Error al obtener los datos de aprobado/reprobado.");
+            console.error('Error al obtener los datos de aprobado/reprobado:', err);
+        }
+        setLoading(false);
+    }
+
+    const Post_Aprobacion = async (aprobacionData) => {
+        console.log(aprobacionData);
+        return await PostAprobacion(aprobacionData);
+    }
+
     // Llamar a fetchLapso cuando el componente se monte o cuando actuLapso cambie
     useEffect(() => {
         fetchLapso();
@@ -141,7 +164,7 @@ export const PoblacionProvider = ({ children }) => {
 
 
     return (
-        <PoblacionContext.Provider value={{getPoblacionByLapso,poblacionPorLapso , Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
+        <PoblacionContext.Provider value={{Post_Aprobacion,aprobadoReprobado,aprobado_reprobado ,getPoblacionByLapso,poblacionPorLapso , Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
             {children}
         </PoblacionContext.Provider>
     );

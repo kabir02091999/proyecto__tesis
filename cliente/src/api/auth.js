@@ -67,6 +67,14 @@ export const getPoblacionByLapso = async (lapsoId) => {
     return api.get(`/inscripcion/getpoblacion-lapso/${lapsoId}`);
 }
 
+export const getAprobadosReprobados = async (ID_lapso) => {
+    return api.get(`/inscripcion/estudiantes-pendientes-evaluacion/${ID_lapso}`);
+}
+
+export  const PostAprobacion = async (aprobacionData) => {
+    return api.post(`/inscripcion/aprobacion`, aprobacionData);
+}
+
 // Al cargar la aplicación, verificamos si hay un token en el localStorage
 // y lo configuramos en los encabezados de Axios.
 const tokenFromStorage = localStorage.getItem('token');

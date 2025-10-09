@@ -5,6 +5,7 @@ import '../css/Poblacion_Lapso.css';
 //componectes
 
 import Get_poblacion_Lapso from "../components/inscricion/Get_poblacion_Lapso";
+import Get_aprobados_reprobados from "../components/inscricion/Get_aprobados_reprobados";
 
 function Aprobacion_Reprobacion() { 
     return (
@@ -13,7 +14,7 @@ function Aprobacion_Reprobacion() {
             <div className="admin-content-main">
 
                 <Get_poblacion_Lapso/>
-                
+                <Get_aprobados_reprobados/>
 
             </div>
         </div>

@@ -243,18 +243,19 @@ export const GetLapso = async (req, res) => {
 }
 
 export const aprobacion = async (req, res) => {
-    const {ci,id_lapso,aprovacion}= req.body;
-    if (!ci || !id_lapso || !aprovacion) {
+    const {CI,ID_lapso,aprobado_Reprobado}= req.body;
+    console.log(req.body)
+    if (!CI || !ID_lapso ) {
         return res.status(400).json({ message: "Todos los campos son obligatorios" });
     }
     try {
-        const [existing] = await pool.query('SELECT ID_lapso FROM aprobacion WHERE CI = ? AND ID_lapso = ?', [ci, id_lapso]);
+        const [existing] = await pool.query('SELECT ID_lapso FROM aprobacion WHERE CI = ? AND ID_lapso = ?', [CI, ID_lapso]);
         if (existing.length > 0) {
             return res.status(409).json({ message: 'Ya existe una aprobación para este CI y lapso' });
         }
 
-        const [result] = await pool.query('INSERT INTO aprobacion (CI,ID_lapso, aprobado_Reprobado) VALUES (?, ?, ?)', [ci, id_lapso, aprovacion]);
-        res.status(201).json({ id: result.insertId, ci, id_lapso, aprovacion });
+        const [result] = await pool.query('INSERT INTO aprobacion (CI,ID_lapso, aprobado_Reprobado) VALUES (?, ?, ?)', [CI, ID_lapso, aprobado_Reprobado]);
+        res.status(201).json({ id: result.insertId, CI, ID_lapso, aprobado_Reprobado });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al crear la aprobación' });
