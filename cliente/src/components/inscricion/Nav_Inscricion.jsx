@@ -42,6 +42,11 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
         navigate('/catequesis/aprobacion-reprobacion');///ojo con el diseño 
     }
 
+    const handleOpcionseis = () => {
+        console.log("Mensaje de la Opción 6: ¡Navegando a la aprobacion!");
+        navigate('/catequesis/progreso-estudiante');///ojo con el diseño 
+    }
+
     return (
         <div className="nav-inscricion-container">
             <h4 className="nav-title">Gestión de Población</h4>
@@ -82,6 +87,13 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
                     className="nav-item-button"
                 >
                     📝 aprobacion 
+                </button>
+
+                <button 
+                    onClick={handleOpcionseis}
+                    className="nav-item-button"
+                >
+                    📝 Progreso del estudiante
                 </button>
                 
                 {/* Opción 2: Buscar */}

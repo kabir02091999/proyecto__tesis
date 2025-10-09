@@ -395,3 +395,61 @@ export const getEstudiantesPendientesEvaluacion = async (req, res) => {
         });
     }
 };
+
+export const getProgresoEstudianteByCI = async (req, res) => {
+    const { ci } = req.params;
+
+    if (!ci) {
+        return res.status(400).json({ message: 'La cédula (CI) es obligatoria.' });
+    }
+
+    try {
+        // Consulta SQL que arranca desde la tabla 'aprobacion'
+        const sqlQueryProgreso = `
+            SELECT
+                P.nombre AS Nombre_Estudiante,
+                P.apellidos AS Apellido_Estudiante,
+                A.CI AS Cedula,
+                L.tipo_inscripcion AS Nombre_Lapso,
+                DATE_FORMAT(L.inicio, '%d/%m/%Y') AS Fecha_Inicio_Lapso,
+                DATE_FORMAT(L.fin, '%d/%m/%Y') AS Fecha_Fin_Lapso,
+                I.seccion AS Seccion_Cursada,
+                I.nivel AS Nivel_Cursado,
+                CASE
+                    WHEN A.aprobado_Reprobado = TRUE THEN 'Aprobado'
+                    ELSE 'Reprobado'
+                END AS Resultado
+            FROM
+                aprobacion A
+            INNER JOIN poblacion P ON A.CI = P.ci
+            INNER JOIN lapso L ON A.ID_lapso = L.ID
+            LEFT JOIN inscrito I ON A.CI = I.CI AND A.ID_lapso = I.ID_lapso
+            WHERE
+                A.CI = ?
+            ORDER BY
+                L.inicio DESC;
+        `;
+        
+        const [rows] = await pool.query(sqlQueryProgreso, [ci]);
+
+        if (rows.length === 0) {
+            // Verificamos si la CI existe en la tabla principal
+            const [poblacionCheck] = await pool.query('SELECT ci FROM poblacion WHERE ci = ?', [ci]);
+            
+            if (poblacionCheck.length === 0) {
+                 return res.status(404).json({ message: `Estudiante con CI ${ci} no registrado.` });
+            } else {
+                 return res.status(404).json({ message: `El estudiante con CI ${ci} no tiene resultados de aprobación registrados.` });
+            }
+        }
+        
+        return res.status(200).json(rows);
+
+    } catch (error) {
+        console.error('Error al obtener el progreso del estudiante:', error);
+        return res.status(500).json({ 
+            message: 'Error interno del servidor al consultar el progreso.',
+            error: error.message
+        });
+    }
+};

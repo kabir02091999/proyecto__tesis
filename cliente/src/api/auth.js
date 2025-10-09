@@ -75,6 +75,10 @@ export  const PostAprobacion = async (aprobacionData) => {
     return api.post(`/inscripcion/aprobacion`, aprobacionData);
 }
 
+export const getProgresoEstudianteByCI = async (ci) => {
+    return api.get(`/inscripcion/get-progreso-poblacion/${ci}`);
+}
+
 // Al cargar la aplicación, verificamos si hay un token en el localStorage
 // y lo configuramos en los encabezados de Axios.
 const tokenFromStorage = localStorage.getItem('token');

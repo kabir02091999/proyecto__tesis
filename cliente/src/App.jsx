@@ -16,6 +16,7 @@ import Poblacion_Lapso from './pages/Poblacion_Lapso'
 
 import ProtectedRoute from './pages/protectedRoute'
 import Aprobacion_Reprobacion from './pages/Aprobacion_Reprobacion'
+import Progreso_estudiante from './pages/Progreso_estudiante'
 
 function App() {
   // El useState(0) no se usa, lo puedes dejar o quitar.
@@ -69,6 +70,11 @@ function App() {
               <Route path='/catequesis/aprobacion-reprobacion' element={
                 <PoblacionProvider>
                   <Aprobacion_Reprobacion />
+                </PoblacionProvider>}/>
+
+              <Route path='/catequesis/progreso-estudiante' element={
+                <PoblacionProvider>
+                  <Progreso_estudiante/>
                 </PoblacionProvider>}/>
 
             <Route path='/financiero' element={
