@@ -61,6 +61,11 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
             return error;
         }
+        finally {
+            setLoading(false);
+        }
+        
+
     };
     
     // Este efecto se encarga de verificar la autenticación cuando la app se carga

@@ -57,3 +57,28 @@
     padding: 10px;
     box-sizing: border-box;
 }
+
+/* --- NUEVA CLASE PARA EL COMPONENTE DE CALENDARIO --- */
+.calendario-liturgico-container {
+    max-width: 900px;
+    /* Yo elimino el margin: auto. El padre (.admin-content-main) se encarga de centrarlo horizontalmente */
+    /* Yo elimino el margin vertical para que quede más ajustado al centro */
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    width: 100%;
+    
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Yo mantengo los estilos de los hijos que ya estaban */
+.calendario-liturgico-container h2 {
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2rem;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}

@@ -1,0 +1,26 @@
+
+.poblacion-lapso-container {
+   
+    max-width: 900px; 
+    /* Yo centro el bloque horizontalmente (esto funciona con display: block) */
+    margin-left: auto;
+    margin-right: auto;
+    /* Yo mantengo el padding o estilo que ya tenías */
+    padding: 20px; 
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* Yo le doy un fondo blanco si el fondo del admin es diferente */
+}
+
+/* Yo me aseguro que los formularios y tablas no se salgan del contenedor */
+.inscripcion-form {
+    display: flex; /* Yo mantengo el layout que ya tenías */
+    /* ... otros estilos de flexbox ... */
+}
+
+/* Yo centro los títulos */
+.poblacion-lapso-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
