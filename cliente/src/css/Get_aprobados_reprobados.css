@@ -1,0 +1,78 @@
+/* ================================================= */
+/* 1. Estilos para la Columna de Acción (Botones) */
+/* ================================================= */
+
+/* Define la alineación para la celda que contiene los botones */
+.table-lapso .accion-celda {
+    display: flex;
+    gap: 8px; /* Espacio entre los botones */
+    align-items: center;
+}
+
+/* --- Estilos Base de los Botones de Evaluación --- */
+.aprobacion-btn,
+.reprobacion-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+    white-space: nowrap; 
+}
+
+/* Botón APROBAR (Verde) */
+.aprobacion-btn {
+    background-color: #28a745; 
+    color: white;
+}
+.aprobacion-btn:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+/* Botón REPROBAR (Rojo) */
+.reprobacion-btn {
+    background-color: #dc3545; 
+    color: white;
+}
+.reprobacion-btn:hover:not(:disabled) {
+    background-color: #c82333;
+}
+
+/* Estado de los botones deshabilitados (durante la carga) */
+.aprobacion-btn:disabled,
+.reprobacion-btn:disabled {
+    background-color: #6c757d; 
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+
+/* ================================================= */
+/* 2. Estilos para la Columna de Estado */
+/* ================================================= */
+
+.estado-aprobado,
+.estado-reprobado,
+.estado-pendiente {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 3px;
+    display: inline-block; 
+}
+
+.estado-aprobado {
+    color: #28a745; /* Verde fuerte */
+    background-color: #e2f4e4; /* Fondo suave */
+}
+
+.estado-reprobado {
+    color: #dc3545; /* Rojo fuerte */
+    background-color: #fcebeb; /* Fondo suave */
+}
+
+.estado-pendiente {
+    color: #ffc107; /* Amarillo/Naranja */
+    background-color: #fff9e6; /* Fondo suave */
+}
