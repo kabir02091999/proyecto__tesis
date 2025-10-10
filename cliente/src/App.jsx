@@ -13,6 +13,7 @@ import Buscar_poblacion from './pages/buscar_poblacion'
 import Crear_poblacion from './pages/crear_poblacion'
 import Crear_lapso from './pages/Crear_lapso'
 import Poblacion_Lapso from './pages/Poblacion_Lapso'
+import Calendario_liturgico from './pages/Calendario_liturgico'
 
 import ProtectedRoute from './pages/protectedRoute'
 import Aprobacion_Reprobacion from './pages/Aprobacion_Reprobacion'
@@ -70,6 +71,11 @@ function App() {
               <Route path='/catequesis/aprobacion-reprobacion' element={
                 <PoblacionProvider>
                   <Aprobacion_Reprobacion />
+                </PoblacionProvider>}/>
+              
+              <Route path='/catequesis/Post-calendario-liturgico' element={
+                <PoblacionProvider>
+                  <Calendario_liturgico/>
                 </PoblacionProvider>}/>
 
               <Route path='/catequesis/progreso-estudiante' element={

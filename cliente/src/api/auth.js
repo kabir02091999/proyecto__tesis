@@ -43,6 +43,12 @@ export const verifyToken = async () => {
     return api.post(`/verifyToken`);
 };
 
+/* aqui general */
+
+export const crearCalendarioLiturgicos = async (calendarioData) => {
+    return api.post(`/crear-calendario`, calendarioData);
+}
+
 export const getPoblacion = async (CI) => {
     return api.get('/inscripcion/getfind-poblacion/' + CI);
 };

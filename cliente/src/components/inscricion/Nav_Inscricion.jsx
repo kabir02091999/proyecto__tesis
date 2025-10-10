@@ -47,6 +47,11 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
         navigate('/catequesis/progreso-estudiante');///ojo con el diseño 
     }
 
+    const handleOpcion7 = () => {
+        console.log("Mensaje de la Opción 7: ¡Navegando a la creación del calendario liturgico!");
+        navigate('/catequesis/Post-calendario-liturgico');
+    }
+
     return (
         <div className="nav-inscricion-container">
             <h4 className="nav-title">Gestión de Población</h4>
@@ -73,6 +78,13 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
                     className="nav-item-button"
                 >
                     ➕ Crear Nuevo lapso 
+                </button>
+
+                <button 
+                    onClick={handleOpcion7}
+                    className="nav-item-button"
+                >
+                    ➕ Crear Nueva fecha de calendario liturgico
                 </button>
 
                 <button 

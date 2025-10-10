@@ -4,7 +4,7 @@ import PostLapso from "../components/inscricion/PostLapso";
 import GetFechas from "../components/inscricion/GetFechas";
 
 // Importamos el CSS del layout general
-import '../css/inscri.css'; 
+import '../css/Poblacion_Lapso.css'; 
 
 function Crear_lapso() {
     return (
@@ -14,7 +14,7 @@ function Crear_lapso() {
             <Nav_Inscricion/> 
             
             {/* Columna 2: Contenido Principal (Lo agrupamos en un div) */}
-            <div className="admin-content">
+            <div className="admin-content-main">
                 <PostLapso/>
                 {/* Ahora GetFechas está correctamente debajo de PostLapso */}
                 <GetFechas/> 

@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {authRequired} from '../middlewares/validateToke.js'; // Assuming you have a middleware for token validation
 
-import {getUsuarios,createUsuario,loginUsuario,deleteUsuario, logout,verifyToken } from '../controllers/usuarios.controller.js';
+import {getUsuarios,createUsuario,loginUsuario,deleteUsuario, logout,verifyToken , crearCalendarioLiturgico} from '../controllers/usuarios.controller.js';
 
 const router = Router();
 
@@ -12,6 +12,9 @@ router.delete('/usuarios/:id', authRequired , deleteUsuario);/* falta implementa
 router.post('/logout', logout);
 router.post('/verifyToken', verifyToken);
 
+router.post('/crear-calendario'/* , authRequired */, crearCalendarioLiturgico); // Nueva ruta para crear calendario
+
+// api/crear-calendario
 
 export default router;
 

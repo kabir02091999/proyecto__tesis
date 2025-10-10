@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { login as loginService, verifyToken as verifyTokenService } from '../api/auth';
+import { login as loginService, verifyToken as verifyTokenService ,crearCalendarioLiturgicos} from '../api/auth';
 import cookie from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { use } from 'react';
@@ -48,6 +48,20 @@ export const AuthProvider = ({ children }) => {
             return error;
         }
     };
+
+    const Post_Calendario_liturgico = async (calendarioData) => {
+        try {
+            setLoading(true);
+            setErrors([]);
+            const response = await crearCalendarioLiturgicos(calendarioData);
+            return response.data;
+        } catch (error) {
+            console.error('Error during creating calendario liturgico:', error);
+            setErrors(error.response?.data?.message || 'Creating calendario liturgico failed');
+            setLoading(false);
+            return error;
+        }
+    };
     
     // Este efecto se encarga de verificar la autenticación cuando la app se carga
     useEffect(() => {
@@ -79,7 +93,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, isAuthenticated, errors, login}}>
+        <AuthContext.Provider value={{Post_Calendario_liturgico , user, loading, isAuthenticated, errors, login}}>
             {children}
         </AuthContext.Provider>
     );

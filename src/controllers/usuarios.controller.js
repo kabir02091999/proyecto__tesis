@@ -157,3 +157,65 @@ export const verifyToken = async (req, res) => {
         return res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
+export const crearCalendarioLiturgico = async (req, res) => {
+    // Yo espero un array de eventos: [{fecha: 'YYYY-MM-DD', evento: 'Nombre'}, ...]
+    const eventos = req.body; 
+    if (!Array.isArray(eventos) || eventos.length === 0) {
+        return res.status(400).json({ message: 'Yo espero un array de uno o más eventos.' });
+    }
+    // 2. Yo preparo los datos para la inserción múltiple
+    const values = eventos.map(e => {
+        // Yo valido que cada objeto tenga 'fecha' y 'evento'
+        if (!e.fecha || !e.evento) {
+            // Yo lanzo un error para que sea capturado por el bloque catch
+            throw new Error("Yo necesito que cada evento tenga 'fecha' y 'evento'.");
+        }
+        return [e.fecha, e.evento];
+    });
+    
+    let connection;
+    try {
+        // 3. Yo inicio una conexión y una transacción
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        const sqlQuery = `
+            INSERT INTO calendario_liturgico (fecha, evento) 
+            VALUES ?
+        `;
+        
+        // Yo ejecuto la inserción múltiple
+        const [result] = await connection.query(sqlQuery, [values]);
+
+        // Yo confirmo la transacción
+        await connection.commit();
+
+        // 4. Yo devuelvo una respuesta de éxito
+        return res.status(201).json({ 
+            message: `Yo inserté con éxito ${result.affectedRows} evento(s) en el calendario.`,
+            insertedIds: result.insertId 
+        });
+
+    } catch (error) {
+        // Si algo falla, yo revierto los cambios
+        if (connection) {
+            await connection.rollback();
+        }
+        
+        console.error('Error al insertar eventos en el calendario:', error);
+        
+        // Yo manejo el error de validación que lancé antes
+        const status = error.message.includes('necesito') ? 400 : 500;
+
+        return res.status(status).json({ 
+            message: 'Yo tuve un error al procesar la inserción.',
+            error: error.message
+        });
+    } finally {
+        // Yo libero la conexión al pool
+        if (connection) {
+            connection.release();
+        }
+    }
+};
