@@ -1,58 +1,78 @@
-/* --- Estilos para el NAV_INSCRICION (Selector Interno) --- */
+/* --- Estilos para el NAV_INSCRICION (Diseño Mejorado) --- */
 
 .nav-inscricion-container {
     /* Define el contenedor del submenú */
-    width: 250px; /* Ancho fijo para que se vea como una columna */
-    background-color: #f0f4f8; /* Color de fondo muy claro, casi blanco */
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 20px; /* Separación del contenido principal */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    width: 280px; 
+    min-height: 100vh; 
+    
+    /* 🚨 CAMBIO CLAVE: Fondo Azul Celeste Suave */
+    background-color: #F0F8FF; /* Azul Celeste Suave */
+    
+    border-right: 1px solid #d0dbe8; /* Borde más sutil que el gris */
+    padding: 20px 0; 
+    
+    /* Sombra para que se "levante" un poco de la página */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05); 
 }
 
 .nav-title {
-    font-size: 1.1em;
-    color: #333;
-    margin-bottom: 15px;
-    padding: 0 5px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
+    /* Estilo del título principal */
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #4a4a4a; /* Gris oscuro elegante */
+    margin: 0 20px 20px 20px; 
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d0dbe8; /* Separador que combina con el fondo azul */
 }
 
 .nav-options-list {
     /* Contenedor de los botones */
     display: flex;
-    flex-direction: column; /* Apila los botones verticalmente */
-    gap: 5px;
+    flex-direction: column;
+    gap: 2px; 
 }
 
 .nav-item-button {
     /* Estilo base de los botones */
     background-color: transparent;
-    color: #555;
+    color: #4a4a4a; 
     border: none;
     text-align: left;
-    padding: 10px 15px;
+    padding: 12px 20px; 
     cursor: pointer;
-    font-size: 0.95em;
-    border-radius: 6px;
-    transition: all 0.2s;
-    width: 100%; /* Ocupa todo el ancho del contenedor */
+    font-size: 1em;
+    border-radius: 0; 
+    transition: background-color 0.2s, color 0.2s;
+    width: 100%;
 }
 
 .nav-item-button:hover {
-    background-color: #e2e6ea; /* Resaltado sutil al pasar el ratón */
-    color: #007bff;
+    /* Resaltado de hover muy sutil */
+    background-color: #e5f1ff; /* Azul ligeramente más claro que el fondo */
+    color: #007bff; /* Color primario al pasar el ratón */
 }
 
-/* Estilo para simular el botón activo si lo estuvieras usando con estado/router */
-.active-user-nav {
-    background-color: #007bff; 
-    color: white;
-    font-weight: bold;
-    box-shadow: 0 1px 3px rgba(0, 123, 255, 0.4);
+/* ------------------------------------------- */
+/* ESTILOS DE ELEMENTOS ICONOGRÁFICOS */
+/* ------------------------------------------- */
+
+.nav-item-button span {
+    margin-right: 8px;
 }
-.active-user-nav:hover {
-    background-color: #0069d9; 
-    color: white;
+
+/* --- Estilo para el botón ACTIVO --- */
+/* El azul activo se mantiene brillante para contrastar, pero el fondo es muy suave. */
+.active-nav-item {
+    /* 🚨 CAMBIO CLAVE: Fondo azul cielo para el activo */
+    background-color: #E6F7FF !important; /* Azul Cielo Suave para activo */
+    
+    color: #007bff !important; /* Texto azul primario */
+    font-weight: 600;
+    border-left: 3px solid #007bff; /* Tira de color para indicar la página actual */
+    padding-left: 17px; 
+}
+
+.active-nav-item:hover {
+    background-color: #E6F7FF !important; 
+    color: #007bff !important;
 }

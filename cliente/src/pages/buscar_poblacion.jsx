@@ -1,13 +1,17 @@
 import Nav_Inscricion from "../components/inscricion/Nav_Inscricion"
 import GetPoblacion from "../components/GetPoblacion"
 
+import '../css/Poblacion_Lapso.css'; 
+
 function buscar_poblacion() {
   return (
-    <div>
+    <div className="admin-layout">
 
       <Nav_Inscricion/>
-      <GetPoblacion/>
 
+      <div className="admin-content-main">
+        <GetPoblacion/>
+      </div>
     </div>
   )
 }

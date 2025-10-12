@@ -219,3 +219,54 @@ export const crearCalendarioLiturgico = async (req, res) => {
         }
     }
 };
+
+
+export const getCalendarioYLapsoUnificado = async (req, res) => {
+    
+    try {
+        // 1. Obtener todos los LAPSOS
+        const [lapsos] = await pool.query('SELECT inicio, fin, tipo_inscripcion FROM lapso');
+
+        // 2. Obtener todos los EVENTOS LITÚRGICOS
+        const [eventosLiturgicos] = await pool.query('SELECT fecha, evento FROM calendario_liturgico');
+        
+        // 3. Transformar los lapsos en eventos de Inicio/Fin
+        const lapsosComoEventos = [];
+        
+        lapsos.forEach(lapso => {
+            // Evento de INICIO del lapso
+            lapsosComoEventos.push({
+                fecha: lapso.inicio,
+                evento: `Inicio de ${lapso.tipo_inscripcion}` 
+            });
+
+            // Evento de FIN del lapso
+            lapsosComoEventos.push({
+                fecha: lapso.fin,
+                evento: `Fin de ${lapso.tipo_inscripcion}`
+            });
+        });
+        
+        // 4. Unir todos los arrays
+        let todasLasFechas = [
+            ...eventosLiturgicos,
+            ...lapsosComoEventos
+        ];
+
+        // 5. Ordenar por fecha (esto asegura la cronología)
+        todasLasFechas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+
+        // Enviar la respuesta exitosa (200 OK)
+        return res.status(200).json(todasLasFechas);
+
+    } catch (error) {
+        // Manejo de error
+        console.error('Error al obtener el calendario y lapsos unificados:', error);
+        
+        return res.status(500).json({ 
+            message: 'Error al obtener el calendario y lapsos unificados',
+            error: error.message
+        });
+    }
+};    

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../css/inscri.css'; 
+import '../css/Poblacion_Lapso.css'; 
 
 import { usePoblacion } from '../context/PoblacionContext';
 
@@ -25,9 +25,9 @@ function Inscri() {
         
         <div className="admin-layout"> 
             <Nav_Inscricion onOptionSelect={handleButtonClick} />
-            
-            <GetPoblacion/>
-            {/* <CrearPoblacion/> */}
+            <div className="admin-content-main">
+                <GetPoblacion/>
+            </div>
             
         </div>
     );

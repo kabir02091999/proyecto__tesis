@@ -1,120 +1,56 @@
-// src/components/Nav_Inscricion.jsx
-
 import React from 'react';
-
-import '../../css/Nav_inscricion.css'; // Asegúrate de tener los estilos necesarios
-
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'; 
+import '../../css/Nav_inscricion.css'; 
+
+import Unet from '../../image/Unet.png'; // Asegúrate de que la ruta sea correcta
 
 const Nav_Inscricion = ({ onOptionSelect }) => {
-
     const navigate = useNavigate();
+    const location = useLocation(); 
+
+    // Yo defino las rutas y los nombres en un array para mayor limpieza
+    const navItems = [
+        { name: 'Inicio', path: '/catequesis', icon: '🏠' },
+        { name: 'Crear Nuevo Registro de estudiante', path: '/catequesis/crear-poblacion', icon: '➕' },
+        { name: 'Crear Nuevo lapso', path: '/catequesis/crear-lapso', icon: '➕' },
+        { name: 'Crear Nueva fecha de calendario liturgico', path: '/catequesis/Post-calendario-liturgico', icon: '➕' },
+        { name: 'Inscribir estudiante en lapso', path: '/catequesis/incribir-poblacion-lapso', icon: '📝' },
+        { name: 'Aprobación / Reprobación', path: '/catequesis/aprobacion-reprobacion', icon: '✅' }, 
+        { name: 'Progreso del estudiante', path: '/catequesis/progreso-estudiante', icon: '📈' }, 
+        { name: 'Buscar poblacion', path: '/catequesis/buscar-poblacion', icon: '🔍' },
+    ];
     
-    const handleInicio = () => {
-        console.log("Mensaje de Inicio: Navegando a la página principal.");
-        navigate('/catequesis'); // 👈 Navega a la ruta raíz
+    // Función genérica para manejar toda la navegación
+    const handleNavigation = (path, name) => {
+        console.log(`Navegando a: ${name}`);
+        navigate(path);
     };
-
-
-    const handleOpcionUno = () => {
-        console.log("Mensaje de la Opción 1: ¡Navegando a la creación!");
-        navigate('/catequesis/crear-poblacion');
-    };
-    
-    
-    const handleOpcionDos = () => {
-        console.log("Mensaje de la Opción 2: ¡Navegando a la búsqueda!");
-        navigate('/catequesis/buscar-poblacion');
-    };
-
-    const handleOpciontres = () => {
-        console.log("Mensaje de la Opción 3: ¡Navegando a la búsqueda!");
-        navigate('/catequesis/crear-lapso');
-    }
-
-    const handleOpcionCuatro = () => {
-        console.log("Mensaje de la Opción 4: ¡Navegando a la inscripción de lapso!");
-        navigate('/catequesis/incribir-poblacion-lapso');
-    }
-    const handleOpcioncinco = () => {
-        console.log("Mensaje de la Opción 5: ¡Navegando a la aprobacion!");
-        
-        navigate('/catequesis/aprobacion-reprobacion');///ojo con el diseño 
-    }
-
-    const handleOpcionseis = () => {
-        console.log("Mensaje de la Opción 6: ¡Navegando a la aprobacion!");
-        navigate('/catequesis/progreso-estudiante');///ojo con el diseño 
-    }
-
-    const handleOpcion7 = () => {
-        console.log("Mensaje de la Opción 7: ¡Navegando a la creación del calendario liturgico!");
-        navigate('/catequesis/Post-calendario-liturgico');
-    }
 
     return (
         <div className="nav-inscricion-container">
+            <div className="nav-logo">
+                <img src={Unet} alt="Logo UNET" className="logo unet-logo" />
+
+            </div>
+
             <h4 className="nav-title">Gestión de Población</h4>
             <div className="nav-options-list">
                 
-                {/* Opción 1: Crear */}
-                <button 
-                    onClick={handleInicio}
-                    className="nav-item-button nav-home-button" // Usamos una clase extra para estilos específicos
-                >
-                    🏠 Inicio
-                </button>
+                {navItems.map((item) => {
+                    // 🚨 Determinamos si la ruta actual coincide con el elemento del menú
+                    const isActive = location.pathname === item.path; 
 
-
-                <button 
-                    onClick={handleOpcionUno}
-                    className="nav-item-button"
-                >
-                    ➕ Crear Nuevo Registro de estudiante 
-                </button>
-
-                <button 
-                    onClick={handleOpciontres}
-                    className="nav-item-button"
-                >
-                    ➕ Crear Nuevo lapso 
-                </button>
-
-                <button 
-                    onClick={handleOpcion7}
-                    className="nav-item-button"
-                >
-                    ➕ Crear Nueva fecha de calendario liturgico
-                </button>
-
-                <button 
-                    onClick={handleOpcionCuatro}
-                    className="nav-item-button"
-                >
-                    📝 Inscribir estudiante en lapso 
-                </button>
-
-                <button 
-                    onClick={handleOpcioncinco}
-                    className="nav-item-button"
-                >
-                    📝 aprobacion 
-                </button>
-
-                <button 
-                    onClick={handleOpcionseis}
-                    className="nav-item-button"
-                >
-                    📝 Progreso del estudiante
-                </button>
-                
-                {/* Opción 2: Buscar */}
-                <button 
-                    onClick={handleOpcionDos}
-                    className="nav-item-button"
-                >
-                    🔍 Buscar poblacion
-                </button>
+                    return (
+                        <button 
+                            key={item.path}
+                            onClick={() => handleNavigation(item.path, item.name)}
+                            className={`nav-item-button ${isActive ? 'active-nav-item' : ''}`}
+                        >
+                            <span role="img" aria-label={item.name}>{item.icon}</span> {item.name}
+                        </button>
+                    );
+                })}
                 
             </div>
         </div>
