@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom'; 
 import '../../css/Nav_inscricion.css'; 
 
-import Unet from '../../image/Unet.png'; // Asegúrate de que la ruta sea correcta
+// 1. Importar ambos logos con nombres claros
+import UnetLogo from '../../image/unet2.png';     // ⚠️ Ajusta la ruta si es necesario
+/* import CatedraLogo from '../../image/cadedra.png'; */ // ⚠️ Asegúrate de que esta ruta sea correcta
 
 const Nav_Inscricion = ({ onOptionSelect }) => {
     const navigate = useNavigate();
     const location = useLocation(); 
 
-    // Yo defino las rutas y los nombres en un array para mayor limpieza
     const navItems = [
+        // ... (Tu array de navItems se mantiene igual)
         { name: 'Inicio', path: '/catequesis', icon: '🏠' },
         { name: 'Crear Nuevo Registro de estudiante', path: '/catequesis/crear-poblacion', icon: '➕' },
         { name: 'Crear Nuevo lapso', path: '/catequesis/crear-lapso', icon: '➕' },
@@ -21,7 +23,6 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
         { name: 'Buscar poblacion', path: '/catequesis/buscar-poblacion', icon: '🔍' },
     ];
     
-    // Función genérica para manejar toda la navegación
     const handleNavigation = (path, name) => {
         console.log(`Navegando a: ${name}`);
         navigate(path);
@@ -29,16 +30,18 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
 
     return (
         <div className="nav-inscricion-container">
-            <div className="nav-logo">
-                <img src={Unet} alt="Logo UNET" className="logo unet-logo" />
-
+            {/* 2. Usamos la clase 'nav-logos' para aplicar los estilos de apilamiento y tamaño */}
+            <div className="nav-logos">
+                {/* Logo principal */}
+                <img src={UnetLogo} alt="Logo UNET" className="logo unet-logo" /> 
+                {/* Segundo logo: 20% del tamaño del UNET */}
+                {/* <img src={CatedraLogo} alt="Logo Cátedra" className="logo catedra-logo" /> */}
             </div>
 
             <h4 className="nav-title">Gestión de Población</h4>
             <div className="nav-options-list">
                 
                 {navItems.map((item) => {
-                    // 🚨 Determinamos si la ruta actual coincide con el elemento del menú
                     const isActive = location.pathname === item.path; 
 
                     return (

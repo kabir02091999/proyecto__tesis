@@ -1,78 +1,104 @@
-/* --- Estilos para el NAV_INSCRICION (Diseño Mejorado) --- */
+/* --- Estilos para el NAV_INSCRICION (Diseño Minimalista Moderno) --- */
 
 .nav-inscricion-container {
-    /* Define el contenedor del submenú */
     width: 280px; 
     min-height: 100vh; 
     
-    /* 🚨 CAMBIO CLAVE: Fondo Azul Celeste Suave */
-    background-color: #F0F8FF; /* Azul Celeste Suave */
+    /* FONDO: Blanco puro para un diseño limpio */
+    background-color: #FFFFFF; 
     
-    border-right: 1px solid #d0dbe8; /* Borde más sutil que el gris */
+    border-right: 1px solid #e0e0e0; 
     padding: 20px 0; 
     
-    /* Sombra para que se "levante" un poco de la página */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05); 
+    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.03); 
 }
+
+/* ------------------------------------------- */
+/* ESTILOS DE LOGOS */
+/* ------------------------------------------- */
+
+.nav-logos {
+    display: flex;
+    flex-direction: column; /* Apilar verticalmente */
+    align-items: center;
+    gap: 10px; 
+    margin-bottom: 30px; 
+}
+
+.unet-logo {
+    width: 100px; /* Tamaño base definido para el logo UNET */
+    height: auto;
+}
+
+.catedra-logo {
+    width: 20px; /* 🚨 20% del tamaño del UNET (20% de 100px) */
+    height: auto;
+}
+
+/* ------------------------------------------- */
+/* ESTILOS DE TÍTULO */
+/* ------------------------------------------- */
 
 .nav-title {
-    /* Estilo del título principal */
-    font-size: 1.2em;
-    font-weight: 600;
-    color: #4a4a4a; /* Gris oscuro elegante */
-    margin: 0 20px 20px 20px; 
-    padding-bottom: 10px;
-    border-bottom: 1px solid #d0dbe8; /* Separador que combina con el fondo azul */
+    font-size: 1.1em; 
+    font-weight: 700; 
+    color: #333333; 
+    margin: 0 20px 25px 20px; 
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eeeeee; 
 }
 
+/* ------------------------------------------- */
+/* ESTILOS DE OPCIONES */
+/* ------------------------------------------- */
+
 .nav-options-list {
-    /* Contenedor de los botones */
     display: flex;
     flex-direction: column;
-    gap: 2px; 
+    gap: 0; 
 }
 
 .nav-item-button {
-    /* Estilo base de los botones */
     background-color: transparent;
-    color: #4a4a4a; 
+    color: #555555; 
     border: none;
     text-align: left;
-    padding: 12px 20px; 
+    padding: 14px 25px; 
     cursor: pointer;
-    font-size: 1em;
-    border-radius: 0; 
-    transition: background-color 0.2s, color 0.2s;
+    font-size: 0.95em;
+    transition: background-color 0.1s, color 0.1s;
     width: 100%;
+    display: flex; 
+    align-items: center;
 }
 
 .nav-item-button:hover {
-    /* Resaltado de hover muy sutil */
-    background-color: #e5f1ff; /* Azul ligeramente más claro que el fondo */
-    color: #007bff; /* Color primario al pasar el ratón */
+    background-color: #f7f7f7; 
+    color: #007bff; 
 }
 
 /* ------------------------------------------- */
-/* ESTILOS DE ELEMENTOS ICONOGRÁFICOS */
+/* ESTILOS DEL BOTÓN ACTIVO */
 /* ------------------------------------------- */
 
-.nav-item-button span {
-    margin-right: 8px;
-}
-
-/* --- Estilo para el botón ACTIVO --- */
-/* El azul activo se mantiene brillante para contrastar, pero el fondo es muy suave. */
 .active-nav-item {
-    /* 🚨 CAMBIO CLAVE: Fondo azul cielo para el activo */
-    background-color: #E6F7FF !important; /* Azul Cielo Suave para activo */
+    /* Fondo que se diferencia sutilmente del blanco */
+    background-color: #f0f8ff !important; 
     
-    color: #007bff !important; /* Texto azul primario */
+    color: #007bff !important; 
     font-weight: 600;
-    border-left: 3px solid #007bff; /* Tira de color para indicar la página actual */
-    padding-left: 17px; 
+    
+    /* Tira de color azul que va de extremo a extremo */
+    border-left: 5px solid #007bff; 
+    padding-left: 20px; 
 }
 
 .active-nav-item:hover {
-    background-color: #E6F7FF !important; 
+    background-color: #f0f8ff !important; 
     color: #007bff !important;
+}
+
+.nav-item-button span {
+    margin-right: 12px; 
+    font-size: 1.1em;
 }

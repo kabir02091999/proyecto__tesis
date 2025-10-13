@@ -1,0 +1,31 @@
+/* ----------------------------------------------------------------------
+   CSS que debe estar disponible en tu aplicación
+   ---------------------------------------------------------------------- */
+
+/* Estilos de impresión: SOLO se aplican cuando se activa el diálogo de impresión */
+@media print {
+    
+    /* 1. Aplicar Padding a la Contenedor Imprimible
+       Esto aplica un espacio interno de 24px al contenido de impresión.
+    */
+    #print {
+        /* PADDING DESEADO: 24px en todos los lados */
+        padding: 24px !important; 
+        
+        /* Opcional: Asegúrate de que no tenga bordes o sombras indeseados en el PDF */
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    /* 2. Opcional: Ajustar los márgenes físicos del papel (si es necesario)
+       Esto controla los márgenes que el navegador aplica al borde del papel.
+       '0.5in' es un margen estándar.
+    */
+    @page {
+        margin: 0.5in; 
+    }
+}
+
+/* ----------------------------------------------------------------------
+   Asegúrate de que tu componente JSX use este ID:
+   ---------------------------------------------------------------------- */
