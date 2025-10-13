@@ -2,6 +2,9 @@ import { pool } from "../db/db.js";
 import bcrypt from "bcryptjs";
 import { crateToken } from "../libs/jwt.js";
 
+// funciones auxiliares 
+import {generarDomingosPorLapso} from '../funcines/lapso.js';
+
 
 async function crear_plobacion_aux(datos, padres,datos_poblacion) {
     const { nombre, apellidos, tipoPoblacion, ci, } = datos
@@ -470,6 +473,53 @@ export const  getInscritosPorFiltro = async (req, res) => {
         console.error('Error al buscar inscritos por lapso/seccion/nivel:', error);
         return res.status(500).json({ 
             message: 'Error interno del servidor al realizar la búsqueda.' 
+        });
+    }
+};
+
+export const generarCalendarioLapsoController = async (req, res) => {
+    const { lapsoId } = req.params; 
+
+    try {
+        // 1. OBTENER FECHAS DE INICIO Y FIN DEL LAPSO
+        const [lapsoResult] = await pool.query(
+            'SELECT inicio, fin FROM lapso WHERE ID = ?', 
+            [lapsoId]
+        );
+
+        if (lapsoResult.length === 0) {
+            return res.status(404).json({ message: "Lapso no encontrado." });
+        }
+
+        const { inicio, fin } = lapsoResult[0];
+        
+        // Convertir Date objects a string 'YYYY-MM-DD' para las consultas y la lógica
+        const fechaInicioStr = inicio.toISOString().substring(0, 10);
+        const fechaFinStr = fin.toISOString().substring(0, 10);
+        
+
+        // CONSULTAR TODOS LOS EVENTOS DEL CALENDARIO LITÚRGICO PARA ESE RANGO
+        const [eventosDB] = await pool.query(
+            'SELECT fecha, evento FROM calendario_liturgico WHERE fecha BETWEEN ? AND ? ORDER BY fecha ASC', 
+            [fechaInicioStr, fechaFinStr]
+        );
+        
+
+        // GENERAR LA LISTA FINAL DE DOMINGOS
+        // Llamamos a la función utilitaria, pasándole los datos ya consultados
+        const listaDomingos = generarDomingosPorLapso(
+            fechaInicioStr, 
+            fechaFinStr, 
+            eventosDB // Pasamos el array de eventos de la DB
+        );
+
+        //  RESPONDER AL CLIENTE
+        return res.json(listaDomingos);
+
+    } catch (error) {
+        console.error("Error al generar el calendario del lapso:", error);
+        return res.status(500).json({ 
+            message: "Error interno del servidor al generar el calendario." 
         });
     }
 };

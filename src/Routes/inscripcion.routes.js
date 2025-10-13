@@ -13,7 +13,8 @@ import {RegistroLapso,GetLapso,
         getPoblacionByLapso,
         getEstudiantesPendientesEvaluacion,
         getProgresoEstudianteByCI,
-        getInscritosPorFiltro
+        getInscritosPorFiltro,
+        generarCalendarioLapsoController
         } from '../controllers/inscricion.controller.js';
 
 
@@ -38,7 +39,10 @@ router.get('/aprobacion/:ci',authRequired, getAprobacionByCI_Inner)// este me bu
 router.get('/estudiantes-pendientes-evaluacion/:ID_lapso',authRequired, getEstudiantesPendientesEvaluacion)// ojo aqui falta al autenticacion
 router.get('/get-progreso-poblacion/:ci',authRequired, getProgresoEstudianteByCI)///ojojo esta listo en el fron
 
-router.get('/inscritos-por-filtro/:lapsoId/:seccion/:nivel'/* ,authRequired */, getInscritosPorFiltro)///ojojo 
+router.get('/inscritos-por-filtro/:lapsoId/:seccion/:nivel',authRequired, getInscritosPorFiltro)///ojojo 
+
+//sona de pdf
+router.get('/calendario-lapso/:lapsoId'/* , authRequired */, generarCalendarioLapsoController); 
 
 
 //para la crear-poblacion
