@@ -2,31 +2,33 @@ import React, { useState } from 'react';
 import { AseAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from "react-router-dom";
 
-//css
-import '../css/login.css';
+//imagenes
+import logoParroquia from '../image/logoParroquia.png' // Corregido: asumimos que es '../image'
+import logoUnet from '../image/unet2.png' // Corregido: asumimos que es '../image'
 
-function login() {
+//css
+import '../css/login.css'; // Corregido: asumimos que es '../css'
+
+function Login() {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [error, setError] = useState(''); // Estado para manejar errores de login
   const navigate = useNavigate();
   const location = useLocation();
 
   const { login, user } = AseAuth();
 
-  const handleSubmit = async (e) => { // Agrega 'async' aquí
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', contrasena);
+    setError(''); // Limpiar errores previos
 
     try {
-      // Usa 'await' para esperar la respuesta completa de la promesa
       const result = await login({ email, contrasena });
 
-      // Ahora puedes acceder a la propiedad tipoUsuario
       const tipo = result.tipoUsuario;
       console.log('Tipo de usuario:', tipo);
 
-      // Redirige basándote en el tipo de usuario
+      // Redirige basándose en el tipo de usuario
       if (tipo === 'administrador') {
         navigate("/admin");
       } else if (tipo === 'financiero') {
@@ -37,47 +39,70 @@ function login() {
         navigate("/catequesis")
       }
       else {
-        // Redirige a una página por defecto si el tipo no coincide
         navigate("/"); 
       }
 
-    } catch (error) {
-      console.error("Error en el inicio de sesión:", error);
+    } catch (err) {
+      console.error("Error en el inicio de sesión:", err);
+      // Mostrar un mensaje de error legible al usuario
+      setError("Credenciales incorrectas o usuario no autorizado."); 
     }
   };
 
   return (
     <div className="login-container1">
-        <div className="login-container2">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Iniciar Sesión</h2>
-        <div className="form-group">
-          <label htmlFor="email">Correo electrónico</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+      <div className="login-container2">
+        
+        <div className="logo-section">
+          <img 
+            src={logoUnet} 
+            alt="Logo UNET" 
+            className="logo logo-unet" 
+            onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/120x120/A0A0A0/FFFFFF?text=U+Logo" }}
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="contrasena">Contraseña</label>
-          <input
-            type="password" 
-            id="contrasena"
-            value={contrasena}
-            onChange={(e) => setContrasena(e.target.value)}
-            required
+          
+          <img 
+            src={logoParroquia} 
+            alt="Logo Parroquia" 
+            className="logo logo-parroquia" 
+            onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/100x100/A0A0A0/FFFFFF?text=P+Logo" }}
           />
+          
         </div>
-        <button type="submit" className="login-button">
-          Iniciar sesión
-        </button>
-      </form>
+
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2>Iniciar Sesión</h2>
+          
+          {/* Muestra el mensaje de error si existe */}
+          {error && <p className="error-message">{error}</p>}
+          
+          <div className="form-group">
+            <label htmlFor="email">Correo electrónico</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="contrasena">Contraseña</label>
+            <input
+              type="password" 
+              id="contrasena"
+              value={contrasena}
+              onChange={(e) => setContrasena(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="login-button">
+            Iniciar sesión
+          </button>
+        </form>
       </div>
     </div>
   );
 }
 
-export default login;
+export default Login;

@@ -1,14 +1,3 @@
-/* body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f0f2f5; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-} */
-
-
 .login-container1 {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -27,6 +16,33 @@
   width: 350px;
   text-align: center;
 }
+
+/* --- ESTILOS DE LOGOS --- */
+.logo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Espacio entre los logos */
+    margin-bottom: 20px; /* Espacio debajo de los logos y antes del formulario */
+}
+
+.logo {
+    height: auto;
+    object-fit: contain;
+}
+
+.logo-parroquia {
+    /* Base size para el logo de la parroquia */
+    width: 80px; 
+}
+
+.logo-unet {
+    /* 20% más grande que el logo de la parroquia (80px * 1.2 = 96px) */
+    width: 96px; 
+}
+
+/* --- FIN ESTILOS DE LOGOS --- */
+
 
 .login-form h2 {
   margin-bottom: 25px;
@@ -77,4 +93,13 @@
 
 .login-button:hover {
   background-color: #0056b3; /* Azul más oscuro al pasar el cursor */
+}
+
+.error-message {
+    color: #dc3545; /* Rojo para errores */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
 }
