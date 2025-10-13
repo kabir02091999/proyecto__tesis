@@ -3,16 +3,16 @@ import { AseAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from "react-router-dom";
 
 //imagenes
-import logoParroquia from '../image/logoParroquia.png' // Corregido: asumimos que es '../image'
-import logoUnet from '../image/unet2.png' // Corregido: asumimos que es '../image'
+import logoParroquia from '../image/logoParroquia.png' 
+import logoUnet from '../image/unet2.png' 
 
 //css
-import '../css/login.css'; // Corregido: asumimos que es '../css'
+import '../css/login.css'; 
 
 function Login() {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
-  const [error, setError] = useState(''); // Estado para manejar errores de login
+  const [error, setError] = useState(''); 
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,11 +20,11 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Limpiar errores previos
-
+    setError(''); 
+    
     try {
       const result = await login({ email, contrasena });
-
+      console.log("Inicio de sesión exitoso:", result);
       const tipo = result.tipoUsuario;
       console.log('Tipo de usuario:', tipo);
 
@@ -47,6 +47,8 @@ function Login() {
       // Mostrar un mensaje de error legible al usuario
       setError("Credenciales incorrectas o usuario no autorizado."); 
     }
+
+    console.log("Usuario actual:", user);
   };
 
   return (

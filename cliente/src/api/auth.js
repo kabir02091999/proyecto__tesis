@@ -85,6 +85,10 @@ export const getProgresoEstudianteByCI = async (ci) => {
     return api.get(`/inscripcion/get-progreso-poblacion/${ci}`);
 }
 
+export const getInscritosPorFiltro = async (lapsoId, seccion, nivel) => {
+    return api.get(`/inscripcion/inscritos-por-filtro/${lapsoId}/${seccion}/${nivel}`);
+}
+
 // Al cargar la aplicación, verificamos si hay un token en el localStorage
 // y lo configuramos en los encabezados de Axios.
 const tokenFromStorage = localStorage.getItem('token');

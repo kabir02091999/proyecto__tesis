@@ -1,7 +1,15 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 
 //api 
-import { getPoblacion, getFechasLapso , createPoblacion as createPoblacion1 , inscribirEstudiante ,getPoblacionByLapso as getPoblacionByLapso1,getAprobadosReprobados,PostAprobacion, getProgresoEstudianteByCI as getProgresoEstudianteByCI1} from '../api/auth';
+import {getPoblacion,
+        getFechasLapso,
+        createPoblacion as createPoblacion1,
+        inscribirEstudiante,
+        getPoblacionByLapso as getPoblacionByLapso1,
+        getAprobadosReprobados,
+        PostAprobacion,
+        getProgresoEstudianteByCI as getProgresoEstudianteByCI1,
+        getInscritosPorFiltro as getInscritosPorFiltro1} from '../api/auth';
 
 // Crear el contexto
 export const PoblacionContext = createContext();
@@ -173,6 +181,22 @@ export const PoblacionProvider = ({ children }) => {
         setLoading(false);
     }
 
+    const getInscritosPorFiltro = async (lapsoId, seccion, nivel) => {
+        setLoading(true);
+        setError(null);
+        setPoblacionPorLapso([]); // Limpiar datos anteriores antes de la búsqueda
+        try {
+            const response = await getInscritosPorFiltro1(lapsoId, seccion, nivel);
+            const data = response.data;
+            setPoblacionPorLapso(data) // Actualiza el estado con los datos obtenidos
+        } catch (err) {
+            setError("Error al obtener los inscritos por filtro.");
+            console.error('Error al obtener los inscritos por filtro:', err);
+        }
+        setLoading(false);
+    }/// ojo aqui fatl cosas 
+
+
 
     // Llamar a fetchLapso cuando el componente se monte o cuando actuLapso cambie
     useEffect(() => {
@@ -182,7 +206,7 @@ export const PoblacionProvider = ({ children }) => {
 
 
     return (
-        <PoblacionContext.Provider value={{progresoEstudiante,getProgresoEstudianteByCI,Post_Aprobacion,aprobadoReprobado,aprobado_reprobado ,getPoblacionByLapso,poblacionPorLapso , Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
+        <PoblacionContext.Provider value={{getInscritosPorFiltro,progresoEstudiante,getProgresoEstudianteByCI,Post_Aprobacion,aprobadoReprobado,aprobado_reprobado ,getPoblacionByLapso,poblacionPorLapso , Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
             {children}
         </PoblacionContext.Provider>
     );

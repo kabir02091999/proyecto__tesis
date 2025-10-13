@@ -15,7 +15,7 @@ function Crear_lapso() {
             
             {/* Columna 2: Contenido Principal (Lo agrupamos en un div) */}
             <div className="admin-content-main">
-                <PostLapso/>
+                <PostLapso/>{/* ojo revisar no rececarga el getFecha o no actualisar */}
                 {/* Ahora GetFechas está correctamente debajo de PostLapso */}
                 <GetFechas/> 
             </div>

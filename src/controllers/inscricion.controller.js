@@ -157,45 +157,6 @@ export const getfindPoblacionByCI = async (req, res) => {
     }
 };
 
-
-/* export const getfindPoblacionByCI = async (req, res) => {
-    const { CI } = req.params;
-    
-    try {
-        // 1. Consultas a la base de datos
-        const [rows] = await pool.query('SELECT * FROM poblacion WHERE ci = ?', [CI]);
-        const [rows2] = await pool.query('SELECT * FROM padres WHERE ci = ?', [CI]);
-        const [rows3] = await pool.query('SELECT * FROM datospoblacion WHERE ci = ?', [CI]);
-
-        // 2. VERIFICACIÓN CRÍTICA (Población Principal)
-        // Si el registro principal (poblacion) no existe, devolvemos 404 y terminamos.
-        if (rows.length === 0) {
-            return res.status(404).json({ message: 'Población con CI no registrada.' });
-        }
-
-        // 3. COMBINACIÓN DE DATOS (Adjuntar lo que esté disponible)
-        
-        // rows2 y rows3 pueden ser arrays vacíos (length === 0) si no hay datos.
-        // Usamos [0] para obtener el objeto o 'undefined' si el array está vacío.
-        const datosPadres = rows2.length > 0 ? rows2[0] : null;
-        const datosSecundarios = rows3.length > 0 ? rows3[0] : null;
-
-        const resultado = {
-            ...rows[0],                     // Datos principales (siempre existen aquí)
-            padres: datosPadres,            // Objeto de padres o null
-            datos_poblacion: datosSecundarios // Objeto de datos secundarios o null
-        };
-        
-        // 4. ÉXITO
-        // Devolvemos 200 OK con el objeto combinado, incluso si 'padres' o 'datos_poblacion' son null.
-        return res.status(200).json(resultado);
-
-    } catch (error) {
-        console.error("Error en la DB:", error);
-        res.status(500).json({ message: 'Error al obtener la población' });
-    }
-}; */
-
 // request para verificar si entidad población existe por id 
 export const getfindPoblacionByID = async (req, res) => {
     const { id } = req.params;
@@ -450,6 +411,65 @@ export const getProgresoEstudianteByCI = async (req, res) => {
         return res.status(500).json({ 
             message: 'Error interno del servidor al consultar el progreso.',
             error: error.message
+        });
+    }
+};
+
+export const  getInscritosPorFiltro = async (req, res) => {
+    // 1. Obtener los parámetros de búsqueda desde la URL
+    const { lapsoId, seccion, nivel } = req.params;
+
+    // 2. Validar que se hayan proporcionado los parámetros
+    if (!lapsoId || !seccion || !nivel) {
+        return res.status(400).json({ 
+            message: 'Debe proporcionar el ID del lapso, la sección y el nivel para la búsqueda.' 
+        });
+    }
+
+    try {
+        // 3. Definir la consulta con placeholders (?)
+        const sqlQuery = `
+            SELECT
+                p.nombre AS Nombre_Estudiante,
+                p.apellidos AS Apellido_Estudiante,
+                p.ci AS Cedula,
+                p.tipoPoblacion,
+                i.seccion AS Seccion_Inscrita,
+                i.nivel AS Nivel_Inscrito,
+                l.ID AS ID_lapso,
+                l.tipo_inscripcion
+            FROM
+                poblacion p
+            INNER JOIN
+                inscrito i ON p.ci = i.CI
+            INNER JOIN
+                lapso l ON i.ID_lapso = l.ID
+            WHERE
+                l.ID = ? 
+                AND i.seccion = ?
+                AND i.nivel = ?;
+        `;
+
+        // 4. Ejecutar la consulta pasando los parámetros al array de valores
+        const [rows] = await pool.query(sqlQuery, [lapsoId, seccion, nivel]);
+
+        // 5. Manejar el resultado
+        if (rows.length === 0) {
+            // Si no hay resultados, devolvemos 404 (Not Found) o 200 con array vacío, 
+            // 200 con array vacío es más común para búsquedas.
+            return res.status(200).json({
+                message: "No se encontraron inscritos con los filtros proporcionados.",
+                data: []
+            });
+        }
+
+        // 6. Devolver los datos de los estudiantes
+        return res.status(200).json(rows);
+
+    } catch (error) {
+        console.error('Error al buscar inscritos por lapso/seccion/nivel:', error);
+        return res.status(500).json({ 
+            message: 'Error interno del servidor al realizar la búsqueda.' 
         });
     }
 };

@@ -18,6 +18,7 @@ import Calendario_liturgico from './pages/Calendario_liturgico'
 import ProtectedRoute from './pages/protectedRoute'
 import Aprobacion_Reprobacion from './pages/Aprobacion_Reprobacion'
 import Progreso_estudiante from './pages/Progreso_estudiante'
+import InscripcionPDF from './pages/inscricionpdf'
 
 function App() {
   // El useState(0) no se usa, lo puedes dejar o quitar.
@@ -81,6 +82,11 @@ function App() {
               <Route path='/catequesis/progreso-estudiante' element={
                 <PoblacionProvider>
                   <Progreso_estudiante/>
+                </PoblacionProvider>}/>
+              
+              <Route path='/catequesis/pdf' element={
+                <PoblacionProvider>
+                  <InscripcionPDF/>
                 </PoblacionProvider>}/>
 
             <Route path='/financiero' element={

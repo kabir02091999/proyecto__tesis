@@ -2,7 +2,19 @@ import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToke.js';
 
 
-import { RegistroLapso,GetLapso, getfindPoblacionByID, crearPoblacion ,getfindPoblacionByCI, aprobacion, inscripto,getinscript_CI, getAprobacionByCI_Inner,getPoblacionByLapso,getEstudiantesPendientesEvaluacion,getProgresoEstudianteByCI} from '../controllers/inscricion.controller.js';
+import {RegistroLapso,GetLapso, 
+        getfindPoblacionByID,
+        crearPoblacion,
+        getfindPoblacionByCI,
+        aprobacion,
+        inscripto,
+        getinscript_CI,
+        getAprobacionByCI_Inner,
+        getPoblacionByLapso,
+        getEstudiantesPendientesEvaluacion,
+        getProgresoEstudianteByCI,
+        getInscritosPorFiltro
+        } from '../controllers/inscricion.controller.js';
 
 
 const router = Router();
@@ -24,7 +36,9 @@ router.post('/aprobacion',authRequired, aprobacion)
 router.get('/aprobacion/:ci',authRequired, getAprobacionByCI_Inner)// este me busca la tabla aprbacion i tre los datos de lapso y incrito
 
 router.get('/estudiantes-pendientes-evaluacion/:ID_lapso',authRequired, getEstudiantesPendientesEvaluacion)// ojo aqui falta al autenticacion
-router.get('/get-progreso-poblacion/:ci'/* ,authRequired */, getProgresoEstudianteByCI)///ojojo esta listo en el fron
+router.get('/get-progreso-poblacion/:ci',authRequired, getProgresoEstudianteByCI)///ojojo esta listo en el fron
+
+router.get('/inscritos-por-filtro/:lapsoId/:seccion/:nivel'/* ,authRequired */, getInscritosPorFiltro)///ojojo 
 
 
 //para la crear-poblacion

@@ -21,6 +21,7 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
         { name: 'Aprobación / Reprobación', path: '/catequesis/aprobacion-reprobacion', icon: '✅' }, 
         { name: 'Progreso del estudiante', path: '/catequesis/progreso-estudiante', icon: '📈' }, 
         { name: 'Buscar poblacion', path: '/catequesis/buscar-poblacion', icon: '🔍' },
+        { name: 'Generar PDF', path: '/catequesis/pdf', icon: '📄' },
     ];
     
     const handleNavigation = (path, name) => {
