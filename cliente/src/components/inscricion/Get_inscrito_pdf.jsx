@@ -3,6 +3,7 @@ import { usePoblacion } from "../../context/PoblacionContext";
 import PlanillaAsistencia from '../../components/pdf/Planilla_Asistencia';
 import PlanillaControlAsistencia from '../pdf/PlanillaControlAsistencia';
 import ReactToPrint, { useReactToPrint } from 'react-to-print';
+import ProgramacionConfirmacion from '../pdf/PlanillaControlConfirmacion';
 
 
 
@@ -78,9 +79,13 @@ function Get_inscrito_pfd() {
     
     const contentRef = useRef(null);
     const contentRef1 = useRef(null);
+    const contentRef2 = useRef(null);
 
     const reactToPrintFn = useReactToPrint({ contentRef });
     const reactToPrintFn1 = useReactToPrint({contentRef:contentRef1});
+    const reactToPrintFn2 = useReactToPrint({contentRef:contentRef2});
+
+    console.log("Datos para Confirmación:",  getLapso)
 
     return (
         <div className="poblacion-pdf-container">
@@ -185,6 +190,40 @@ function Get_inscrito_pfd() {
                     </div>
 
                 )
+
+            }
+            {
+                    /* inscritos = [], filtros = {}, calendario = [] , contentRef */
+                getLapso.length != 0 && (
+                        
+                <div>
+                    {/* <button onClick={reactToPrintFn2} >IMPRMIRRRRRRRRRRRRRRRR CONTROL DE ASISTENCIA</button> */}
+                   {/*  <PlanillaControlConfirmacion 
+                        inscritos={inscritos} 
+                        filtros={filtros} 
+                        calendario={getLapso} // Se mapea su variable 'getLapso' a la prop 'calendario'
+                        contentRef={contentRef} // Referencia necesaria para el componente de impresión
+                    /> */}
+                    {/* <ProgramacionConfirmacion 
+                    calendario={getLapso} 
+                    filtros={inscripcionData}    
+                    contentRef={contentRef2} 
+                /> */}
+
+                        <div>
+                {/* Botón que usa la función de impresión asociada a contentRef2 */}
+                <button onClick={reactToPrintFn2} >IMPRIMIR PROGRAMACIÓN</button> 
+                
+                <ProgramacionConfirmacion 
+                    calendario={getLapso} 
+                    filtros={inscripcionData}     
+                    ref={contentRef2} // <<<— ¡CORREGIDO! DEBE SER LA PROP 'ref'
+                />
+            </div>
+
+                </div>
+
+    )
 
             }
 
