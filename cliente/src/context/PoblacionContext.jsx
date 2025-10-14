@@ -9,7 +9,8 @@ import {getPoblacion,
         getAprobadosReprobados,
         PostAprobacion,
         getProgresoEstudianteByCI as getProgresoEstudianteByCI1,
-        getInscritosPorFiltro as getInscritosPorFiltro1} from '../api/auth';
+        getInscritosPorFiltro as getInscritosPorFiltro1,
+        obtenerCalendarioLapso as btenerCalendarioLapso} from '../api/auth';
 
 // Crear el contexto
 export const PoblacionContext = createContext();
@@ -32,7 +33,8 @@ export const PoblacionProvider = ({ children }) => {
     const [poblacionPorLapso, setPoblacionPorLapso] = useState([]); // Nuevo estado para población por lapso
     const [aprobadoReprobado, setAprobadoReprobado] = useState([]); // Nuevo estado para aprobado/reprobado
     const [progresoEstudiante, setProgresoEstudiante] = useState([]); // Nuevo estado para progreso del estudiante
-
+    const [getLapso, setGetLapso] = useState([]); // Nuevo estado para progreso del estudiante
+    
     const getPoblacionByCI = async (CI) => {
         setLoading(true);
         setError(null); // Limpiar errores anteriores
@@ -196,6 +198,21 @@ export const PoblacionProvider = ({ children }) => {
         setLoading(false);
     }/// ojo aqui fatl cosas 
 
+    const obtenerCalendarioLapso = async (lapsoId) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await btenerCalendarioLapso(lapsoId);
+            const data = response.data;
+            console.log("Datos de calendario litúrgico obtenidos:", data);
+            setGetLapso(data); // Actualiza el estado con los datos obtenidos
+            /* console.log("Datos de calendario litúrgico en estado:", getLapso); */
+        } catch (err) {
+            setError("Error al obtener el calendario litúrgico.");
+            console.error('Error al obtener el calendario litúrgico:', err);
+        }
+        setLoading(false);
+    }
 
 
     // Llamar a fetchLapso cuando el componente se monte o cuando actuLapso cambie
@@ -206,7 +223,7 @@ export const PoblacionProvider = ({ children }) => {
 
 
     return (
-        <PoblacionContext.Provider value={{getInscritosPorFiltro,progresoEstudiante,getProgresoEstudianteByCI,Post_Aprobacion,aprobadoReprobado,aprobado_reprobado ,getPoblacionByLapso,poblacionPorLapso , Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
+        <PoblacionContext.Provider value={{getLapso , obtenerCalendarioLapso, getInscritosPorFiltro,progresoEstudiante,getProgresoEstudianteByCI,Post_Aprobacion,aprobadoReprobado,aprobado_reprobado ,getPoblacionByLapso,poblacionPorLapso , Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
             {children}
         </PoblacionContext.Provider>
     );

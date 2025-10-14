@@ -37,10 +37,10 @@ function Inscri() {
             <div className="admin-content-main">
                 <GetPoblacion/>
 
-                <div>
+                {/* <div>
                     <button onClick={reactToPrintFn} >IMRPIMIRRRRRRRRRRRRRRRR</button>
-                        <PlanillaAsistencia contentRef={contentRef}   />
-                </div>
+                    <PlanillaAsistencia contentRef={contentRef}   />
+                </div> */}
 
             </div>
             

@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { usePoblacion } from "../../context/PoblacionContext";
+import PlanillaAsistencia from '../../components/pdf/Planilla_Asistencia';
+import PlanillaControlAsistencia from '../pdf/PlanillaControlAsistencia';
+import ReactToPrint, { useReactToPrint } from 'react-to-print';
+
+
 
 // Función auxiliar simple para formatear fechas
 const formatFecha = (dateString) => {
     if (!dateString) return 'N/A';
     return new Date(dateString).toLocaleDateString('es-VE'); 
 };
+
 
 
 function Get_inscrito_pfd() {
@@ -16,7 +22,7 @@ function Get_inscrito_pfd() {
         nivel: ''
     });
     const [loading, setLoading] = useState(false);
-    const { Lapso, getInscritosPorFiltro, poblacionPorLapso } = usePoblacion(); 
+    const { Lapso, getInscritosPorFiltro, poblacionPorLapso ,obtenerCalendarioLapso ,getLapso} = usePoblacion(); 
     
  
     const [inscritos, setInscritos] = useState([]); 
@@ -45,11 +51,11 @@ function Get_inscrito_pfd() {
         }
 
         setLoading(true);
-        console.log("Buscando inscritos con filtros:", inscripcionData);
+       // console.log("Buscando inscritos con filtros:", inscripcionData);
         
         try {
             await getInscritosPorFiltro(lapsoId, seccion, nivel);
-            
+            await obtenerCalendarioLapso(lapsoId); 
             if (poblacionPorLapso.length === 0) { 
                  // alert("No se encontraron estudiantes...");
             }
@@ -68,6 +74,13 @@ function Get_inscrito_pfd() {
         }
     }, [inscritos]);
 
+    //console.log("Estado actual de inscritos:", getLapso);
+    
+    const contentRef = useRef(null);
+    const contentRef1 = useRef(null);
+
+    const reactToPrintFn = useReactToPrint({ contentRef });
+    const reactToPrintFn1 = useReactToPrint({contentRef:contentRef1});
 
     return (
         <div className="poblacion-pdf-container">
@@ -145,6 +158,36 @@ function Get_inscrito_pfd() {
 
             {loading && <p>Cargando datos...</p>}
             
+
+            {
+                getLapso.length != 0 && 
+                ( 
+                    <div>
+                        <button onClick={reactToPrintFn} >IMRPIMIRRRRRRRRRRRRRRRR</button>
+                        <PlanillaAsistencia data={getLapso} contentRef={contentRef}   />
+                    </div>
+
+                )
+            }
+
+            {
+
+                getLapso.length !=0 && (
+
+                    <div>
+                        <button onClick={reactToPrintFn1} >IMRPIMIRRRRRRRRRRRRRRRR CONTROL DE ASISTENCIA</button>
+                        <PlanillaControlAsistencia
+                            contentRef={contentRef1} 
+                            inscritos={inscritos} 
+                            filtros={inscripcionData} 
+                            calendario={getLapso} 
+                        />
+                    </div>
+
+                )
+
+            }
+
         </div>
     );
 }
