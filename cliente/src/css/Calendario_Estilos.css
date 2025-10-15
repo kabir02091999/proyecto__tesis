@@ -1,37 +1,30 @@
-/* ---------------------------------------------------------------------- */
-/* 🚨 SOLUCIÓN FINAL PARA FORZAR EL ANCHO Y MINIMIZAR EL HORIZONTAL */
-/* ---------------------------------------------------------------------- */
+/* En ../css/Calendario_Estilos.css */
 
-/* A. Contenedor del Calendario y Vista de Mes: Forzar el 100% */
 .rbc-calendar,
 .rbc-month-view {
     width: 100% !important;
     max-width: 100% !important;
-    /* Oculta si la caja se desborda y elimina el scroll horizontal */
     overflow-x: hidden !important; 
-    box-sizing: border-box !important;
 }
 
-/* B. Columnas de Días y Cabeceras (LA PARTE MÁS CRÍTICA) */
-/* Este selector controla la distribución de los 7 días */
+/* 🚨 SOLUCIÓN DE ANCHO FINAL: Obliga a las columnas a ser 1/7 */
 .rbc-month-view .rbc-row-segment,
 .rbc-month-view .rbc-date-cell,
 .rbc-month-view .rbc-header {
-    /* 100% / 7 días = 14.2857% */
     flex-basis: 14.2857% !important; 
     max-width: 14.2857% !important; 
     
-    /* 🔑 CLAVE: Obliga a la columna a encogerse (anula el efecto del texto largo) */
+    /* 🔑 CLAVE: Anula el min-width interno que causa el estiramiento */
     min-width: 0 !important; 
     flex-shrink: 1 !important; 
     
-    /* Oculta cualquier cosa que se salga del borde de la columna */
     overflow: hidden !important; 
 }
 
-/* C. Contenido del Evento: Reafirmar el truncamiento CSS (Soporte) */
 .rbc-event-content {
+    /* Necesario para truncar el texto que ahora está forzado a un ancho pequeño */
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+    min-width: 0 !important; 
 }

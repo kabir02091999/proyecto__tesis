@@ -75,10 +75,20 @@
 
 /* Yo mantengo los estilos de los hijos que ya estaban */
 .calendario-liturgico-container h2 {
+    max-width: 900px;
     color: #343a40;
     text-align: center;
     margin-bottom: 25px;
     font-size: 2rem;
     border-bottom: 2px solid #007bff;
     padding-bottom: 10px;
+}
+
+.calendar-view {
+    /* 🚨 Asegura que el contenedor del calendario no se estire */
+    max-width: 700px; /* Pruebe con 700px, 650px o 600px */
+    width: 100%;
+    overflow-x: hidden !important; 
+    
+    /* Si existe una clase .calendario-liturgico-container, aplique estas reglas también */
 }

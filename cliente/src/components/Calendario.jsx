@@ -44,7 +44,7 @@ const localizer = dateFnsLocalizer({
 // -----------------------------------------------------------
 const formatEvents = (lapsoData) => {
     return lapsoData
-        .filter(item => item.fecha && item.liturgico) 
+        .filter(item => item.fecha && item.evento) 
         .map(item => {
             const datePart = item.fecha.substring(0, 10); 
             const dateObjectLocal = new Date(datePart); 
@@ -54,7 +54,7 @@ const formatEvents = (lapsoData) => {
             }
 
             return {
-                title: item.liturgico,
+                title: item.evento,
                 allDay: true,
                 start: dateObjectLocal, 
                 end: dateObjectLocal,   
@@ -70,7 +70,12 @@ const EventCalendar = ({ calendario }) => {
     const events = useMemo(() => formatEvents(calendario || []), [calendario]);
 
     return (
-        <div style={{ height: '600px', margin: '20px' }}>
+        <div style={{ 
+                height: '600px', 
+                margin: '10px',
+                width: '100%',         // Asegura que ocupe el 100% del .calendar-view
+                maxWidth: '100%',      // Evita que crezca más allá
+                overflow: 'hidden' }}>
             <Calendar
                 localizer={localizer}
                 events={events}

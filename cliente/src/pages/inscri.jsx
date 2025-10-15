@@ -93,7 +93,7 @@ function Inscri() {
             <GetPoblacion/>
             <div className="calendar-view">
                 <h1>Calendario de Programación Confirmación</h1> 
-                <EventCalendar calendario={calendarioData} /> 
+                <EventCalendar calendario={calendario} /> 
             </div>
         </div>
     </div>
