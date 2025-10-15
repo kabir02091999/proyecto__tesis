@@ -162,8 +162,6 @@ function Get_inscrito_pfd() {
             )}
 
             {loading && <p>Cargando datos...</p>}
-            
-
             {
                 getLapso.length != 0 && 
                 ( 
@@ -171,7 +169,6 @@ function Get_inscrito_pfd() {
                         <button onClick={reactToPrintFn} >IMRPIMIRRRRRRRRRRRRRRRR</button>
                         <PlanillaAsistencia data={getLapso} contentRef={contentRef}   />
                     </div>
-
                 )
             }
 
@@ -193,38 +190,18 @@ function Get_inscrito_pfd() {
 
             }
             {
-                    /* inscritos = [], filtros = {}, calendario = [] , contentRef */
-                getLapso.length != 0 && (
-                        
-                <div>
-                    {/* <button onClick={reactToPrintFn2} >IMPRMIRRRRRRRRRRRRRRRR CONTROL DE ASISTENCIA</button> */}
-                   {/*  <PlanillaControlConfirmacion 
-                        inscritos={inscritos} 
-                        filtros={filtros} 
-                        calendario={getLapso} // Se mapea su variable 'getLapso' a la prop 'calendario'
-                        contentRef={contentRef} // Referencia necesaria para el componente de impresión
-                    /> */}
-                    {/* <ProgramacionConfirmacion 
-                    calendario={getLapso} 
-                    filtros={inscripcionData}    
-                    contentRef={contentRef2} 
-                /> */}
-
-                        <div>
-                {/* Botón que usa la función de impresión asociada a contentRef2 */}
-                <button onClick={reactToPrintFn2} >IMPRIMIR PROGRAMACIÓN</button> 
+                /* inscritos = [], filtros = {}, calendario = [] , contentRef */
+                getLapso.length != 0 && (               
+                    <div>
+                    <button onClick={reactToPrintFn2} >IMPRIMIR PROGRAMACIÓN</button> 
                 
-                <ProgramacionConfirmacion 
-                    calendario={getLapso} 
-                    filtros={inscripcionData}     
-                    ref={contentRef2} // <<<— ¡CORREGIDO! DEBE SER LA PROP 'ref'
-                />
-            </div>
-
-                </div>
-
-    )
-
+                        <ProgramacionConfirmacion 
+                        calendario={getLapso} 
+                        filtros={inscripcionData}     
+                        ref={contentRef2}
+                        />
+                    </div>
+                )
             }
 
         </div>

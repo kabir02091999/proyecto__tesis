@@ -93,6 +93,10 @@ export const obtenerCalendarioLapso = async (lapsoId) => {
     return api.get(`/inscripcion/calendario-lapso/${lapsoId}`); 
 }
 
+export const getCalendario = async () => {
+    return api.get(`/calendario`);
+}
+
 // Al cargar la aplicación, verificamos si hay un token en el localStorage
 // y lo configuramos en los encabezados de Axios.
 const tokenFromStorage = localStorage.getItem('token');

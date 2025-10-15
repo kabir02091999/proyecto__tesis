@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { login as loginService, verifyToken as verifyTokenService ,crearCalendarioLiturgicos} from '../api/auth';
+import { login as loginService, verifyToken as verifyTokenService ,crearCalendarioLiturgicos, getCalendario} from '../api/auth';
 import cookie from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { use } from 'react';
@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
     const [token , setToken] = useState(null);
+    const [calendario, setCalendario] = useState([]);
     //const navigate = useNavigate();
 
     const login = async (userData) => {
@@ -67,6 +68,25 @@ export const AuthProvider = ({ children }) => {
         
 
     };
+
+    const Getcalendario = async () => {
+        try {
+            setLoading(true);
+            setErrors([]);
+            const response = await getCalendario();
+            setCalendario(response.data);
+            
+        }
+        catch (error) {
+            console.error('Error during getting calendario liturgico:', error);
+            setErrors(error.response?.data?.message || 'Getting calendario liturgico failed');
+            setLoading(false);
+            return error;
+        }
+        finally {
+            setLoading(false);
+        }
+    };
     
     // Este efecto se encarga de verificar la autenticación cuando la app se carga
     useEffect(() => {
@@ -98,7 +118,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{Post_Calendario_liturgico , user, loading, isAuthenticated, errors, login}}>
+        <AuthContext.Provider value={{calendario,Getcalendario ,Post_Calendario_liturgico , user, loading, isAuthenticated, errors, login}}>
             {children}
         </AuthContext.Provider>
     );
