@@ -1,7 +1,13 @@
 import {Router} from 'express';
-import {authRequired} from '../middlewares/validateToke.js'; // Assuming you have a middleware for token validation
+import {authRequired} from '../middlewares/validateToke.js'; 
 
-import {getUsuarios,createUsuario,loginUsuario,deleteUsuario, logout,verifyToken , crearCalendarioLiturgico ,getCalendarioYLapsoUnificado} from '../controllers/usuarios.controller.js';
+import {getUsuarios,
+        createUsuario,
+        loginUsuario,
+        deleteUsuario,
+        logout,verifyToken,
+        crearCalendarioLiturgico,
+        getCalendarioYLapsoUnificado} from '../controllers/usuarios.controller.js';
 
 const router = Router();
 

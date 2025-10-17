@@ -1,7 +1,5 @@
 import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToke.js';
-
-
 import {RegistroLapso,GetLapso, 
         getfindPoblacionByID,
         crearPoblacion,

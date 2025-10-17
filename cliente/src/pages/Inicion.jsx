@@ -1,7 +1,13 @@
-function Incion() {
+
+import NavbarParroquia from '../components/inicio/NavbarParroquia.jsx';
+
+function Inicion() {
   return (
-    <div>Inicion</div>
+    <div>
+      <NavbarParroquia/>
+      
+      Inicion</div>
   )
 }
 
-export default Incion
+export default Inicion

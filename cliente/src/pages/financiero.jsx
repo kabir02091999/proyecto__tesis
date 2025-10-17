@@ -1,9 +1,3 @@
-/* function financiero() {
-  return (
-    <div>financiero</div>
-  )
-}
-export default financiero */
 
 import React, { useEffect, useState } from 'react';
 import { AseAuth } from '../context/AuthContext';

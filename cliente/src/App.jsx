@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { AuthProvider } from './context/AuthContext'
 import { PoblacionProvider } from './context/PoblacionContext' // Lo necesitamos
+import { FinancieroProvider  } from './context/finacieroContext' // Lo necesitamos
 
 import Login from './pages/login'
 import Inicion from './pages/Inicion'
@@ -31,6 +32,8 @@ function App() {
         <Routes>
           {/* Rutas Públicas */}
           <Route path='/' element={<Inicion />} />
+          
+          
           <Route path='/login' element={<Login />} />
 
           {/* 2. Rutas Protegidas: ProtectedRoute actúa como layout/padre */}
@@ -90,11 +93,17 @@ function App() {
                 </PoblacionProvider>}/>
 
             <Route path='/financiero' element={
+              <FinancieroProvider>
+                <Financiero />
+              </FinancieroProvider>
+            } />
+          
+            <Route path='/contenido' element={
               <PoblacionProvider>
                 <Financiero />
               </PoblacionProvider>
             } />
-            
+
           </Route>
         </Routes>
       </Router>
