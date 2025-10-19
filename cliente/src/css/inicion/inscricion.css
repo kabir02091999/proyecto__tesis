@@ -1,0 +1,80 @@
+/* Colores */
+:root {
+    --text-color: #001F54;
+    --accent-color: #007bff;
+    --background-color: #f8f9fa;
+    --paragraph-color: #333;
+}
+
+/* Estilos Globales para la página de Inscripción */
+.inscricion-page-wrapper {
+    background-color: var(--background-color);
+    min-height: 100vh;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.inscricion-content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+/* Encabezado */
+.inscricion-header {
+    color: var(--text-color);
+    border-bottom: 3px solid var(--text-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Títulos de Sección */
+.inscricion-section-title {
+    color: var(--accent-color);
+    font-size: 1.4em;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--accent-color);
+    padding-left: 10px;
+    font-weight: 600;
+}
+
+/* Párrafos */
+.inscricion-p {
+    line-height: 1.6;
+    color: var(--paragraph-color);
+    margin-bottom: 15px;
+}
+
+/* Listas */
+.inscricion-list {
+    list-style-type: disc;
+    margin-left: 20px;
+    color: var(--paragraph-color);
+}
+
+/* Botón de Descarga */
+.inscricion-download-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.inscricion-download-button:hover {
+    background-color: #0056b3;
+}

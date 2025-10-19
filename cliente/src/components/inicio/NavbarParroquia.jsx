@@ -4,31 +4,39 @@ import React from 'react';
 import logoUnet from '../../image/unet2.png'; 
 import logoParroquia from '../../image/logoParroquia.png'; 
 
+// Colores
 const NAV_BACKGROUND_COLOR = '#F8F9FA'; // Gris Claro Sutil
-const TEXT_COLOR = '#001F54'; // Azul Institucional
+const TEXT_COLOR = '#001F54'; // Azul Institucional (Navy)
+const ACCENT_COLOR = '#3f51b5'; // Azul un poco más claro para el hover
 
-// Alturas
+// Alturas (manteniendo las alturas calculadas)
 const LOGO_HEIGHT_PARROQUIA = '85px';     
 const LOGO_HEIGHT_UNET = '102px';        
 
 
 const NavbarParroquia = () => {
+    // Definimos el estado para manejar el hover en los enlaces
+    const [hoveredLink, setHoveredLink] = React.useState(null);
+
+    // Función para obtener el estilo de un enlace, incluyendo el efecto hover
+    const getLinkStyle = (name) => ({
+        ...styles.link,
+        // Aplica el estilo de hover si el enlace actual es el que tiene el mouse encima
+        ...(hoveredLink === name && styles.linkHover) 
+    });
+
     return (
         <nav style={styles.navbar}>
             
             <div style={styles.logoContainer}>
                 
-                {/* GRUPO DE LOGOS ALINEADO A LA IZQUIERDA */}
+                {/* 1. GRUPO DE LOGOS ALINEADO A LA IZQUIERDA */}
                 <div style={styles.leftLogoGroup}> 
-                    
-                    {/* Logo UNET */}
                     <img 
                         src={logoUnet} 
                         alt="Logo UNET" 
                         style={styles.logoUnet} 
                     />
-
-                    {/* Logo Parroquia */}
                     <img 
                         src={logoParroquia} 
                         alt="Logo Parroquia Divino Maestro" 
@@ -36,23 +44,55 @@ const NavbarParroquia = () => {
                     />
                 </div>
 
-                {/* Título Central */}
+                {/* 2. Título Central */}
                 <h1 style={styles.title}>
-                    Sistema de Gestión Parroquial
+                    Parroquia Divino Maestro
                 </h1>
                 
-                {/* ➡️ ESPACIADOR DERECHO: Ajustado a 210px para igualar el ancho de los logos y centrar el título */}
+                {/* 3. ESPACIADOR DERECHO */}
                 <div style={styles.spacer} /> 
-
             </div>
 
-            {/* 2. Enlaces de Navegación */}
+            {/* 4. Línea de Separación bajo el Título */}
+            <div style={styles.separator} />
+
+            {/* 5. Enlaces de Navegación */}
             <div style={styles.navLinks}>
-                <a href="/inscripcion" style={styles.link}>Inscripción</a>
-                <a href="/calendario" style={styles.link}>Calendario</a>
-                <a href="/finanzas" style={styles.link}>Finanzas</a>
-                <a href="/reportes" style={styles.link}>Reportes</a>
-                <a href="/login" style={styles.link}>Login</a>
+                
+                {/* Nota: Usamos onMouseEnter/Leave para simular el :hover en CSS-in-JS */}
+                <a 
+                    href="/inscripcion" 
+                    style={getLinkStyle('inscripcion')} 
+                    onMouseEnter={() => setHoveredLink('inscripcion')}
+                    onMouseLeave={() => setHoveredLink(null)}
+                >
+                    Inscripción
+                </a>
+                
+                <a 
+                    href="/reportes" 
+                    style={getLinkStyle('reportes')}
+                    onMouseEnter={() => setHoveredLink('reportes')}
+                    onMouseLeave={() => setHoveredLink(null)}
+                >
+                    Reportes
+                </a>
+                <a 
+                    href="/login" 
+                    style={getLinkStyle('login')}
+                    onMouseEnter={() => setHoveredLink('login')}
+                    onMouseLeave={() => setHoveredLink(null)}
+                >
+                    Login
+                </a>
+                <a 
+                    href="/" 
+                    style={getLinkStyle('inicio')}
+                    onMouseEnter={() => setHoveredLink('inicio')}
+                    onMouseLeave={() => setHoveredLink(null)}
+                >
+                    Inicio
+                </a>
             </div>
 
         </nav>
@@ -67,8 +107,8 @@ const styles = {
         display: 'flex',
         flexDirection: 'column', 
         alignItems: 'center',
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)', 
-        borderBottom: `1px solid #dee2e6`, 
+        // Sombra más elegante
+        boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)', 
     },
     logoContainer: {
         width: '100%',
@@ -76,26 +116,27 @@ const styles = {
         display: 'flex',
         justifyContent: 'space-between', 
         alignItems: 'center',
-        marginBottom: '10px',
+        // Reducimos el margen inferior, ya que la línea separadora se encargará
+        marginBottom: '0', 
     },
     leftLogoGroup: {
         display: 'flex',
         alignItems: 'center',
-        gap: '20px', 
+        gap: '25px', // Un poco más de espacio entre logos
     },
     title: {
         color: TEXT_COLOR,
-        fontSize: '1.7em', 
-        fontWeight: '700',
-        // Aseguramos que el texto esté centrado DENTRO del elemento h1
+        // Fuente más grande y negrita para hacerlo más dominante
+        fontSize: '2.0em', 
+        fontWeight: '800', // Súper Negrita
+        fontFamily: 'Segoe UI, Roboto, Arial, sans-serif', // Fuente moderna
         textAlign: 'center', 
-        // Permite que el título ocupe todo el espacio entre los logos y el espaciador
         flexGrow: 1, 
-        // Quitamos margin: 0 auto, ya que flex-grow es suficiente aquí
+        // Eliminamos el margen superior/inferior para que se alinee mejor
+        margin: '0', 
     },
-    // ➡️ AJUSTE CRÍTICO PARA EL CENTRADO ⬅️
     spacer: {
-        // Hemos aumentado el ancho para que sea simétrico al grupo de logos de la izquierda.
+        // Mantenemos el espaciador para el centrado
         minWidth: '210px', 
     },
     
@@ -109,20 +150,40 @@ const styles = {
         width: 'auto',
     },
     
-    // ENLACES
+    // ⬇️ NUEVO ESTILO: Separador entre Título y Enlaces
+    separator: {
+        width: '100%',
+        maxWidth: '1200px',
+        height: '3px',
+        backgroundColor: TEXT_COLOR, // Línea en azul institucional
+        margin: '10px 0',
+    },
+
+    // ⬇️ ESTILOS DE ENLACES MEJORADOS
     navLinks: {
+        width: '100%',
+        maxWidth: '1200px',
         display: 'flex',
-        gap: '30px',
-        paddingTop: '5px',
+        gap: '15px', // Menos espacio para más enlaces
+        padding: '5px 0 10px 0', // Espaciado vertical
+        justifyContent: 'flex-end', // Alineamos los enlaces a la derecha
     },
     link: {
         color: TEXT_COLOR,
         textDecoration: 'none',
         fontSize: '1em',
-        padding: '5px 10px',
-        borderRadius: '5px',
-        transition: 'background-color 0.2s',
+        fontWeight: '600',
+        padding: '5px 12px',
+        borderRadius: '20px', // Forma de píldora
+        transition: 'all 0.3s ease',
+        fontFamily: 'Segoe UI, Roboto, Arial, sans-serif',
     },
+    linkHover: {
+        // Efecto hover sutil
+        backgroundColor: ACCENT_COLOR, 
+        color: '#FFFFFF', // Texto blanco al pasar el mouse
+        transform: 'translateY(-1px)', // Ligero efecto 3D
+    }
 };
 
 export default NavbarParroquia;

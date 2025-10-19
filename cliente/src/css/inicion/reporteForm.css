@@ -1,0 +1,118 @@
+/* Colores y Variables */
+:root {
+    --text-color: #001F54;
+    --accent-color: #007bff;
+    --background-color: #f0f2f5;
+    --border-color: #cccccc;
+    --input-bg: #f9f9f9;
+}
+
+/* Contenedor Principal del Formulario */
+.reporte-form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.reporte-form-title {
+    font-size: 2.2em;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.reporte-form-subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 20px;
+}
+
+/* Encabezados de Sección */
+.section-header {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--accent-color);
+    letter-spacing: 0.5px;
+}
+
+/* Contenedor para campos en paralelo (Grid) */
+.form-group-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+/* Estilos de Grupo de Formulario */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+/* Estilos para Inputs y Textarea */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--input-bg);
+    color: #333;
+    box-sizing: border-box; /* Crucial para que el padding no desborde el ancho */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Botón de Enviar */
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffffff;
+    margin-top: 30px;
+    transition: background-color 0.3s ease, transform 0.1s;
+}
+
+.submit-button:hover {
+    background-color: #0056b3 !important;
+    transform: translateY(-1px);
+}
+
+/* Responsividad: En pantallas pequeñas, los campos vuelven a ser una sola columna */
+@media (max-width: 600px) {
+    .form-group-grid {
+        grid-template-columns: 1fr;
+    }
+    .reporte-form-container {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+}

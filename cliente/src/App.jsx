@@ -20,6 +20,9 @@ import ProtectedRoute from './pages/protectedRoute'
 import Aprobacion_Reprobacion from './pages/Aprobacion_Reprobacion'
 import Progreso_estudiante from './pages/Progreso_estudiante'
 import InscripcionPDF from './pages/inscricionpdf'
+import Inscricion from './pages/inicio/inscricion'
+
+import Reporte from './pages/inicio/Reporte'
 
 function App() {
   // El useState(0) no se usa, lo puedes dejar o quitar.
@@ -32,9 +35,9 @@ function App() {
         <Routes>
           {/* Rutas Públicas */}
           <Route path='/' element={<Inicion />} />
-          
-          
           <Route path='/login' element={<Login />} />
+          <Route path='/inscripcion' element={<Inscricion/>} />
+          <Route path='/reportes' element={<Reporte/>} />
 
           {/* 2. Rutas Protegidas: ProtectedRoute actúa como layout/padre */}
           <Route element={<ProtectedRoute />}>

@@ -1,22 +1,42 @@
-.login-container1 {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f0f2f5; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; 
+    /* Evita el scroll horizontal causado por elementos desbordados */
+    overflow-x: hidden; 
 }
+
+/* El contenedor principal de Login */
+.login-container1 {
+    /* 🚨 SOLUCIÓN AL SCROLL: Usamos calc() para que este contenedor
+       solo ocupe el espacio RESTANTE bajo el Navbar. 
+       (Aproximamos la altura del Navbar a 120px, ajústala si el scroll persiste). */
+    height: calc(100vh - 200px); 
+    
+    display: flex;
+    justify-content: center; 
+    align-items: center; /* Centra el módulo de login en el espacio restante */
+    
+    background-color: #f0f2f5; 
+    padding: 0; /* Aseguramos que no haya paddings extra */
+}
+
+/* ------------------------------------------------ */
+/* --- MÓDULO DE LOGIN (Recuadro blanco) --- */
+/* ------------------------------------------------ */
 
 .login-container2 {
-  background-color: #ffffff; /* Fondo blanco para el contenedor */
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  width: 350px;
-  text-align: center;
+    /* 🚨 AUMENTAMOS EL VALOR NEGATIVO para subirlo MÁS */
+    transform: translateY(-5%); 
+    
+    /* El resto de estilos para el recuadro blanco */
+    background-color: white;
+    padding: 40px; 
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    width: 100%;
+    max-width: 400px;
 }
-
 /* --- ESTILOS DE LOGOS --- */
 .logo-section {
     display: flex;

@@ -8,6 +8,7 @@ import logoUnet from '../image/unet2.png'
 
 //css
 import '../css/login.css'; 
+import NavbarParroquia from '../components/inicio/NavbarParroquia';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -52,7 +53,11 @@ function Login() {
   };
 
   return (
+
+    <div>
+      <NavbarParroquia/>
     <div className="login-container1">
+      
       <div className="login-container2">
         
         <div className="logo-section">
@@ -103,6 +108,7 @@ function Login() {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }
