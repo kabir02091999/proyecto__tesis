@@ -89,14 +89,14 @@ function Inscri() {
     return (
         <div className="admin-layout">
             <Nav_Inscricion /> 
-        <div className="admin-content-main">
-            <GetPoblacion/>
-            <div className="calendar-view">
-                <h1>Calendario de Programación Confirmación</h1> 
-                <EventCalendar calendario={calendario} /> 
+            <div className="admin-content-main">
+                <GetPoblacion/>
+                <div className="calendar-view">
+                    <h1>Calendario de Programación Confirmación</h1> 
+                    <EventCalendar calendario={calendario} /> 
+                </div>
             </div>
         </div>
-    </div>
     );
 }
 

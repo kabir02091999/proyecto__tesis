@@ -8,7 +8,7 @@ import { FinancieroProvider  } from './context/finacieroContext' // Lo necesitam
 import Login from './pages/login'
 import Inicion from './pages/Inicion'
 import Administracion from './pages/adminitracion'
-import Financiero from './pages/financiero'
+import Financiero from './pages/financiero/financiero'
 import Inscri from './pages/inscri'
 import Buscar_poblacion from './pages/buscar_poblacion'
 import Crear_poblacion from './pages/crear_poblacion'
@@ -23,6 +23,7 @@ import InscripcionPDF from './pages/inscricionpdf'
 import Inscricion from './pages/inicio/inscricion'
 
 import Reporte from './pages/inicio/Reporte'
+import Reginstrar_Transacciones from './pages/financiero/Registrar_Transaccion'
 
 function App() {
   // El useState(0) no se usa, lo puedes dejar o quitar.
@@ -100,10 +101,16 @@ function App() {
                 <Financiero />
               </FinancieroProvider>
             } />
+
+            <Route path='/financiero/registrar-transacciones' element={
+              <FinancieroProvider>
+                <Reginstrar_Transacciones/>
+              </FinancieroProvider>
+            } />
           
             <Route path='/contenido' element={
               <PoblacionProvider>
-                <Financiero />
+                <h1>hola contenido</h1>
               </PoblacionProvider>
             } />
 

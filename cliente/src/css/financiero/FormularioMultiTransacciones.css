@@ -1,0 +1,169 @@
+/* Estilos generales del contenedor, asumiendo un layout de dos columnas */
+.transacciones-container {
+    max-width: 900px;
+    width: 100%;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.transacciones-container h1 {
+    font-size: 1.8em;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.transacciones-container p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* ------------------------------------------- */
+/* Estilos del Formulario GRID (Columnas) */
+/* ------------------------------------------- */
+
+.transacciones-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.transacciones-header,
+.transaccion-row {
+    display: grid;
+    /* Define 4 columnas: Tipo (fijo), Monto (pequeño), Descripción (grande), Acciones (fijo) */
+    grid-template-columns: 150px 120px 1fr 100px; 
+    gap: 15px;
+    padding: 10px 0;
+    align-items: center;
+}
+
+.transacciones-header {
+    font-weight: bold;
+    color: #007bff;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.transaccion-row {
+    border-bottom: 1px solid #eee;
+}
+
+/* ------------------------------------------- */
+/* Estilos de los Inputs y Grupos */
+/* ------------------------------------------- */
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group input[type="text"],
+.input-group input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.input-group input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2); /* Hacer el checkbox más visible */
+}
+
+.input-group span {
+    font-size: 0.9em;
+    color: #333;
+    font-weight: 500;
+}
+
+/* ------------------------------------------- */
+/* Estilos de Botones de Acción */
+/* ------------------------------------------- */
+
+.actions-group {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-add,
+.btn-remove {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-add {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-add:hover {
+    background-color: #218838;
+}
+
+.btn-remove {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-remove:hover {
+    background-color: #c82333;
+}
+
+/* ------------------------------------------- */
+/* Estilos del Footer y Mensajes */
+/* ------------------------------------------- */
+
+.form-footer {
+    padding-top: 20px;
+    text-align: right;
+}
+
+.btn-submit {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.btn-submit:disabled {
+    background-color: #99cfff;
+    cursor: not-allowed;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}

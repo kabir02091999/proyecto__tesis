@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom'; 
 import '../../css/Nav_inscricion.css'; 
 
-// 1. Importar ambos logos con nombres claros
+
 import UnetLogo from '../../image/unet2.png';     // ⚠️ Ajusta la ruta si es necesario
-/* import CatedraLogo from '../../image/cadedra.png'; */ // ⚠️ Asegúrate de que esta ruta sea correcta
+
 
 const Nav_Inscricion = ({ onOptionSelect }) => {
     const navigate = useNavigate();
     const location = useLocation(); 
 
     const navItems = [
-        // ... (Tu array de navItems se mantiene igual)
+        
         { name: 'Inicio', path: '/catequesis', icon: '🏠' },
         { name: 'Crear Nuevo Registro de estudiante', path: '/catequesis/crear-poblacion', icon: '➕' },
         { name: 'Crear Nuevo lapso', path: '/catequesis/crear-lapso', icon: '➕' },

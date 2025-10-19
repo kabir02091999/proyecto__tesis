@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
-import { AseAuth } from '../context/AuthContext';
-import { getUsuarios } from '../api/auth';
+import { AseAuth } from '../../context/AuthContext';
+import { getUsuarios } from '../../api/auth';
 import { useNavigate } from 'react-router-dom';
+import Nav_Finanzas from '../../components/financiero/Nav_Finanzas';
 
 function Financiero() {
   const { isAuthenticated, loading } = AseAuth();
@@ -36,7 +37,19 @@ function Financiero() {
   }
 
   return (
-    <div className="p-8">
+    <div className="admin-layout">
+      <Nav_Finanzas/>
+      <div className="admin-content-main">
+        <h1>Bienvenido al Panel de Finanzas</h1>
+      </div>
+    </div>
+  );
+}
+
+export default Financiero;
+
+
+{/* <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Página de Finanzas</h1>
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <div >
@@ -52,8 +65,4 @@ function Financiero() {
           <p>No hay usuarios para mostrar.</p>
         )}
       </div>
-    </div>
-  );
-}
-
-export default Financiero;
+    </div> */}
