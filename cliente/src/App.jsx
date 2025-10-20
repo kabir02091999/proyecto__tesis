@@ -27,6 +27,7 @@ import Inscricion from './pages/inicio/inscricion'
 import Reporte from './pages/inicio/Reporte'
 import Reginstrar_Transacciones from './pages/financiero/Registrar_Transaccion'
 import Reporte_finaciero from './pages/financiero/Reporte_finaciero'
+import Contenido from './pages/contenido/contenido'
 
 function App() {
   // El useState(0) no se usa, lo puedes dejar o quitar.
@@ -125,7 +126,7 @@ function App() {
           
             <Route path='/contenido' element={
               <PoblacionProvider>
-                <h1>hola contenido</h1>
+                <Contenido/>
               </PoblacionProvider>
             } />
 
