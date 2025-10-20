@@ -60,22 +60,3 @@ function Financiero() {
 }
 
 export default Financiero;
-
-
-{/* <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Página de Finanzas</h1>
-      {error && <div className="text-red-500 mb-4">{error}</div>}
-      <div >
-        {usuarios.length > 0 ? (
-          usuarios.map((usuario) => (
-            <div key={usuario.id} className="bg-white p-4 rounded-lg shadow-md">
-              <h2 className="text-lg font-semibold">{usuario.nombreUsuario}</h2>
-              <p className="text-gray-600">{usuario.email}</p>
-              <p className="text-sm text-gray-400">Tipo: {usuario.tipoUsuario}</p>
-            </div>
-          ))
-        ) : (
-          <p>No hay usuarios para mostrar.</p>
-        )}
-      </div>
-    </div> */}
