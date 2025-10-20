@@ -5,8 +5,16 @@ import { getUsuarios } from '../../api/auth';
 import { useNavigate } from 'react-router-dom';
 import Nav_Finanzas from '../../components/financiero/Nav_Finanzas';
 
+
+import EventCalendar from '../../components/calendario';
+
+import '../../css/Poblacion_Lapso.css'; 
+import '../../css/imprimir.css';
+import '../../css/Calendario_Estilos.css';
+
+
 function Financiero() {
-  const { isAuthenticated, loading } = AseAuth();
+  const { isAuthenticated, loading ,calendario, Getcalendario} = AseAuth();
   const [usuarios, setUsuarios] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -29,6 +37,8 @@ function Financiero() {
       }
     };
 
+
+    Getcalendario();
     fetchUsuarios();
   }, [isAuthenticated, loading, navigate]);
 
@@ -40,8 +50,11 @@ function Financiero() {
     <div className="admin-layout">
       <Nav_Finanzas/>
       <div className="admin-content-main">
-        <h1>Bienvenido al Panel de Finanzas</h1>
-      </div>
+          <div className="calendar-view">
+            <h1>Calendario de Programación Confirmación</h1> 
+              <EventCalendar calendario={calendario} /> 
+          </div>
+        </div>
     </div>
   );
 }
