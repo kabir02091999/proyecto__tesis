@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext'
 import { PoblacionProvider } from './context/PoblacionContext' // Lo necesitamos
 import { FinancieroProvider  } from './context/finacieroContext' // Lo necesitamos
 
+//paginas
 import Login from './pages/login'
 import Inicion from './pages/Inicion'
 import Administracion from './pages/adminitracion'
@@ -15,6 +16,7 @@ import Crear_poblacion from './pages/crear_poblacion'
 import Crear_lapso from './pages/Crear_lapso'
 import Poblacion_Lapso from './pages/Poblacion_Lapso'
 import Calendario_liturgico from './pages/Calendario_liturgico'
+import Buscar_finansa from './pages/financiero/Buscar_finansa'
 
 import ProtectedRoute from './pages/protectedRoute'
 import Aprobacion_Reprobacion from './pages/Aprobacion_Reprobacion'
@@ -24,6 +26,7 @@ import Inscricion from './pages/inicio/inscricion'
 
 import Reporte from './pages/inicio/Reporte'
 import Reginstrar_Transacciones from './pages/financiero/Registrar_Transaccion'
+import Reporte_finaciero from './pages/financiero/Reporte_finaciero'
 
 function App() {
   // El useState(0) no se usa, lo puedes dejar o quitar.
@@ -105,6 +108,18 @@ function App() {
             <Route path='/financiero/registrar-transacciones' element={
               <FinancieroProvider>
                 <Reginstrar_Transacciones/>
+              </FinancieroProvider>
+            } />
+            {/* ojo aqui */}
+            <Route path='/financiero/reportes' element={
+              <FinancieroProvider>
+                <Reporte_finaciero/>
+              </FinancieroProvider>
+            } />
+            {/* ojo aqui */}
+            <Route path='/financiero/buscar' element={
+              <FinancieroProvider>
+                <Buscar_finansa/>
               </FinancieroProvider>
             } />
           

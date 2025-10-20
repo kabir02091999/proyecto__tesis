@@ -101,6 +101,10 @@ export const registro_Transacciones = async (transaccionesData) => {
     return api.post(`/finanzas/transacciones`, transaccionesData);
 }
 
+export const obtener_Transacciones = async () => {
+    return api.get(`/finanzas/transacciones`);
+};
+
 // Al cargar la aplicación, verificamos si hay un token en el localStorage
 // y lo configuramos en los encabezados de Axios.
 const tokenFromStorage = localStorage.getItem('token');

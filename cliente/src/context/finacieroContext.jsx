@@ -1,9 +1,9 @@
-import { createContext , useState, useContext , useEffect } from "react";
+import { createContext , useState, useContext , useEffect, useCallback } from "react";
 
 export const FinancieroContext = createContext();
 
 //api
-import { registro_Transacciones as  registro_Transacciones1} from '../api/auth';
+import { registro_Transacciones as  registro_Transacciones1 , obtener_Transacciones} from '../api/auth';
 
 export const useFinancieroContext = () => {
     const context = useContext(FinancieroContext);
@@ -15,6 +15,7 @@ export const FinancieroProvider = ({children}) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
+    const [transacciones, setTransacciones] = useState([]);
     
     const registrarTransacciones = async (transaccionesArray) => {
         setLoading(true);
@@ -43,6 +44,20 @@ export const FinancieroProvider = ({children}) => {
         }
     };
 
+    const fetchTransacciones = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await obtener_Transacciones();
+            setTransacciones(response.data.data || []);
+        } catch (err) {
+            const msg = err.response?.data?.message || 'Error al obtener transacciones.';
+            setError(msg);
+        } finally {
+            setLoading(false);
+        }
+    }, [setLoading, setError, setTransacciones]);
+
     useEffect(() => {
         console.log("Financiero Context Mounted");
     }, []);
@@ -53,7 +68,10 @@ export const FinancieroProvider = ({children}) => {
             error,
             successMessage,
             setError, 
-            setSuccessMessage}}>
+            setSuccessMessage,
+            fetchTransacciones
+            ,transacciones
+            }}>
             {children} 
         </FinancieroContext.Provider>
     )

@@ -28,14 +28,17 @@ export const AuthProvider = ({ children }) => {
             const response = await loginService(userData);
             
             console.log("tipo usuario " + response.data.tipoUsuario)
+            setUser(response.data.tipoUsuario);
+            console.log("tipo usuario 111111111111111" + user);
             // Aquí guardamos el token en una cookie después del login
             if (response.data.token) {
                 console.log("token "+ response.data.token)
                 // Guardar el token en una local storage
-                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', response.data.tipoUsuario);
             }
 
             setUser(response.data);
+            console.log("usuario en context " + user)
             setIsAuthenticated(true);
             setLoading(false);
             // quiero que me mandes a la ruta admin

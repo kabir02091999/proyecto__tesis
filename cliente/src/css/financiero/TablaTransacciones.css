@@ -1,0 +1,121 @@
+/* Estilos del Contenedor de la Tabla */
+.finanzas-table-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.finanzas-table-container h1 {
+    font-size: 1.8em;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+.finanzas-table-container p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Estilos de la Tabla */
+.transacciones-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.95em;
+}
+
+.transacciones-table th, 
+.transacciones-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+/* Encabezado */
+.transacciones-table thead th {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    border: none;
+    position: sticky; /* Opcional: para que se pegue al hacer scroll */
+    top: 0;
+}
+
+/* Filas */
+.transacciones-table tbody tr {
+    border-bottom: 1px solid #eeeeee;
+    transition: background-color 0.2s;
+}
+
+.transacciones-table tbody tr:hover {
+    background-color: #f8f8f8;
+}
+
+/* Columna ID - Importante para centrar o reducir su tamaño */
+.transacciones-table .col-id {
+    width: 50px;
+    font-weight: bold;
+    color: #555;
+    text-align: center;
+}
+
+/* Columna Monto - Alinear a la derecha para finanzas */
+.transacciones-table .col-monto {
+    font-weight: bold;
+    text-align: right;
+    width: 120px;
+}
+
+/* ------------------------------------------- */
+/* Estilos de Ingreso y Egreso */
+/* ------------------------------------------- */
+
+/* Resaltar la fila completa */
+.row-ingreso {
+    /* Fondo muy sutil */
+    background-color: #f7fff7; 
+}
+.row-egreso {
+    /* Fondo muy sutil */
+    background-color: #fff7f7; 
+}
+
+/* Badges (Etiquetas) de Tipo */
+.tipo-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8em;
+    text-transform: uppercase;
+}
+
+.badge-ingreso {
+    background-color: #e6ffed; /* Verde claro */
+    color: #28a745; /* Verde oscuro */
+}
+
+.badge-egreso {
+    background-color: #fff0f0; /* Rojo claro */
+    color: #dc3545; /* Rojo oscuro */
+}
+
+/* ------------------------------------------- */
+/* Mensajes */
+/* ------------------------------------------- */
+
+.loading-message, .no-data-message, .alert.error {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}

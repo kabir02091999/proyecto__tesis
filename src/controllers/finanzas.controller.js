@@ -1,8 +1,6 @@
-// En tu archivo: ../controllers/finanzas.controller.js
-
 import { pool } from "../db/db.js";
 
-// 🚨 CORRECCIÓN CLAVE: La función ahora recibe (req, res)
+
 export const registrarMultiplesTransacciones = async (req, res) => {
     // 💡 PASO 1: Desestructurar el array 'transacciones' del body
     // Esto coincide con el JSON que envías: { "transacciones": [...] }
@@ -62,5 +60,15 @@ export const registrarMultiplesTransacciones = async (req, res) => {
             ok: false, 
             message: message 
         });
+    }
+}
+
+export const GetTransacciones = async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM transacciones ORDER BY id DESC');
+        res.json({ ok: true, data: rows });
+    } catch (error) {
+        console.error("Error al obtener transacciones:", error);
+        res.status(500).json({ ok: false, message: 'Error al obtener transacciones.' });
     }
 }

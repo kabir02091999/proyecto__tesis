@@ -11,10 +11,10 @@ const Nav_Finanzas = () => {
     const navItems = [
         { name: 'Inicio', path: '/financiero', icon: '🏠'  },
         { name: 'Registrar Transacciones', path: '/financiero/registrar-transacciones', icon: '📝' },
-        { name: 'Reporte de Ingresos/Egresos', path: '/finanzas/reportes', icon: '📈' },
-        { name: 'Balance General', path: '/finanzas/balance', icon: '⚖️' }, 
-        { name: 'Buscar Transacción', path: '/finanzas/buscar', icon: '🔍' },
-      { name: 'Volver a Catequesis', path: '/catequesis', icon: '🔙' },
+        { name: 'Reporte de Ingresos/Egresos', path: '/financiero/reportes', icon: '📈' },
+        /* { name: 'Balance General', path: '/financiero/balance', icon: '⚖️' }, */ 
+        { name: 'Buscar Transacción', path: '/financiero/buscar', icon: '🔍' },
+        { name: 'Volver a Catequesis', path: '/catequesis', icon: '🔙' },
     ];
     
     const handleNavigation = (path, name) => {

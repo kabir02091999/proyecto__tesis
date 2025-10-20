@@ -28,7 +28,7 @@ function Login() {
       console.log("Inicio de sesión exitoso:", result);
       const tipo = result.tipoUsuario;
       console.log('Tipo de usuario:', tipo);
-
+      console.log(user)
       // Redirige basándose en el tipo de usuario
       if (tipo === 'administrador') {
         navigate("/admin");
