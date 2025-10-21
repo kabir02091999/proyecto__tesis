@@ -1,56 +1,9 @@
-/* import React, { useState ,useRef} from 'react';
-
-
-import ReactToPrint, { useReactToPrint } from 'react-to-print';
-
-
-import '../css/Poblacion_Lapso.css'; 
-import '../css/imprimir.css'
-
-import { usePoblacion } from '../context/PoblacionContext';
-
-// Importa solo los componentes definidos originalmente (CrearPoblacion y GetPoblacion están fuera del flujo de renderContent)
-import GetPoblacion from '../components/GetPoblacion';
-import Nav_Inscricion from '../components/inscricion/Nav_Inscricion';
-
-// --- Componente Principal ---
-
-function Inscri() {
-    
-    const contentRef = useRef(null);
-    const reactToPrintFn = useReactToPrint({ contentRef });
-
-    const [contenidoActivo, setContenidoActivo] = useState('lapso');
-    const { getPoblacionByCI } = usePoblacion(); // Mantenemos la desestructuración por si la necesitas más adelante
-
-    
-    const handleButtonClick = (opcion) => {
-        setContenidoActivo(opcion);
-    };
-
-    return (
-        
-        <div className="admin-layout"> 
-            <Nav_Inscricion onOptionSelect={handleButtonClick} />
-            <div className="admin-content-main">
-                <GetPoblacion/>
-
-                
-            </div>
-            
-        </div>
-    );
-}
-
-export default Inscri; */
-
-
 import React, {useEffect} from 'react';
 
 import { AseAuth } from '../context/AuthContext';
 
 // Componentes propios
-import EventCalendar from '../components/calendario'; // ⬅️ IMPORTAR CALENDARIO
+import EventCalendar from '../components/calendario'; 
 import Nav_Inscricion from '../components/inscricion/Nav_Inscricion';
 import GetPoblacion from '../components/GetPoblacion';
 
@@ -69,15 +22,8 @@ const PROGRAMACION_DATA_EJEMPLO = [
 
 
 function Inscri() {
-    
-    // Si necesitas los datos reales de tu contexto:
-    // const { getLapso } = usePoblacion(); 
-    // const calendarioData = getLapso || PROGRAMACION_DATA_EJEMPLO; 
     const calendarioData = PROGRAMACION_DATA_EJEMPLO;
     const { calendario, Getcalendario } = AseAuth();
-
-    
-
     useEffect(() => {
         
         Getcalendario();

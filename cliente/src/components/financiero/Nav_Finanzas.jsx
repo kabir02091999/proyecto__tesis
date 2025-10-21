@@ -53,14 +53,14 @@ const Nav_Finanzas = () => {
       </div>
       
       {/* 💡 BOTÓN DE CERRAR SESIÓN (SEPARADO Y CON LÓGICA PROPIA) */}
-      <div className="logout-section">
+      {/* <div className="logout-section">
           <button 
              onClick={handleLogout}
              className="nav-item-button logout-button" // Puedes agregar un CSS específico: .logout-button
           >
               <span role="img" aria-label="Cerrar cuenta">🔙</span> Cerrar cuenta
           </button>
-      </div>
+      </div> */}
 
     </div>
     );

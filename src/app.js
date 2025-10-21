@@ -6,7 +6,7 @@ import cors from 'cors';
 import usuariosRoutes from './Routes/usuarios.routes.js';
 import inscripcionRoutes from './Routes/inscripcion.routes.js';
  import finansasRoutes from './Routes/finanzas.routes.js';
-/* import contenidoRoutes from './Routes/contenido.routes.js';  */
+import contenidoRoutes from './Routes/contenido.routes.js'; 
 
 const app = express();
 app.use(cors());
@@ -17,7 +17,7 @@ app.use('/api', usuariosRoutes);
 
 app.use('/api/inscripcion', inscripcionRoutes); 
 app.use('/api/finanzas', finansasRoutes); 
-/* app.use('/api/contenido', contenidoRoutes);  */
+app.use('/api/contenido', contenidoRoutes); 
 
 export default app;
 /*  {
