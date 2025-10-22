@@ -105,6 +105,17 @@ export const obtener_Transacciones = async () => {
     return api.get(`/finanzas/transacciones`);
 };
 
+export const obtenerTransaccionesPorPeriodo = async (mes, anio) => {
+    // Usa la instancia 'api' para que se incluya el token de autenticación
+    // y usa el parámetro 'params' de Axios para construir la URL con Query Params
+    return api.get(`/finanzas/transacciones/periodo`, { 
+        params: { 
+            mes: mes, 
+            anio: anio 
+        } 
+    });
+};
+
 export const subirarArchivo = async (archivoData) => {
     return api.post('/contenido/archivo', archivoData, {
         headers: {            

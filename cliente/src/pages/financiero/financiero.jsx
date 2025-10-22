@@ -51,7 +51,7 @@ function Financiero() {
       <Nav_Finanzas/>
       <div className="admin-content-main">
           <div className="calendar-view">
-            <h1>Calendario de Programación Confirmación</h1> 
+            <h1>Calendario liturgico</h1> 
               <EventCalendar calendario={calendario} /> 
           </div>
         </div>

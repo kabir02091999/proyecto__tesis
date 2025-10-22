@@ -72,3 +72,43 @@ export const GetTransacciones = async (req, res) => {
         res.status(500).json({ ok: false, message: 'Error al obtener transacciones.' });
     }
 }
+
+export const obtenerTransaccionesPorPeriodo = async (req, res) => {
+    const { mes, anio } = req.query;
+
+    if (!mes || !anio || isNaN(mes) || isNaN(anio)) {
+        return res.status(400).json({ 
+            ok: false, 
+            message: 'Parámetros de mes y año son obligatorios y deben ser números.' 
+        });
+    }
+
+    const sql = `SELECT
+            id,
+            es_ingreso,
+            monto,
+            descripcion,
+            fecha_registro
+        FROM
+            transacciones
+        WHERE
+            YEAR(fecha_registro) = ?
+            AND MONTH(fecha_registro) = ?
+        ORDER BY
+            fecha_registro ASC;
+    `;
+    try {
+
+        const [resultado] = await pool.query(sql, [anio, mes]);
+
+        return res.status(200).json({ 
+            ok: true, 
+            data: resultado 
+        });
+    } catch (error) {
+        console.error("Error al obtener transacciones por período:", error);
+        return res.status(500).json({message: 'Error al obtener transacciones por período.'});
+    }
+}
+        
+    

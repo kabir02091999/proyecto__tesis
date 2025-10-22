@@ -16,7 +16,7 @@ import Crear_poblacion from './pages/crear_poblacion'
 import Crear_lapso from './pages/Crear_lapso'
 import Poblacion_Lapso from './pages/Poblacion_Lapso'
 import Calendario_liturgico from './pages/Calendario_liturgico'
-import Buscar_finansa from './pages/financiero/Buscar_finansa'
+import Buscar_finansa from './components/financiero/Buscar_finansa'
 
 import ProtectedRoute from './pages/protectedRoute'
 import Aprobacion_Reprobacion from './pages/Aprobacion_Reprobacion'
