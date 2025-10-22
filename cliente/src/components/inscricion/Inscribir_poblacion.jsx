@@ -90,7 +90,7 @@ function Inscribir_poblacion() {
     return (
         <div>
             <form className="inscripcion-form" onSubmit={handleSubmit}>
-                <h2>Inscribir Población en Lapso</h2>
+                <h2>Inscribir participante en Lapso</h2>
                 
                 
                 <select 

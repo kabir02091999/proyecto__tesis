@@ -63,7 +63,7 @@ function Calendario_Liturgico() {
 
     return (
         <div className="poblacion-lapso-container">
-            <h2>Yo Administro el Calendario Litúrgico</h2>
+            <h2>Insertar fecha del calendario liturgico</h2>
             
             {errors.length > 0 && <p className="error-message">{errors.join(', ')}</p>}
             

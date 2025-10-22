@@ -314,7 +314,7 @@ function CrearPoblacion() {
     
     return (
         <div className="create-poblacion-container">
-            <h1 className="form-title">Registro de Nueva Población</h1>
+            <h1 className="form-title">Registro de Nuevo participante</h1>
             
             <div className="tab-menu">
                 <button 

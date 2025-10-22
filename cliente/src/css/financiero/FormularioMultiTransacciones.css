@@ -167,3 +167,52 @@
     color: #155724;
     border: 1px solid #c3e6cb;
 }
+
+.description-input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.description-input select,
+.description-input input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover y focus */
+.description-input select:focus,
+.description-input input[type="text"]:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+/* Pequeño espacio entre select y input "otros" */
+.description-input input[type="text"] {
+  margin-top: 6px;
+}
+
+/* Ajuste general de filas */
+.transaccion-row {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 2.2fr 0.5fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .transaccion-row {
+    grid-template-columns: 1fr;
+  }
+  .description-input {
+    width: 100%;
+  }
+}

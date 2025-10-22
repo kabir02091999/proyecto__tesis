@@ -25,12 +25,12 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
     const navItems = [
         
         { name: 'Inicio', path: '/catequesis', icon: '🏠' },
-        { name: 'Crear Nuevo Registro de estudiante', path: '/catequesis/crear-poblacion', icon: '➕' },
+        { name: 'Nuevo registro de participante', path: '/catequesis/crear-poblacion', icon: '➕' },
         { name: 'Crear Nuevo lapso', path: '/catequesis/crear-lapso', icon: '➕' },
-        { name: 'Crear Nueva fecha de calendario liturgico', path: '/catequesis/Post-calendario-liturgico', icon: '➕' },
-        { name: 'Inscribir estudiante en lapso', path: '/catequesis/incribir-poblacion-lapso', icon: '📝' },
-        { name: 'Aprobación / Reprobación', path: '/catequesis/aprobacion-reprobacion', icon: '✅' }, 
-        { name: 'Progreso del estudiante', path: '/catequesis/progreso-estudiante', icon: '📈' }, 
+        { name: 'Insertar calendario liturgico', path: '/catequesis/Post-calendario-liturgico', icon: '➕' },
+        { name: 'Inscribir participante en lapso', path: '/catequesis/incribir-poblacion-lapso', icon: '📝' },
+        { name: 'Aprobación / No aprobado', path: '/catequesis/aprobacion-reprobacion', icon: '✅' }, 
+        { name: 'Progreso de participante', path: '/catequesis/progreso-estudiante', icon: '📈' }, 
         { name: 'Buscar poblacion', path: '/catequesis/buscar-poblacion', icon: '🔍' },
         { name: 'Generar PDF', path: '/catequesis/pdf', icon: '📄' },
         // Ya no incluimos "Cerrar cuenta" aquí, lo pondremos como un botón separado
