@@ -89,6 +89,46 @@ function Get_inscrito_pfd() {
 
     return (
         <div className="poblacion-pdf-container">
+            
+            <style>
+            {`
+            @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            html, body, #root, .poblacion-pdf-container, #print {
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            table, tr, td, div {
+                page-break-inside: avoid !important;
+            }
+
+            .page-break {
+                page-break-before: always !important;
+            }
+
+            /* 👉 POR DEFECTO todas las páginas serán verticales */
+            @page {
+                size: A4 portrait;
+                margin: 1cm;
+            }
+
+            /* 👉 Pero las planillas de asistencia serán horizontales */
+            .planilla-asistencia {
+                page: planillaAsistencia;
+            }
+
+            @page planillaAsistencia {
+                size: A4 landscape;
+                margin: 1cm;
+            }
+            }
+            `}
+            </style>
             <form className="inscripcion-form" onSubmit={handleSubmit}>
                 <h2>Generar PDF de Inscritos (Filtro)</h2>
 
@@ -167,8 +207,11 @@ function Get_inscrito_pfd() {
                 ( 
                     <div>
                         <button onClick={reactToPrintFn} >IMRPIMIRRRRRRRRRRRRRRRR</button>
-                        <PlanillaAsistencia data={getLapso} contentRef={contentRef}   />
-                    </div>
+                       <PlanillaAsistencia 
+                        data={getLapso} 
+                        contentRef={contentRef}
+                        className="planilla-asistencia"
+                    /></div>
                 )
             }
 
@@ -190,7 +233,7 @@ function Get_inscrito_pfd() {
 
             }
             {
-                /* inscritos = [], filtros = {}, calendario = [] , contentRef */
+                
                 getLapso.length != 0 && (               
                     <div>
                     <button onClick={reactToPrintFn2} >IMPRIMIR PROGRAMACIÓN</button> 

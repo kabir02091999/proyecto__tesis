@@ -18,8 +18,10 @@ router.delete('/usuarios/:id', authRequired , deleteUsuario);/* falta implementa
 router.post('/logout', logout);
 router.post('/verifyToken', verifyToken);
 
-router.post('/crear-calendario'/* , authRequired */, crearCalendarioLiturgico); // Nueva ruta para crear calendario
+router.post('/crear-calendario', authRequired, crearCalendarioLiturgico); // Nueva ruta para crear calendario
 router.get('/calendario',getCalendarioYLapsoUnificado);
+
+
 // api/crear-calendario
 
 export default router;

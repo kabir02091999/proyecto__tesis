@@ -41,8 +41,8 @@ const styles = {
     container: {
         fontFamily: 'Arial, sans-serif',
         margin: '0 auto',
-        maxWidth: '850px',
-        padding: '20px',
+        padding: '10px',
+        maxWidth: '800px',
         border: '1px solid #ccc',
         boxShadow: '0 0 10px rgba(0,0,0,0.1)'
     },
@@ -52,17 +52,17 @@ const styles = {
     },
     logo: {
         width: 'auto',
-        height: '100px',
-        marginBottom: '10px'
+        height: '70px',
+        marginBottom: '5px'
     },
     h1: {
-        fontSize: '18pt',
+        fontSize: '14pt',
         fontWeight: 'bold',
         color: '#333',
         margin: '5px 0'
     },
     h2: {
-        fontSize: '14pt',
+        fontSize: '11pt',
         fontWeight: 'normal',
         color: '#555',
         margin: '5px 0'
@@ -151,11 +151,11 @@ function PlanillaAsistencia({ data, contentRef }) {
     })
 
     return (
-        <div style={styles.container} id='print' ref={contentRef}>
+        <div style={styles.container} id='print' ref={contentRef} className="planilla-asistencia">
 
             {/* CABECERA */}
             <header style={styles.header}>
-                {/* Asumiendo que el logo se cargaría de forma dinámica en un entorno real */}
+                
                 <img
                     src={imagen}
                     alt="Logo Parroquia Divino Maestro"

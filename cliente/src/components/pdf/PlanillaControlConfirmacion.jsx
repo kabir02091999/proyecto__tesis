@@ -144,7 +144,7 @@ const ProgramacionConfirmacion = forwardRef(({ calendario, filtros }, ref) => {
 
   return (
     <div style={styles.container} ref={ref}> 
-      <div style={styles.headerInfo}>
+      {<div style={styles.headerInfo}>
         <img
           src={logo} 
           alt="Parroquia Divino Maestro"
@@ -154,7 +154,7 @@ const ProgramacionConfirmacion = forwardRef(({ calendario, filtros }, ref) => {
         <p style={styles.subtitle}>SACRAMENTO DE LA CONFIRMACIÓN</p>
         <p style={styles.details}>PROGRAMACIÓN 2/2/2025 HASTA EL 30/11/2025 | SEDE UNET</p>
         <p style={styles.section}>SECCIÓN N°: {seccion}</p>
-      </div>
+      </div>}
 
       <hr style={styles.divider} />
 

@@ -119,7 +119,7 @@ function PlanillaControlAsistencia({ inscritos = [], filtros = {}, calendario = 
     `;
 
     return (
-        <div style={styles.container} ref={contentRef}> 
+        <div style={styles.container} id='print' ref={contentRef} className="planilla-asistencia">
             <style>{printStyles}</style>
             
             {/* CABECERA PRINCIPAL */}
