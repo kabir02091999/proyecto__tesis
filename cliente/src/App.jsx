@@ -24,11 +24,14 @@ import Progreso_estudiante from './pages/Progreso_estudiante'
 import InscripcionPDF from './pages/inscricionpdf'
 import Inscricion from './pages/inicio/inscricion'
 
+import ContenidoConfiguracion from '../src/components/contenido/Contenido'
+
 import Reporte from './pages/inicio/Reporte'
 import Reginstrar_Transacciones from './pages/financiero/Registrar_Transaccion'
 import Reporte_finaciero from './pages/financiero/Reporte_finaciero'
 import Contenido from './pages/contenido/contenido'
 import Subida from './pages/contenido/subida'
+import Paguina from './components/contenido/Paguina'
 
 function App() {
   // El useState(0) no se usa, lo puedes dejar o quitar.
@@ -44,6 +47,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/inscripcion' element={<Inscricion/>} />
           <Route path='/reportes' element={<Reporte/>} />
+
+          <Route path='/prueva1234' element={ <Paguina/> } />
 
           {/* 2. Rutas Protegidas: ProtectedRoute actúa como layout/padre */}
           <Route element={<ProtectedRoute />}>
@@ -135,6 +140,11 @@ function App() {
               <PoblacionProvider>
                 <Subida/>
               </PoblacionProvider>
+            } />
+
+            <Route path='/contenido/paguina' element={
+              
+                < ContenidoConfiguracion/>             
             } />
 
           </Route>

@@ -4,7 +4,7 @@ import '../../css/Nav_inscricion.css';
 
 import UnetLogo from '../../image/unet2.png'; 
 
-const Nav_contenido = () => {
+const Nav_Admin = () => {
     const navigate = useNavigate();
     const location = useLocation(); 
     const handleLogout = () => {
@@ -14,12 +14,11 @@ const Nav_contenido = () => {
     };
 
     const navItems = [
-        { name: 'Inicio', path: '/contenido', icon: '🏠'  },
-        { name: 'subidad', path: '/contenido/subida', icon: '📝' },
-        { name: 'Reporte de Ingresos/Egresos', path: '/financiero/reportes', icon: '📈' },
-        /* { name: 'Balance General', path: '/financiero/balance', icon: '⚖️' }, */ 
-        { name: 'Buscar Transacción', path: '/financiero/buscar', icon: '🔍' },
-        { name: 'Configuración de la página', path: '/contenido/paguina', icon: '⚙️' },
+        { name: 'Inicio', path: '/admin', icon: '🏠'  },
+        { name: 'catequesis', path: '/catequesis', icon: '📝' },
+        { name: 'contenido', path: '/contenido', icon: '📈' },
+        { name: 'financiero', path: '/financiero', icon: '⚖️' },
+        
     ];
     
     const handleNavigation = (path, name) => {
@@ -33,7 +32,7 @@ const Nav_contenido = () => {
       <div className="nav-logos">
         <img src={UnetLogo} alt="Logo UNET" className="logo unet-logo" /> 
       </div>
-      <h4 className="nav-title">Gestión de Contenido</h4>
+      <h4 className="nav-title">Gestión de Finanzas</h4>
       <div className="nav-options-list">
                                 
         {/* Renderizado de los elementos de navegación normales */}
@@ -67,4 +66,4 @@ const Nav_contenido = () => {
     );
 };
 
-export default Nav_contenido;
+export default Nav_Admin;

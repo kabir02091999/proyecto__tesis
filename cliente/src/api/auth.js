@@ -116,6 +116,33 @@ export const obtenerTransaccionesPorPeriodo = async (mes, anio) => {
     });
 };
 
+export const subirHistorias = async (data) => {
+    return api.post('/contenido/historias', data, {
+        headers: {            
+            'Content-Type': "multipart/form-data"
+        }
+    });
+}
+
+export const getHistorias = async (data) => {
+    return api.get('/contenido/historias');
+}
+
+
+export const getBanner = async (data) => {
+    return api.get('/contenido/main-banner');
+}
+
+export const subirBanner = async (data) => {
+    return api.post('/contenido/main-banner', data, {
+        headers: {            
+            'Content-Type': "multipart/form-data"
+        }
+    });
+}
+
+
+
 export const subirarArchivo = async (archivoData) => {
     return api.post('/contenido/archivo', archivoData, {
         headers: {            

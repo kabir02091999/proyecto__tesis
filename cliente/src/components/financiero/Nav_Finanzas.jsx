@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../../css/Nav_inscricion.css'; 
 
+import {  AseAuth } from '../../context/AuthContext';
+
 import UnetLogo from '../../image/unet2.png'; 
 
 const Nav_Finanzas = () => {
@@ -13,11 +15,19 @@ const Nav_Finanzas = () => {
         navigate('/'); 
     };
 
+    const { admin } =  AseAuth();
+
+    if (!admin) {
+        console.log("No eres administrador, redirigiendo...");
+         
+    }else{
+        console.log("Eres administrador, puedes acceder.");
+    }
+
     const navItems = [
         { name: 'Inicio', path: '/financiero', icon: '🏠'  },
         { name: 'Registrar Transacciones', path: '/financiero/registrar-transacciones', icon: '📝' },
-        { name: 'Reporte de Ingresos/Egresos', path: '/financiero/reportes', icon: '📈' },
-        /* { name: 'Balance General', path: '/financiero/balance', icon: '⚖️' }, */ 
+        { name: 'Reporte de Ingresos/Egresos', path: '/financiero/reportes', icon: '📈' }, 
         { name: 'Buscar Transacción', path: '/financiero/buscar', icon: '🔍' },
     ];
     
@@ -53,14 +63,14 @@ const Nav_Finanzas = () => {
       </div>
       
       {/* 💡 BOTÓN DE CERRAR SESIÓN (SEPARADO Y CON LÓGICA PROPIA) */}
-      {/* <div className="logout-section">
+      <div className="logout-section">
           <button 
              onClick={handleLogout}
              className="nav-item-button logout-button" // Puedes agregar un CSS específico: .logout-button
           >
               <span role="img" aria-label="Cerrar cuenta">🔙</span> Cerrar cuenta
           </button>
-      </div> */}
+      </div>
 
     </div>
     );

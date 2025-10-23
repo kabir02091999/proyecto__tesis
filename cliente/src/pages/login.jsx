@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AseAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import logoUnet from '../image/unet2.png'
 //css
 import '../css/login.css'; 
 import NavbarParroquia from '../components/inicio/NavbarParroquia';
+import { set } from 'date-fns';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { login, user } = AseAuth();
+  const { login, user ,setAdmin,admin} = AseAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,12 +32,18 @@ function Login() {
       console.log(user)
       // Redirige basándose en el tipo de usuario
       if (tipo === 'administrador') {
+        console.log("es adminsadadaaaaaaaaaa" + admin)
+        setAdmin(true)
+        console.log("admin 111111111aaaaaaaaaaaaaaaaa"+ admin)
         navigate("/admin");
       } else if (tipo === 'financiero') {
+        setAdmin(false)
         navigate("/financiero");
       } else if (tipo === "contenido"){
+        setAdmin(false)
         navigate("/contenido")
       } else if (tipo ==='catequesis') {
+        setAdmin(false)
         navigate("/catequesis")
       }
       else {
@@ -51,6 +58,7 @@ function Login() {
 
     console.log("Usuario actual:", user);
   };
+
 
   return (
 

@@ -14,6 +14,7 @@ export const AseAuth = () => {
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [admin, setAdmin] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -121,7 +122,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{calendario,Getcalendario ,Post_Calendario_liturgico , user, loading, isAuthenticated, errors, login}}>
+        <AuthContext.Provider value={{admin,setAdmin,calendario,Getcalendario ,Post_Calendario_liturgico , user, loading, isAuthenticated, errors, login}}>
             {children}
         </AuthContext.Provider>
     );
