@@ -5,6 +5,7 @@ import GetUsuarios from '../components/GetUsuarios';
 import '../css/Administracion.css';
 import Nav_Admin from '../components/Administrador/Nav_Admin';
 import { AseAuth } from '../context/AuthContext';
+import Reportes from '../components/Reportes';
 
 
 function Administracion() {
@@ -21,11 +22,10 @@ function Administracion() {
       <Nav_Admin/>
       <div className="admin-content-main">
             
-            <PostUsuarios className="post-usuarios-top-margin" />
-            <GetUsuarios />   
-            </div>
-      {/* <PostUsuarios className="post-usuarios-top-margin" />
-      <GetUsuarios /> */}
+            {/* <PostUsuarios className="post-usuarios-top-margin" />
+            <GetUsuarios /> */}  
+            <Reportes/>
+      </div>
     </div>
   );
 }

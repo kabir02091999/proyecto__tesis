@@ -216,10 +216,10 @@ export const PoblacionProvider = ({ children }) => {
 
 
     // Llamar a fetchLapso cuando el componente se monte o cuando actuLapso cambie
-    useEffect(() => {
+     useEffect(() => {
         fetchLapso();
         console.log("actulapso en context " + actuLapso)
-    }, [actuLapso]);
+    }, [actuLapso]);   
 
 
     return (

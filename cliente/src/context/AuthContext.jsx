@@ -1,5 +1,6 @@
-import { createContext, useState, useContext, useEffect } from 'react';
-import { login as loginService, verifyToken as verifyTokenService ,crearCalendarioLiturgicos, getCalendario,PostReportes,obtenerReportes,deleteReporte} from '../api/auth';
+
+import { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import { login as loginService, verifyToken as verifyTokenService, crearCalendarioLiturgicos, getCalendario, PostReportes, obtenerReportes, deleteReporte } from '../api/auth';
 import cookie from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { use } from 'react';
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
-    const [token , setToken] = useState(null);
+    const [token, setToken] = useState(null);
     const [calendario, setCalendario] = useState([]);
     const [reportes, setReportes] = useState([]);
     //const navigate = useNavigate();
@@ -28,13 +29,13 @@ export const AuthProvider = ({ children }) => {
             setLoading(true);
             setErrors([]);
             const response = await loginService(userData);
-            setAdmin(response.data.tipoUsuario === 'administrador' );
+            setAdmin(response.data.tipoUsuario === 'administrador');
             console.log("tipo usuario " + response.data.tipoUsuario)
             setUser(response.data.tipoUsuario);
             console.log("tipo usuario 111111111111111" + user);
             // Aquí guardamos el token en una cookie después del login
             if (response.data.token) {
-                console.log("token "+ response.data.token)
+                console.log("token " + response.data.token)
                 // Guardar el token en una local storage
                 localStorage.setItem('token', response.data.tipoUsuario);
             }
@@ -79,7 +80,7 @@ export const AuthProvider = ({ children }) => {
             setErrors([]);
             const response = await getCalendario();
             setCalendario(response.data);
-            
+
         }
         catch (error) {
             console.error('Error during getting calendario liturgico:', error);
@@ -107,46 +108,42 @@ export const AuthProvider = ({ children }) => {
             setLoading(false); // Se agrega
         }
     };
-    
-    const getReportes = async () => {
+
+    const getReportes = useCallback(async () => {
         try {
             setLoading(true);
             setErrors([]);
             const response = await obtenerReportes();
-            setReportes(response.data); 
+            setReportes(response.data);
         } catch (error) {
             console.error('Error al obtener los reportes:', error);
             setErrors([error.response?.data?.message || 'Error al cargar la lista de reportes.']);
         } finally {
             setLoading(false);
         }
-    };
-    
-    const eliminarReporte = async (id) => {
+    }, []);
+
+    const eliminarReporte = useCallback(async (id) => {
         try {
-            setLoading(true); // Se agrega
+            setLoading(true);
             setErrors([]);
             await deleteReporte(id);
-
-            setReportes(prevReportes => prevReportes.filter(reporte => reporte.ID_Reporte !== id));
-            
-            return { message: 'Reporte eliminado con éxito' };
-
+            setReportes(prevReportes => prevReportes.filter(r => r.ID_Reporte !== id));
         } catch (error) {
             console.error(`Error al eliminar el reporte ID ${id}:`, error);
             const errorMessage = error.response?.data?.message || 'Error al intentar eliminar el reporte.';
             setErrors([errorMessage]);
             throw new Error(errorMessage);
         } finally {
-            setLoading(false); // Se agrega
+            setLoading(false);
         }
-    };
-    
+    }, []);
+
     // Este efecto se encarga de verificar la autenticación cuando la app se carga
     useEffect(() => {
         // Verificar si hay un token en local storage
         const token = localStorage.getItem('token');
-        
+
         if (token) {
             setLoading(true);
             verifyTokenService(token).then(response => {
@@ -165,14 +162,15 @@ export const AuthProvider = ({ children }) => {
         } else {
             setLoading(false);
             setIsAuthenticated(false);
-            
+
         }
 
-        
+
     }, []);
+   
 
     return (
-        <AuthContext.Provider value={{reportes, setReportes,eliminarReporte,getReportes,enviarReporte,admin,setAdmin,calendario,Getcalendario ,Post_Calendario_liturgico , user, loading, isAuthenticated, errors, login}}>
+        <AuthContext.Provider value={{ reportes, setReportes, eliminarReporte, getReportes, enviarReporte, admin, setAdmin, calendario, Getcalendario, Post_Calendario_liturgico, user, loading, isAuthenticated, errors, login }}>
             {children}
         </AuthContext.Provider>
     );

@@ -1,0 +1,138 @@
+/* ===== CONTENEDOR GENERAL ===== */
+.reportes-container {
+  padding: 2rem;
+  background-color: #f9fafb;
+  min-height: 100vh;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.reportes-container h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4f46e5;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* ===== LOADING Y SIN REPORTES ===== */
+.loading-message,
+.no-reportes {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #374151;
+  margin-top: 2rem;
+}
+
+/* ===== GRID DE CARDS ===== */
+.reportes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ===== CARD ===== */
+.reporte-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  padding: 1.2rem 1.5rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-left: 5px solid #6366f1;
+}
+
+.reporte-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== CABECERA DEL CARD ===== */
+.reporte-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.reporte-header h3 {
+  font-size: 1.1rem;
+  color: #111827;
+  margin: 0;
+}
+
+/* ===== ETIQUETAS DE TIPO ===== */
+.tipo-etiqueta {
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.tipo-consulta {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.tipo-sugerencia {
+  background-color: #dbeafe;
+  color: #1e3a8a;
+}
+
+.tipo-otro {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* ===== MENSAJE CON ANIMACIÓN ===== */
+.mensaje-truncate {
+  max-height: 2.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.mensaje-truncate:hover {
+  white-space: normal;
+  overflow: visible;
+  background-color: #f9fafb;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  max-height: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* ===== BOTÓN ELIMINAR ===== */
+.acciones {
+  text-align: right;
+  margin-top: 1rem;
+}
+
+.btn-eliminar {
+  color: #dc2626;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.btn-eliminar:hover {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+}
+
+/* ===== ENLACE DE EMAIL ===== */
+.email-link {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.email-link:hover {
+  color: #1d4ed8;
+}
+
