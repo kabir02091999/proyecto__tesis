@@ -148,70 +148,213 @@ function Get_inscrito_pfd() {
       
       <hr />
 
-      <h3>Resultados de la Búsqueda ({inscritos.length} estudiantes)</h3>
+      <style>
+{`
+  .tabla-container {
+    margin-top: 20px;
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .tabla-inscritos {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .tabla-inscritos thead {
+    background-color: #1e3a8a; /* Azul UNET */
+    color: white;
+    text-align: left;
+  }
+
+  .tabla-inscritos th, 
+  .tabla-inscritos td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* ✅ Solo aplica hover a las filas del cuerpo, no del encabezado */
+  .tabla-inscritos tbody tr:hover {
+    background-color: #e0e7ff;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .tabla-inscritos tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+  }
+
+  .tabla-inscritos th {
+    font-weight: 600;
+    font-size: 14px;
+    cursor: default; /* evita el cambio de cursor en el encabezado */
+  }
+
+  .tabla-inscritos td {
+    font-size: 14px;
+    color: #333;
+  }
+
+  @media (max-width: 600px) {
+    .tabla-inscritos th, 
+    .tabla-inscritos td {
+      padding: 8px;
+      font-size: 12px;
+    }
+  }
+`}
+</style>
       
-      {inscritos.length > 0 && (
-        <table>
-          <tbody>
-            {inscritos.map((estudiante, index) => (
-              <tr key={estudiante.Cedula || index}> 
-                <td>{estudiante.Cedula}</td>
-                <td>{estudiante.Nombre_Estudiante} {estudiante.Apellido_Estudiante}</td>
-                <td>{estudiante.Nivel_Inscrito}</td>
-                <td>{estudiante.Seccion_Inscrita}</td>
-                <td>{estudiante.tipoPoblacion}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <h3>Resultados de la Búsqueda ({inscritos.length} estudiantes)</h3>
+
+        {inscritos.length > 0 && (
+        <div className="tabla-container">
+            <table className="tabla-inscritos">
+            <thead>
+                <tr>
+                <th>Cédula</th>
+                <th>Nombre y Apellido</th>
+                <th>Nivel</th>
+                <th>Sección</th>
+                <th>Tipo de Población</th>
+                </tr>
+            </thead>
+            <tbody>
+                {inscritos.map((estudiante, index) => (
+                <tr key={estudiante.Cedula || index}> 
+                    <td>{estudiante.Cedula}</td>
+                    <td>{estudiante.Nombre_Estudiante} {estudiante.Apellido_Estudiante}</td>
+                    <td>{estudiante.Nivel_Inscrito}</td>
+                    <td>{estudiante.Seccion_Inscrita}</td>
+                    <td>{estudiante.tipoPoblacion}</td>
+                </tr>
+                ))}
+            </tbody>
+            </table>
+        </div>
+        )}
 
       {loading && <p>Cargando datos...</p>}
+      <style>
+        {`
+        .botones-planillas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .botones-planillas button {
+            background-color: #1e3a8a; /* Azul UNET */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .botones-planillas button:hover {
+            background-color: #2b4fc3; /* Azul más claro al pasar el cursor */
+            transform: translateY(-1px);
+        }
+
+        .botones-planillas button:active {
+            background-color: #162f75; /* Azul más oscuro al hacer clic */
+            transform: translateY(0);
+        }
+
+        .btn-imprimir {
+  background-color: #047857 !important; /* Verde profesional */
+  color: white !important;
+  border: none !important;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.btn-imprimir:hover {
+  background-color: #059669 !important; /* Verde más claro */
+  transform: translateY(-1px);
+}
+
+.btn-imprimir:active {
+  background-color: #065f46 !important; /* Verde más oscuro */
+  transform: translateY(0);
+}
+        @media (max-width: 600px) {
+            .botones-planillas {
+            flex-direction: column;
+            }
+            .botones-planillas button {
+            width: 100%;
+            text-align: center;
+            }
+        }
+        `}
+        </style>
 
       {/* --- NUEVOS BOTONES DE SELECCIÓN DE PLANILLA --- */}
       {getLapso.length !== 0 && (
-        <div style={{ marginTop: "20px" }}>
-          <h4>Seleccione qué planilla visualizar:</h4>
-          <button onClick={() => setVisibleSection('asistencia')}>Planilla de Asistencia</button>
-          <button onClick={() => setVisibleSection('control')}>Control de Asistencia</button>
-          <button onClick={() => setVisibleSection('programacion')}>Programación Confirmación</button>
-        </div>
-      )}
+  <div>
+    <h4>Seleccione qué planilla visualizar:</h4>
+    <div className="botones-planillas">
+      <button onClick={() => setVisibleSection('asistencia')}>Planilla de Asistencia</button>
+      <button onClick={() => setVisibleSection('control')}>Control de Asistencia</button>
+      <button onClick={() => setVisibleSection('programacion')}>Programación Confirmación</button>
+    </div>
+  </div>
+)}
 
-      {/* --- COMPONENTES MOSTRADOS SEGÚN BOTÓN --- */}
-      {getLapso.length !== 0 && visibleSection === 'asistencia' && (
-        <div>
-          <button onClick={reactToPrintFn}>IMPRIMIR PLANILLA DE ASISTENCIA</button>
-          <PlanillaAsistencia 
-            data={getLapso} 
-            contentRef={contentRef}
-            className="planilla-asistencia"
-          />
-        </div>
-      )}
+{/* --- COMPONENTES MOSTRADOS SEGÚN BOTÓN --- */}
+{getLapso.length !== 0 && visibleSection === 'asistencia' && (
+  <div>
+    <button className="btn-imprimir" onClick={reactToPrintFn}>
+      IMPRIMIR PLANILLA DE ASISTENCIA
+    </button>
+    <PlanillaAsistencia 
+      data={getLapso} 
+      contentRef={contentRef}
+      className="planilla-asistencia"
+    />
+  </div>
+)}
 
-      {getLapso.length !== 0 && visibleSection === 'control' && (
-        <div>
-          <button onClick={reactToPrintFn1}>IMPRIMIR CONTROL DE ASISTENCIA</button>
-          <PlanillaControlAsistencia
-            contentRef={contentRef1} 
-            inscritos={inscritos} 
-            filtros={inscripcionData} 
-            calendario={getLapso} 
-          />
-        </div>
-      )}
+{getLapso.length !== 0 && visibleSection === 'control' && (
+  <div>
+    <button className="btn-imprimir" onClick={reactToPrintFn1}>
+      IMPRIMIR CONTROL DE ASISTENCIA
+    </button>
+    <PlanillaControlAsistencia
+      contentRef={contentRef1} 
+      inscritos={inscritos} 
+      filtros={inscripcionData} 
+      calendario={getLapso} 
+    />
+  </div>
+)}
 
-      {getLapso.length !== 0 && visibleSection === 'programacion' && (
-        <div>
-          <button onClick={reactToPrintFn2}>IMPRIMIR PROGRAMACIÓN</button>
-          <ProgramacionConfirmacion 
-            calendario={getLapso} 
-            filtros={inscripcionData}     
-            ref={contentRef2}
-          />
-        </div>
-      )}
+{getLapso.length !== 0 && visibleSection === 'programacion' && (
+  <div>
+    <button className="btn-imprimir" onClick={reactToPrintFn2}>
+      IMPRIMIR PROGRAMACIÓN
+    </button>
+    <ProgramacionConfirmacion 
+      calendario={getLapso} 
+      filtros={inscripcionData}     
+      ref={contentRef2}
+    />
+  </div>
+)}
 
     </div>
   );
