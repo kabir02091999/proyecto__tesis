@@ -35,6 +35,10 @@ export const getUsuarios = async () => {
     return api.get(`/usuarios`);
 };
 
+export const deleteUsuario = async (userId) => {
+    return api.delete(`/usuarios/${userId}`);
+};
+
 export const createUsuario = async (usuarioData) => {
     return api.post(`/usuarios`, usuarioData);
 }
