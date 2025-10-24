@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom'; 
 import '../../css/Nav_inscricion.css'; 
 
+import {  AseAuth } from '../../context/AuthContext';
+
 import UnetLogo from '../../image/unet2.png'; 
 
 const Nav_Inscricion = ({ onOptionSelect }) => {
     const navigate = useNavigate();
     const location = useLocation(); 
-
+    const { admin } =  AseAuth();
     // Función que maneja el cierre de sesión
     const handleLogout = () => {
         console.log("Cerrando sesión de Catequesis/Inscripción...");
@@ -33,7 +35,9 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
         { name: 'Progreso de participante', path: '/catequesis/progreso-estudiante', icon: '📈' }, 
         { name: 'Buscar poblacion', path: '/catequesis/buscar-poblacion', icon: '🔍' },
         { name: 'Generar PDF', path: '/catequesis/pdf', icon: '📄' },
-        // Ya no incluimos "Cerrar cuenta" aquí, lo pondremos como un botón separado
+        ...(admin ? [{ 
+            name: 'inicio administrador', path: '/admin', icon: '⚙'
+        }] : [])
     ];
     
     const handleNavigation = (path, name) => {

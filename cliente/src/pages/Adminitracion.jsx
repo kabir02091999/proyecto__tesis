@@ -13,8 +13,6 @@ function Administracion() {
   if (!admin) {
     alert("No tienes permiso para acceder a esta página.");
     return <div>No tienes permiso para acceder a esta página.</div>;
-  } else {
-    alert("Bienvenido Administrador.");
   }
 
   return (//ojo tengo que crar un usecontes donde se reinicia formularion

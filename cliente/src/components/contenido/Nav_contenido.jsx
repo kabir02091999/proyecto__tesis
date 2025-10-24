@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../../css/Nav_inscricion.css'; 
 
+import {  AseAuth } from '../../context/AuthContext';
+
 import UnetLogo from '../../image/unet2.png'; 
 
 const Nav_contenido = () => {
@@ -13,13 +15,15 @@ const Nav_contenido = () => {
         navigate('/'); 
     };
 
+    const { admin } =  AseAuth();
+
     const navItems = [
         { name: 'Inicio', path: '/contenido', icon: '🏠'  },
         { name: 'subidad', path: '/contenido/subida', icon: '📝' },/* crear usuario */
         { name: 'calendario', path: '/contenido/Post-calendario-liturgico', icon: '📈' },
-        /* { name: 'Balance General', path: '/financiero/balance', icon: '⚖️' }, */ 
-        /* { name: 'Buscar Transacción', path: '/financiero/buscar', icon: '🔍' },
-        { name: 'Configuración de la página', path: '/contenido/paguina', icon: '⚙️' }, */
+        ...(admin ? [{ 
+            name: 'inicio administrador', path: '/admin', icon: '⚙'
+        }] : [])
     ];
     
     const handleNavigation = (path, name) => {
