@@ -25,7 +25,6 @@ function PostLapso() {
         };
 
         // Muestra los datos capturados en la consola
-        console.log('✅ Datos del Lapso a enviar:', actuLapso);
         PostFechaLapso(datosLapso);
         // como hacer dependiendo de la respuesta setActuLapso true o false
         setActuLapso((prev) => !prev); // Cambia el estado para indicar que se ha actualizado el lapso

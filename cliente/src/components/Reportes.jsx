@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { AseAuth } from '../context/AuthContext';
+
 import '../css/cssReportes.css';
+import { useReportes } from '../context/ReportesContext';
 
 function Reportes() {
-  const { reportes, eliminarReporte, getReportes } = AseAuth();
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchReportes = async () => {
-      try {
-        await getReportes();
-      } catch (error) {
-        console.error('Error al cargar los reportes:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchReportes();
-  }, [getReportes]);
-
-  if (isLoading) {
+  useReportes
+  const { reportes, eliminarReporte , reportesLoading} = useReportes();
+ 
+  if (reportesLoading) {
     return <div className="loading-message">Cargando reportes...</div>;
   }
 

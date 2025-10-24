@@ -26,15 +26,10 @@ function Login() {
     
     try {
       const result = await login({ email, contrasena });
-      console.log("Inicio de sesión exitoso:", result);
       const tipo = result.tipoUsuario;
-      console.log('Tipo de usuario:', tipo);
-      console.log(user)
       // Redirige basándose en el tipo de usuario
       if (tipo === 'administrador') {
-        console.log("es adminsadadaaaaaaaaaa" + admin)
         setAdmin(true)
-        console.log("admin 111111111aaaaaaaaaaaaaaaaa"+ admin)
         navigate("/admin");
       } else if (tipo === 'financiero') {
         setAdmin(false)
@@ -52,11 +47,9 @@ function Login() {
 
     } catch (err) {
       console.error("Error en el inicio de sesión:", err);
-      // Mostrar un mensaje de error legible al usuario
       setError("Credenciales incorrectas o usuario no autorizado."); 
     }
 
-    console.log("Usuario actual:", user);
   };
 
 

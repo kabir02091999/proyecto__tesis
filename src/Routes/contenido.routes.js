@@ -18,8 +18,6 @@ const file_url = `http://localhost:3000/archivos`
 const router = Router();
 
 router.post('/archivo', upload.single("foto"), (req, res) => {
-    console.log(req.file)
-    console.log(req.body.favoriteColor)
     res.send('Aquí se manejará la subida de archivos.');
 });
 
@@ -55,7 +53,6 @@ router.post('/main-banner', upload.single("banner-foto"), async (req, res) => {
                 }
             }
         } catch (error) {
-            console.log(error)
         }
 
         query = `

@@ -13,7 +13,6 @@ function Contenido()    {
   useEffect(() => {
           
           Getcalendario();
-          console.log("calendario desde contenido", calendario)
   
   
       }, []);

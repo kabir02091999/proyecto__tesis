@@ -21,7 +21,6 @@ function Get_aprobados_reprobados() {
         
         // Si el campo está vacío, yo no hago nada
         if (!ciInput) return;
-        console.log("Yo estoy buscando el progreso para la CI:", ciInput);
         // Yo llamo a la función del contexto para buscar el progreso
         await getProgresoEstudianteByCI(ciInput); 
     };

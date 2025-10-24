@@ -18,12 +18,12 @@ const Nav_contenido = () => {
     const { admin } =  AseAuth();
 
     const navItems = [
-        { name: 'Inicio', path: '/contenido', icon: '🏠'  },
+        { name: 'Inicio', path: '/contenido', icon: '🏠' },
         { name: 'subidad', path: '/contenido/subida', icon: '📝' },/* crear usuario */
         { name: 'calendario', path: '/contenido/Post-calendario-liturgico', icon: '📈' },
         ...(admin ? [{ 
             name: 'inicio administrador', path: '/admin', icon: '⚙'
-        }] : [])
+        }] :[])
     ];
     
     const handleNavigation = (path, name) => {

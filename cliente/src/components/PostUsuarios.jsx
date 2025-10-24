@@ -22,7 +22,6 @@ function PostUsuarios(props) {
 
   const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log("Datos del formulario enviados:", formData);
       try {
           await createUsuario(formData);
           setFormData({
@@ -33,7 +32,6 @@ function PostUsuarios(props) {
               tipoUsuario: 'administrador',
           });
 
-          //console.log("Formulario reiniciado con éxito.");
 
       } catch (error) {
           console.error("Error al crear el usuario:", error);

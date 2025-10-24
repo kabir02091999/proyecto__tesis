@@ -37,15 +37,13 @@ export const PoblacionProvider = ({ children }) => {
     
     const getPoblacionByCI = async (CI) => {
         setLoading(true);
-        setError(null); // Limpiar errores anteriores
-        setPoblacion(null); // Limpiar datos anteriores antes de la búsqueda
+        setError(null); 
+        setPoblacion(null); 
 
         try {
             const response = await getPoblacion(CI);
             
-            // Si la respuesta es exitosa (código 2xx), procedemos
             const data = response.data;
-            console.log("Datos de población obtenidos:", data);
             setPoblacion(data);
 
         } catch (err) {
@@ -54,9 +52,7 @@ export const PoblacionProvider = ({ children }) => {
             if (err.response) {
                 // 2. Manejar el caso específico 404 (Not Found)
                 if (err.response.status === 404) {
-                    console.log(`CI no encontrada (${CI}). Estableciendo población a null.`);
                     setPoblacion(null); // Esto dispara el mensaje "No se encontraron resultados" en el frontend
-                    // No establecemos setError(err.message) porque 404 es una respuesta "controlada"
                 } else {
                     // Manejar otros errores HTTP (400, 500, etc.)
                     const errorMessage = err.response.data.message || `Error del servidor: ${err.response.status}`;
@@ -74,8 +70,6 @@ export const PoblacionProvider = ({ children }) => {
 
 
     const Inscribir_poblacion = async (datos) => {  
-        console.log("--- Datos Listos para API ---");
-        console.log("Datos de Inscripción:", datos);
         alert(`Simulación: Datos enviados. Cédula ${datos.cedula} inscrita en Lapso ID ${datos.lapsoId}, Nivel ${datos.nivel}, Sección ${datos.seccion}.`);
         return await inscribirEstudiante(datos);
     }
@@ -96,7 +90,6 @@ export const PoblacionProvider = ({ children }) => {
         
     } catch (err) {
         if (err.response && err.response.status === 404) {
-            console.log(`CI no encontrada (${CI}).`);
             setPoblacion(null);
             setErrorGetPoblacion(true); // Indica que NO se encontró
             return false; // 👈 Retorna false al componente que llama
@@ -114,7 +107,6 @@ export const PoblacionProvider = ({ children }) => {
 
 
     const createPoblacion = async (poblacionData) => {
-        console.log(poblacionData);
         return await createPoblacion1(poblacionData);
     }
 
@@ -122,7 +114,6 @@ export const PoblacionProvider = ({ children }) => {
         try {
             const response = await getFechasLapso();
             setLapso(response.data);
-            console.log("Datos de lapso obtenidos:", response.data);
         } catch (err) {
             console.error('Error al obtener los datos de lapso:', err);
         }
@@ -136,11 +127,9 @@ export const PoblacionProvider = ({ children }) => {
         try {
             const response = await getPoblacionByLapso1(lapsoId); // Asegúrate de tener esta función en tu API
             const data = response.data;
-            console.log("Datos de población por lapso obtenidos:", data);
             setPoblacionPorLapso(data); // Actualiza el estado con los datos obtenidos
         } catch (err) {
             setError("Error al obtener la población por lapso.");
-            console.error('Error al obtener la población por lapso:', err);
         }
         setLoading(false);
     };
@@ -153,17 +142,14 @@ export const PoblacionProvider = ({ children }) => {
         try {
             const response = await getAprobadosReprobados(lapsoId);
             const data = response.data;
-            console.log("Datos de aprobado/reprobado obtenidos:", data);
             setAprobadoReprobado(data); // Actualiza el estado con los datos obtenidos
         } catch (err) {
             setError("Error al obtener los datos de aprobado/reprobado.");
-            console.error('Error al obtener los datos de aprobado/reprobado:', err);
         }
         setLoading(false);
     }
 
     const Post_Aprobacion = async (aprobacionData) => {
-        console.log(aprobacionData);
         return await PostAprobacion(aprobacionData);
     }
 
@@ -174,7 +160,6 @@ export const PoblacionProvider = ({ children }) => {
         try {
             const response = await getProgresoEstudianteByCI1(ci);
             const data = response.data;
-            console.log("Datos de progreso del estudiante obtenidos:", data);
             setProgresoEstudiante(data); // Actualiza el estado con los datos obtenidos
         } catch (err) {
             setError("Error al obtener el progreso del estudiante.");
@@ -204,9 +189,7 @@ export const PoblacionProvider = ({ children }) => {
         try {
             const response = await btenerCalendarioLapso(lapsoId);
             const data = response.data;
-            console.log("Datos de calendario litúrgico obtenidos:", data);
             setGetLapso(data); // Actualiza el estado con los datos obtenidos
-            /* console.log("Datos de calendario litúrgico en estado:", getLapso); */
         } catch (err) {
             setError("Error al obtener el calendario litúrgico.");
             console.error('Error al obtener el calendario litúrgico:', err);
@@ -218,7 +201,6 @@ export const PoblacionProvider = ({ children }) => {
     // Llamar a fetchLapso cuando el componente se monte o cuando actuLapso cambie
      useEffect(() => {
         fetchLapso();
-        console.log("actulapso en context " + actuLapso)
     }, [actuLapso]);   
 
 

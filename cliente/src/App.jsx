@@ -36,8 +36,6 @@ import CalendarioPageCon from './pages/contenido/CalendarioPageCon'
 import CalendarioPageFin from './pages/financiero/calendarioPageFin'
 
 function App() {
-  // El useState(0) no se usa, lo puedes dejar o quitar.
-  const [count, setCount] = useState(0) 
 
   return (
     // 1. AuthProvider envuelve todo, ya que la autenticación se usa en ProtectedRoute

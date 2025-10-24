@@ -47,7 +47,6 @@ const CalendarUploader = () => {
       setIsLoading(false);
       return; 
     }
-    console.log("Eventos a enviar:", eventos);
     try {
       const response = await Post_Calendario_liturgico(eventos);
       

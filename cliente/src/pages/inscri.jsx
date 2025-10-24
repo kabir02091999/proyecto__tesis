@@ -27,7 +27,6 @@ function Inscri() {
     useEffect(() => {
         
         Getcalendario();
-        console.log("calendario desde inscri", calendario)
 
 
     }, []);

@@ -24,7 +24,6 @@ function Get_poblacion_Lapso() {
         // Si no seleccioné un lapso, no sigo
         if (!selectedLapso) return;
 
-        console.log(`Voy a buscar la población para el Lapso ID: ${selectedLapso}`);
         
         // Llamo a mi función asíncrona y espero que termine.
         await getPoblacionByLapso(selectedLapso); 

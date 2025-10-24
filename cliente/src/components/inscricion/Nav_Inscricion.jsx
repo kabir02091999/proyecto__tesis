@@ -13,7 +13,6 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
     const { admin } =  AseAuth();
     // Función que maneja el cierre de sesión
     const handleLogout = () => {
-        console.log("Cerrando sesión de Catequesis/Inscripción...");
         
         // 1. Borrar la información de la sesión del almacenamiento local.
         // Esto elimina tokens de sesión, datos de usuario, etc.
@@ -41,7 +40,6 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
     ];
     
     const handleNavigation = (path, name) => {
-        console.log(`Navegando a: ${name}`);
         navigate(path);
     };
 

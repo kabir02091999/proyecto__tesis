@@ -40,7 +40,6 @@ async function crear_plobacion_aux(datos, padres,datos_poblacion) {
         }
     }
  
-    console.log("bien")
     return {
         ok: true,
         mensaje: 'poblacion creada existosmanete',
@@ -178,11 +177,7 @@ export const getfindPoblacionByID = async (req, res) => {
 /* recordar que la fecha estan mmmm/mm/dd*/
 export const RegistroLapso = async (req, res) => {
     const { inicio, fin, tipo_inscripcion } = req.body;
-    console.log(req.body)
     if (!inicio || !fin || !tipo_inscripcion) {
-        console.log("inicio " + inicio)
-        console.log("fin " + fin)
-        console.log("tipo_inscripcion " + tipo_inscripcion)
         return res.status(400).json({ message: "Todos los campos son obligatorios" });
     }
 
@@ -208,7 +203,6 @@ export const GetLapso = async (req, res) => {
 
 export const aprobacion = async (req, res) => {
     const {CI,ID_lapso,aprobado_Reprobado}= req.body;
-    console.log(req.body)
     if (!CI || !ID_lapso ) {
         return res.status(400).json({ message: "Todos los campos son obligatorios" });
     }
@@ -262,7 +256,6 @@ export const inscripto = async (req, res) => {
 
 export const getinscript_CI = async (req, res) => {
     const { ci } = req.params;
-    console.log("ci "+ci)   
     try {
         const [rows] = await pool.query('SELECT * FROM inscrito WHERE CI = ?', [ci]);
         if (rows.length === 0) {

@@ -1,15 +1,13 @@
-// FormularioReporte.jsx (Sin cambios en la lógica)
-
 import React, { useState } from 'react';
-import '../../css/inicion/reporteForm.css'; // Asegúrate de que este CSS esté disponible
-import { AseAuth } from '../../context/AuthContext';
+import '../../css/inicion/reporteForm.css'; 
+import { useReportes } from '../../context/ReportesContext';
 
 const TEXT_COLOR = '#001F54'; 
 const ACCENT_COLOR = '#007bff'; 
 
 const FormularioReporte = () => {
     
-    const { enviarReporte } = AseAuth();
+    const { enviarReporte } = useReportes();
 
     const [formData, setFormData] = useState({
         nombre: '',

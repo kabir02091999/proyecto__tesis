@@ -74,42 +74,6 @@ export const logout =  (req, res) => {
 };
 
 
-//export const verifyToken = async (req, res) => {
-    // extraer el token del post header
-
-
-
-    /* const { token } = req.body;
-    console.log("verificando token: "+ token)
-    if (!token) {
-        return res.status(401).json({ message: 'No token provided' });
-    }
-
-
-
-    jwt.verify(token, TOKEN_SECRET , async (err, decoded) => {
-        
-        if (err) {
-            return res.status(401).json({ message: 'Invalid token' });
-        }else{
-            console.log(decoded.userId)
-            // pool.query('SELECT * FROM usuarios WHERE id = ?', [decoded.userId]);
-            const [rows, fields] = await pool.execute('SELECT * FROM usuarios WHERE id = ?', [decoded.userId]);
-            const [user] = rows
-
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-            console.log("usuario " + JSON.stringify(user))
-            console.log("token "+ token)
-            
-            return res.status(200).json({ message: 'Token is valid', user: user,  });
-
-
-        }
-
-}) }*/
-
 export const verifyToken = async (req, res) => {
     try {
         const authHeader = req.headers['authorization'];
@@ -122,7 +86,6 @@ export const verifyToken = async (req, res) => {
         // 2. Extraer el token del encabezado
         const token = authHeader.split(' ')[1];
         
-        console.log("verificando token: " + token);
 
         if (!token) {
             return res.status(401).json({ message: 'No se pudo extraer el token' });
@@ -138,7 +101,6 @@ export const verifyToken = async (req, res) => {
             });
         });
 
-        console.log("Token decodificado:", decoded);
         const [rows] = await pool.execute('SELECT * FROM usuarios WHERE id = ?', [decoded.userId]);
         const [user] = rows;
 
@@ -146,7 +108,6 @@ export const verifyToken = async (req, res) => {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
-        console.log("Usuario encontrado:", JSON.stringify(user));
         return res.status(200).json({ message: 'Token es válido', user });
 
     } catch (error) {

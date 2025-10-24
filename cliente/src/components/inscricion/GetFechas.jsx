@@ -26,7 +26,6 @@ function GetFechas() {
             setLoading(false);
         };
 
-        console.log('useEffect actuLapso cambiado:', actuLapso);
         fetchFechas();
     }, [actuLapso]);
 
