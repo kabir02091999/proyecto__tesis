@@ -15,11 +15,11 @@ const Nav_contenido = () => {
 
     const navItems = [
         { name: 'Inicio', path: '/contenido', icon: '🏠'  },
-        { name: 'subidad', path: '/contenido/subida', icon: '📝' },
-        { name: 'Reporte de Ingresos/Egresos', path: '/financiero/reportes', icon: '📈' },
+        { name: 'subidad', path: '/contenido/subida', icon: '📝' },/* crear usuario */
+        { name: 'calendario', path: '/contenido/Post-calendario-liturgico', icon: '📈' },
         /* { name: 'Balance General', path: '/financiero/balance', icon: '⚖️' }, */ 
-        { name: 'Buscar Transacción', path: '/financiero/buscar', icon: '🔍' },
-        { name: 'Configuración de la página', path: '/contenido/paguina', icon: '⚙️' },
+        /* { name: 'Buscar Transacción', path: '/financiero/buscar', icon: '🔍' },
+        { name: 'Configuración de la página', path: '/contenido/paguina', icon: '⚙️' }, */
     ];
     
     const handleNavigation = (path, name) => {

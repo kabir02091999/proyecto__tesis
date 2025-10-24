@@ -21,6 +21,7 @@ function Financiero() {
 
   useEffect(() => {
     if (loading) return;
+   
 
     if (!isAuthenticated) {
       navigate('/login');

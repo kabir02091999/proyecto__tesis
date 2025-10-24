@@ -1,5 +1,7 @@
 import Archivo from "../../components/contenido/archivo";
+import ContenidoConfiguracion from "../../components/contenido/Contenido";
 import Nav_contenido from "../../components/contenido/Nav_contenido";
+
 
 
 function Subida () {
@@ -8,7 +10,8 @@ function Subida () {
         <Nav_contenido/>
         <div className="admin-content-main">
             
-            <Archivo/>
+            {/* <Archivo/> */}
+            <ContenidoConfiguracion/>
 
         </div>
     </div>

@@ -2,10 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { getBanner, getHistorias } from '../../api/auth';
 
+// ===========================================
+// ✅ 2 VARIABLES CONSTANTES PARA MISIÓN Y VISIÓN
+// ===========================================
+const MISION_PARROQUIA = 'Ser la voz y el motor del desarrollo comunitario, promoviendo la participación ciudadana, la transparencia y la mejora continua de los servicios. Trabajamos por una parroquia moderna, justa y con un futuro próspero para todos sus habitantes.';
+const VISION_PARROQUIA = 'Consolidar a nuestra parroquia como un modelo de gestión local y bienestar social, donde cada ciudadano se sienta valorado y tenga acceso a oportunidades de crecimiento integral, manteniendo un fuerte sentido de identidad y patrimonio cultural.';
+// ===========================================
+
 const STORIES_TO_SHOW = 3; 
 const CARD_WIDTH_PLUS_GAP = 300 + 25; 
 
 const styles = {
+    // ... (Mantengo los estilos originales)
     appContainer: {
         fontFamily: 'Roboto, Arial, sans-serif',
         margin: 0,
@@ -74,6 +82,49 @@ const styles = {
         fontSize: '1.2em',
         color: '#666',
     },
+    // ✅ NUEVO ESTILO: Contenedor para Misión y Visión
+    misionVisionSection: {
+        padding: '40px 20px',
+        maxWidth: '1200px',
+        margin: '0 auto 50px auto',
+        display: 'flex',
+        gap: '40px',
+        justifyContent: 'space-around',
+        backgroundColor: 'white', // Fondo blanco para destacarlo
+        borderRadius: '12px',
+        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.05)',
+        borderLeft: '8px solid #004d99', // Detalle azul institucional
+    },
+    // ✅ NUEVO ESTILO: Contenido individual de Misión/Visión
+    misionVisionCard: {
+        flex: 1,
+        padding: '20px',
+        textAlign: 'center',
+    },
+    // ✅ NUEVO ESTILO: Título de Misión/Visión
+    misionVisionTitle: {
+        color: '#004d99',
+        fontSize: '1.8em',
+        marginBottom: '15px',
+        position: 'relative',
+        paddingBottom: '10px',
+    },
+    // ✅ NUEVO ESTILO: Separador bajo el título
+    titleSeparator: {
+        content: '""',
+        display: 'block',
+        width: '50px',
+        height: '3px',
+        backgroundColor: '#ff9900', // Color de contraste (Naranja/Oro)
+        margin: '0 auto',
+        marginTop: '10px',
+    },
+    // ✅ NUEVO ESTILO: Párrafo de Misión/Visión
+    misionVisionText: {
+        fontSize: '1.1em',
+        color: '#333',
+        lineHeight: '1.6',
+    },
     
     historiasSection: {
         padding: '20px',
@@ -91,7 +142,7 @@ const styles = {
     },
     carruselContainer: { 
         position: 'relative',
-        padding: '0 50px', // Añadimos padding para que las flechas no queden pegadas
+        padding: '0 50px', 
     },
     carruselHistorias: {
         display: 'flex',
@@ -130,7 +181,7 @@ const styles = {
         marginBottom: '10px',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',   
+        whiteSpace: 'nowrap',   
     },
     historiaTexto: {
         fontSize: '0.9em',
@@ -140,45 +191,40 @@ const styles = {
         maxHeight: '4.2em', 
         overflow: 'hidden',
     },
-    // Estilos de los botones del Carrusel - MODIFICADOS PARA QUE SE VEAN MÁS
     carruselButton: {
         position: 'absolute',
         top: '50%', 
         transform: 'translateY(-50%)',
-        backgroundColor: 'rgba(0, 77, 153, 0.95)', // Un poco menos transparente
+        backgroundColor: 'rgba(0, 77, 153, 0.95)', 
         color: 'white',
-        border: '2px solid white', // Borde blanco para mayor visibilidad
+        border: '2px solid white', 
         borderRadius: '50%',
-        width: '50px', // Tamaño más grande
-        height: '50px', // Tamaño más grande
-        fontSize: '2em', // Icono más grande
+        width: '50px', 
+        height: '50px', 
+        fontSize: '2em', 
         fontWeight: 'bold',
         cursor: 'pointer',
         zIndex: 20,
         transition: 'background-color 0.3s, transform 0.3s, border-color 0.3s',
-        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.4)', // Sombra más pronunciada
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.4)', 
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         outline: 'none',
-        // Hover effect
-        '&:hover': {
-            backgroundColor: '#003366', // Un azul más oscuro al pasar el ratón
-            transform: 'translateY(-50%) scale(1.05)', // Pequeño efecto de escala
-        }
+        // El hover se maneja directamente con la sintaxis de `style` en JSX en el renderizado.
     },
     prevButton: {
-        left: '0px', // Posición ajustada para que quepa en el padding del contenedor
+        left: '0px', 
     },
     nextButton: {
-        right: '0px', // Posición ajustada
+        right: '0px', 
     },
     buttonDisabled: {
-        backgroundColor: 'rgba(0, 77, 153, 0.4)', // Color atenuado cuando está deshabilitado
+        backgroundColor: 'rgba(0, 77, 153, 0.4)', 
         borderColor: 'rgba(255, 255, 255, 0.5)',
         cursor: 'not-allowed',
         boxShadow: 'none',
-        transform: 'translateY(-50%)', // No hay efecto de escala cuando está deshabilitado
+        transform: 'translateY(-50%)', 
     },
     dotsContainer: {
         display: 'flex',
@@ -200,7 +246,6 @@ const styles = {
     },
 };
 
-
 const Paguina = () => {
     const carruselRef = useRef(null); 
     const [currentSlide, setCurrentSlide] = useState(0); 
@@ -212,13 +257,15 @@ const Paguina = () => {
 
     const totalSlides = Math.ceil(historias.length / STORIES_TO_SHOW);
     
+    // ... (Lógica de scroll, handleNext, handlePrev - SE MANTIENE IGUAL)
     const scrollToSlide = (index) => {
         if (!carruselRef.current) return;
 
-        const scrollPosition = index * CARD_WIDTH_PLUS_GAP; 
+        // Se mantiene la lógica de scroll, asegurando que se desplace por la cantidad de tarjetas
+        const scrollAmount = carruselRef.current.clientWidth; // Desplaza el ancho visible del contenedor
         
         carruselRef.current.scrollTo({
-            left: scrollPosition * STORIES_TO_SHOW, 
+            left: index * scrollAmount, 
             behavior: 'smooth'
         });
         setCurrentSlide(index);
@@ -243,6 +290,7 @@ const Paguina = () => {
             try {
                 const API_BASE_URL = 'http://localhost:3000'; 
                 
+                // Las llamadas a la API se mantienen igual
                 const {data:historias} = await getHistorias()
                 const {data:banner} = await getBanner()
 
@@ -250,7 +298,9 @@ const Paguina = () => {
 
                 const historiasConURL = historias.map(historia => ({
                     ...historia,
-                    foto: `${API_BASE_URL}/archivos/${historia.foto}`
+                    // Se asume que historia.foto ya es una URL completa si no se necesita el prefijo
+                    // Si se necesita el prefijo, mantén la línea original:
+                    foto: `${API_BASE_URL}/archivos/${historia.foto}` 
                 }));
 
                 setHistorias(historiasConURL.sort((a, b) => (a.indice || 0) - (b.indice || 0)));
@@ -282,15 +332,14 @@ const Paguina = () => {
     }
 
     const getStoryImageUrl = (filename) => {
+        // Esta función se mantiene, asumiendo que es un fallback
         return `http://localhost:3000/archivos/placeholder-story.png`;
     };
 
     return (
         <div style={styles.appContainer}>
-            <header style={styles.siteHeader}>
-                Parroquia Digital
-            </header>
             <main style={styles.mainContent}>
+                {/* 1. SECCIÓN PRINCIPAL DEL BANNER */}
                 <section style={styles.mainBanner}>
                     <img 
                         src={bannerData.imagen} 
@@ -306,6 +355,28 @@ const Paguina = () => {
                     </div>
                 </section>
 
+                {/* 2. ✅ NUEVA SECCIÓN: MISIÓN Y VISIÓN */}
+                <section style={styles.misionVisionSection}>
+                    {/* Tarjeta de Misión */}
+                    <div style={styles.misionVisionCard}>
+                        <h2 style={styles.misionVisionTitle}>
+                            Misión
+                            <span style={styles.titleSeparator}></span>
+                        </h2>
+                        <p style={styles.misionVisionText}>{MISION_PARROQUIA}</p>
+                    </div>
+
+                    {/* Tarjeta de Visión */}
+                    <div style={styles.misionVisionCard}>
+                        <h2 style={styles.misionVisionTitle}>
+                            Visión
+                            <span style={styles.titleSeparator}></span>
+                        </h2>
+                        <p style={styles.misionVisionText}>{VISION_PARROQUIA}</p>
+                    </div>
+                </section>
+
+                {/* 3. SECCIÓN DE HISTORIAS Y ACONTECIMIENTOS */}
                 <section style={styles.historiasSection}>
                     <h2 style={styles.sectionTitle}>Nuestras Historias y Acontecimientos</h2>
                     
@@ -360,10 +431,11 @@ const Paguina = () => {
                             style={{ 
                                 ...styles.carruselButton, 
                                 ...styles.nextButton, 
-                                ...(currentSlide >= totalSlides - 1 && styles.buttonDisabled) 
+                                // Ajuste la condición para deshabilitar correctamente el botón siguiente
+                                ...(currentSlide >= totalSlides - 1 || historias.length <= STORIES_TO_SHOW) && styles.buttonDisabled
                             }}
                             onClick={handleNext}
-                            disabled={currentSlide >= totalSlides - 1}
+                            disabled={currentSlide >= totalSlides - 1 || historias.length <= STORIES_TO_SHOW}
                             aria-label="Historia Siguiente"
                         >
                             {'>'}

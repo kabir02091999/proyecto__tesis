@@ -25,10 +25,13 @@ const Nav_Finanzas = () => {
     }
 
     const navItems = [
-        { name: 'Inicio', path: '/financiero', icon: '🏠'  },
+        { name: 'Inicio', path: '/financiero', icon: '🏠',  },
         { name: 'Registrar Transacciones', path: '/financiero/registrar-transacciones', icon: '📝' },
         { name: 'Reporte de Ingresos/Egresos', path: '/financiero/reportes', icon: '📈' }, 
-        { name: 'Buscar Transacción', path: '/financiero/buscar', icon: '🔍' },
+        { name: 'Calendario', path: '/financiero/Post-calendario-liturgico', icon: '🔍' },
+        ...(admin ? [{ 
+            name: 'inicio administrador', path: '/admin', icon: '⚙'
+        }] : [])
     ];
     
     const handleNavigation = (path, name) => {

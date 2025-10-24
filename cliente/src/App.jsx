@@ -32,6 +32,8 @@ import Reporte_finaciero from './pages/financiero/Reporte_finaciero'
 import Contenido from './pages/contenido/contenido'
 import Subida from './pages/contenido/subida'
 import Paguina from './components/contenido/Paguina'
+import CalendarioPageCon from './pages/contenido/CalendarioPageCon'
+import CalendarioPageFin from './pages/financiero/calendarioPageFin'
 
 function App() {
   // El useState(0) no se usa, lo puedes dejar o quitar.
@@ -48,7 +50,7 @@ function App() {
           <Route path='/inscripcion' element={<Inscricion/>} />
           <Route path='/reportes' element={<Reporte/>} />
 
-          <Route path='/prueva1234' element={ <Paguina/> } />
+          {/* <Route path='/prueva1234' element={ <Paguina/> } /> */}
 
           {/* 2. Rutas Protegidas: ProtectedRoute actúa como layout/padre */}
           <Route element={<ProtectedRoute />}>
@@ -129,11 +131,21 @@ function App() {
                 <Buscar_finansa/>
               </FinancieroProvider>
             } />
+
+            <Route path='/financiero/Post-calendario-liturgico' element={
+              <CalendarioPageFin/>
+            } />
           
             <Route path='/contenido' element={
               <PoblacionProvider>
                 <Contenido/>
               </PoblacionProvider>
+            } />
+
+            <Route path='/contenido/Post-calendario-liturgico' element={
+
+                <CalendarioPageCon/>
+                             
             } />
 
             <Route path='/contenido/subida' element={
@@ -143,7 +155,6 @@ function App() {
             } />
 
             <Route path='/contenido/paguina' element={
-              
                 < ContenidoConfiguracion/>             
             } />
 

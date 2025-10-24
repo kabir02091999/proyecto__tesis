@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
             setLoading(true);
             setErrors([]);
             const response = await loginService(userData);
-            
+            setAdmin(response.data.tipoUsuario === 'administrador' );
             console.log("tipo usuario " + response.data.tipoUsuario)
             setUser(response.data.tipoUsuario);
             console.log("tipo usuario 111111111111111" + user);
