@@ -269,28 +269,28 @@ function Get_inscrito_pfd() {
         }
 
         .btn-imprimir {
-  background-color: #047857 !important; /* Verde profesional */
-  color: white !important;
-  border: none !important;
-  border-radius: 8px;
-  padding: 10px 18px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-}
+        background-color: #047857 !important; /* Verde profesional */
+        color: white !important;
+        border: none !important;
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
 
-.btn-imprimir:hover {
-  background-color: #059669 !important; /* Verde más claro */
-  transform: translateY(-1px);
-}
+        .btn-imprimir:hover {
+        background-color: #059669 !important; /* Verde más claro */
+        transform: translateY(-1px);
+        }
 
-.btn-imprimir:active {
-  background-color: #065f46 !important; /* Verde más oscuro */
-  transform: translateY(0);
-}
+        .btn-imprimir:active {
+        background-color: #065f46 !important; /* Verde más oscuro */
+        transform: translateY(0);
+        }
         @media (max-width: 600px) {
             .botones-planillas {
             flex-direction: column;

@@ -145,15 +145,15 @@ const styles = {
         padding: '0 50px', 
     },
     carruselHistorias: {
-        display: 'flex',
-        overflowX: 'hidden', 
-        gap: '25px',
-        padding: '15px',
-        scrollBehavior: 'smooth',
-        msOverflowStyle: 'none', 
-        scrollbarWidth: 'none', 
-        WebkitOverflowScrolling: 'touch', 
-    },
+    display: 'flex',
+    overflowX: 'auto',  // Permite scroll táctil
+    gap: '25px',
+    padding: '15px',
+    scrollBehavior: 'smooth',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+    WebkitOverflowScrolling: 'touch',
+},
     historiaCard: {
         minWidth: '300px',
         maxWidth: '300px',
@@ -249,26 +249,29 @@ const styles = {
 const Paguina = () => {
     const carruselRef = useRef(null); 
     const [currentSlide, setCurrentSlide] = useState(0); 
-
+    const [storiesToShow, setStoriesToShow] = useState(STORIES_TO_SHOW);
     const [bannerData, setBannerData] = useState({ imagen: '', titulo: 'Cargando Contenido...' });
     const [historias, setHistorias] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const totalSlides = Math.ceil(historias.length / STORIES_TO_SHOW);
+    const totalSlides = Math.ceil(historias.length / storiesToShow);
+
     
     // ... (Lógica de scroll, handleNext, handlePrev - SE MANTIENE IGUAL)
     const scrollToSlide = (index) => {
-        if (!carruselRef.current) return;
+       if (!carruselRef.current) return;
+    
+    const cardWidth = carruselRef.current.firstChild
+        ? carruselRef.current.firstChild.offsetWidth + 25 // 25px gap
+        : 325;
 
-        // Se mantiene la lógica de scroll, asegurando que se desplace por la cantidad de tarjetas
-        const scrollAmount = carruselRef.current.clientWidth; // Desplaza el ancho visible del contenedor
-        
-        carruselRef.current.scrollTo({
-            left: index * scrollAmount, 
-            behavior: 'smooth'
-        });
-        setCurrentSlide(index);
+    carruselRef.current.scrollTo({
+        left: index * cardWidth * storiesToShow,
+        behavior: 'smooth'
+    });
+
+    setCurrentSlide(index);
     };
 
     const handleNext = () => {
@@ -314,6 +317,23 @@ const Paguina = () => {
 
         fetchData();
     }, []);
+    
+
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth < 480) {
+      setStoriesToShow(1);
+    } else if (window.innerWidth < 768) {
+      setStoriesToShow(2);
+    } else {
+      setStoriesToShow(3);
+    }
+  };
+
+  handleResize(); // Ejecuta al montar
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
 
     if (loading) {
         return (
