@@ -103,13 +103,7 @@ function Get_inscrito_pfd() {
                 overflow: visible !important;
             }
 
-            table, tr, td, div {
-                page-break-inside: avoid !important;
-            }
-
-            .page-break {
-                page-break-before: always !important;
-            }
+   
 
             /* 👉 POR DEFECTO todas las páginas serán verticales */
             @page {
