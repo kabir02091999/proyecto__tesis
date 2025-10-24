@@ -73,6 +73,7 @@ export const logout =  (req, res) => {
     return res.sendStatus(200);
 };
 
+
 //export const verifyToken = async (req, res) => {
     // extraer el token del post header
 
@@ -220,6 +221,92 @@ export const crearCalendarioLiturgico = async (req, res) => {
     }
 };
 
+export const PostReportes = async (req, res) => {
+    const { nombre, email, telefono, tipoReporte, mensaje } = req.body;
+
+    if (!nombre || !email || !tipoReporte || !mensaje) {
+        return res.status(400).json({ 
+            message: 'Error: Faltan campos obligatorios (nombre, email, tipoReporte, mensaje).' 
+        });
+    }
+
+    try {
+
+        const sql = `INSERT INTO REPORTES (Nombre_Completo, Correo_Electronico, Telefono, Tipo_Comunicacion, Mensaje) VALUES (?, ?, ?, ?, ?)`;
+        
+        const values = [
+            nombre, 
+            email, 
+            telefono || null, 
+            tipoReporte, 
+            mensaje
+        ];
+
+        // 3. Ejecución de la consulta
+        const [result] = await pool.execute(sql, values);
+
+        // 4. Respuesta de éxito
+        return res.status(201).json({ 
+            message: 'Reporte registrado con éxito', 
+            id: result.insertId 
+        });
+
+    } catch (error) {
+        console.error('Error al insertar el reporte en la BD:', error);
+        return res.status(500).json({ 
+            message: 'Error al procesar el reporte y guardarlo en la base de datos',
+            error: error.message
+        });
+    }
+};
+
+export const getReportes = async (req, res) => {
+    try {
+        // Yo obtengo todos los registros de la tabla REPORTES
+        const [rows] = await pool.query('SELECT ID_Reporte, Nombre_Completo, Correo_Electronico, Telefono, Tipo_Comunicacion, Mensaje, Fecha_Reporte FROM REPORTES ORDER BY Fecha_Reporte DESC');
+        
+        // Yo devuelvo los reportes
+        return res.status(200).json(rows);
+        
+    } catch (error) {
+        console.error('Error al obtener los reportes:', error);
+        return res.status(500).json({ 
+            message: 'Error al obtener los reportes de la base de datos',
+            error: error.message
+        });
+    }
+};
+
+export const deleteReporte = async (req, res) => {
+    // Yo extraigo el ID del reporte de los parámetros de la URL
+    const { id } = req.params; 
+
+    // Yo puedo añadir una pequeña validación del ID
+    if (!id || isNaN(id)) {
+        return res.status(400).json({ message: 'ID de reporte inválido.' });
+    }
+
+    try {
+        // Yo ejecuto la consulta de eliminación
+        const [result] = await pool.query('DELETE FROM REPORTES WHERE ID_Reporte = ?', [id]);
+        
+        // Yo verifico si se eliminó algún registro
+        if (result.affectedRows === 0) {
+            // Si affectedRows es 0, significa que el ID no existe
+            return res.status(404).json({ message: 'Reporte no encontrado para eliminar.' });
+        }
+        
+        // Yo devuelvo una respuesta de éxito (código 200)
+        return res.status(200).json({ message: `Reporte con ID ${id} eliminado correctamente.` });
+        
+    } catch (error) {
+        console.error('Error al eliminar el reporte:', error);
+        return res.status(500).json({ 
+            message: 'Error al eliminar el reporte de la base de datos',
+            error: error.message
+        });
+    }
+};
 
 export const getCalendarioYLapsoUnificado = async (req, res) => {
     

@@ -109,6 +109,19 @@ export const obtener_Transacciones = async () => {
     return api.get(`/finanzas/transacciones`);
 };
 
+/* aqui  */
+export const PostReportes = async (reporteData) => {
+    return api.post(`/reportes`, reporteData);
+}
+
+export const obtenerReportes = async () => {
+    return api.get(`/reportes`);
+};
+
+export const deleteReporte = async (reporteId) => {
+    return api.delete(`/reportes/${reporteId}`);
+};
+
 export const obtenerTransaccionesPorPeriodo = async (mes, anio) => {
     // Usa la instancia 'api' para que se incluya el token de autenticación
     // y usa el parámetro 'params' de Axios para construir la URL con Query Params

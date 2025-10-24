@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { login as loginService, verifyToken as verifyTokenService ,crearCalendarioLiturgicos, getCalendario} from '../api/auth';
+import { login as loginService, verifyToken as verifyTokenService ,crearCalendarioLiturgicos, getCalendario,PostReportes,obtenerReportes,deleteReporte} from '../api/auth';
 import cookie from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { use } from 'react';
@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     const [errors, setErrors] = useState([]);
     const [token , setToken] = useState(null);
     const [calendario, setCalendario] = useState([]);
+    const [reportes, setReportes] = useState([]);
     //const navigate = useNavigate();
 
     const login = async (userData) => {
@@ -90,6 +91,56 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
         }
     };
+
+    const enviarReporte = async (reporteData) => {
+        try {
+            setLoading(true); // Se agrega
+            setErrors([]);
+            const response = await PostReportes(reporteData);
+            return response.data;
+        } catch (error) {
+            console.error('Error al enviar el reporte:', error);
+            const errorMessage = error.response?.data?.message || 'Error desconocido al enviar el reporte.';
+            setErrors([errorMessage]);
+            throw new Error(errorMessage);
+        } finally {
+            setLoading(false); // Se agrega
+        }
+    };
+    
+    const getReportes = async () => {
+        try {
+            setLoading(true);
+            setErrors([]);
+            const response = await obtenerReportes();
+            setReportes(response.data); 
+        } catch (error) {
+            console.error('Error al obtener los reportes:', error);
+            setErrors([error.response?.data?.message || 'Error al cargar la lista de reportes.']);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    const eliminarReporte = async (id) => {
+        try {
+            setLoading(true); // Se agrega
+            setErrors([]);
+            await deleteReporte(id);
+
+            setReportes(prevReportes => prevReportes.filter(reporte => reporte.ID_Reporte !== id));
+            
+            return { message: 'Reporte eliminado con éxito' };
+
+        } catch (error) {
+            console.error(`Error al eliminar el reporte ID ${id}:`, error);
+            const errorMessage = error.response?.data?.message || 'Error al intentar eliminar el reporte.';
+            setErrors([errorMessage]);
+            throw new Error(errorMessage);
+        } finally {
+            setLoading(false); // Se agrega
+        }
+    };
     
     // Este efecto se encarga de verificar la autenticación cuando la app se carga
     useEffect(() => {
@@ -121,7 +172,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{admin,setAdmin,calendario,Getcalendario ,Post_Calendario_liturgico , user, loading, isAuthenticated, errors, login}}>
+        <AuthContext.Provider value={{reportes, setReportes,eliminarReporte,getReportes,enviarReporte,admin,setAdmin,calendario,Getcalendario ,Post_Calendario_liturgico , user, loading, isAuthenticated, errors, login}}>
             {children}
         </AuthContext.Provider>
     );

@@ -2,12 +2,15 @@
 
 import React, { useState } from 'react';
 import '../../css/inicion/reporteForm.css'; // Asegúrate de que este CSS esté disponible
+import { AseAuth } from '../../context/AuthContext';
 
 const TEXT_COLOR = '#001F54'; 
 const ACCENT_COLOR = '#007bff'; 
 
 const FormularioReporte = () => {
-    // ... Tu lógica de useState, handleChange, y handleSubmit ...
+    
+    const { enviarReporte } = AseAuth();
+
     const [formData, setFormData] = useState({
         nombre: '',
         email: '',
@@ -24,11 +27,21 @@ const FormularioReporte = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Datos del Reporte Enviados:", formData);
-        alert('Reporte enviado con éxito. Gracias por tu comunicación.');
+        /* console.log("Datos del Reporte Enviados:", formData);
+        alert('Reporte enviado con éxito. Gracias por tu comunicación.'); */
+
+        try {
+            await enviarReporte(formData);
+            alert('Reporte enviado con éxito. Gracias por tu comunicación. recordar que te responderesmos de acuerdo al medio que nos proporcionaste.');
+        } catch (error) {
+            alert('Hubo un error al enviar el reporte. Por favor, intenta nuevamente.');
+            console.error('Error al enviar el reporte:', error);
+        }
         
+
+
         setFormData({
             nombre: '',
             email: '',
@@ -81,7 +94,7 @@ const FormularioReporte = () => {
                 
                 <div className="form-group-grid">
                     <div className="form-group">
-                        <label htmlFor="telefono">Teléfono / Cédula</label>
+                        <label htmlFor="telefono">Teléfono</label>
                         <input
                             type="text"
                             id="telefono"
