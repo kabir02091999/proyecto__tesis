@@ -1,4 +1,4 @@
-// @ts-check
+
 
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { deleteReporte, obtenerReportes, PostReportes } from '../api/auth';

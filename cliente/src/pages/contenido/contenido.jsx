@@ -1,32 +1,38 @@
-import React ,{useEffect} from "react";
+import React, { useEffect } from "react";
 
 import Nav_contenido from "../../components/contenido/Nav_contenido";
 import EventCalendar from "../../components/calendario";
 
+import { ReportesProvider } from '../../context/ReportesContext';
+import Reportes from '../../components/Reportes';
+
 
 import { AseAuth } from '../../context/AuthContext';
 
-function Contenido()    {
+function Contenido() {
 
   const { calendario, Getcalendario } = AseAuth();
 
   useEffect(() => {
-          
-          Getcalendario();
-  
-  
-      }, []);
+
+    Getcalendario();
+
+
+  }, []);
 
   return (
     <div className="admin-layout">
-        <Nav_contenido/>
-        <div className="admin-content-main">
-            <h1>Contenido de Catequesis</h1>
-            <div className="calendar-view">
-                    <h1>Calendario de Programación Confirmación</h1> 
-                    <EventCalendar calendario={calendario} /> 
-            </div>
+      <Nav_contenido />
+      <div className="admin-content-main">
+        <h1>Contenido de Catequesis</h1>
+        <div className="calendar-view">
+          <h1>Calendario de Programación Confirmación</h1>
+          <EventCalendar calendario={calendario} />
         </div>
+        <ReportesProvider>
+          <Reportes />
+        </ReportesProvider>
+      </div>
     </div>
   );
 }

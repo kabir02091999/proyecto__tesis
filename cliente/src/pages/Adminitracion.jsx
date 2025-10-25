@@ -4,6 +4,8 @@ import Nav_Admin from '../components/Administrador/Nav_Admin';
 import { AseAuth } from '../context/AuthContext';
 import Reportes from '../components/Reportes';
 import { ReportesProvider } from '../context/ReportesContext';
+import GetUsuarios from '../components/GetUsuarios';
+import PostUsarios from '../components/PostUsuarios';
 
 
 function Administracion() {
@@ -14,13 +16,17 @@ function Administracion() {
     return <div>No tienes permiso para acceder a esta página.</div>;
   }
 
-  return (//ojo tengo que crar un usecontes donde se reinicia formularion
+  return (
     <div className="admin-layout">
       <Nav_Admin/>
       <div className="admin-content-main">
+            <GetUsuarios/>
+            <PostUsarios/>
+            
             <ReportesProvider>
               <Reportes/>
             </ReportesProvider>
+            
       </div>
     </div>
   );

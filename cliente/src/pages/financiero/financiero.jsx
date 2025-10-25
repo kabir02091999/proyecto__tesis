@@ -4,24 +4,26 @@ import { AseAuth } from '../../context/AuthContext';
 import { getUsuarios } from '../../api/auth';
 import { useNavigate } from 'react-router-dom';
 import Nav_Finanzas from '../../components/financiero/Nav_Finanzas';
+import { ReportesProvider } from '../../context/ReportesContext';
+import Reportes from '../../components/Reportes';
 
 
 import EventCalendar from '../../components/calendario';
 
-import '../../css/Poblacion_Lapso.css'; 
+import '../../css/Poblacion_Lapso.css';
 import '../../css/imprimir.css';
 import '../../css/Calendario_Estilos.css';
 
 
 function Financiero() {
-  const { isAuthenticated, loading ,calendario, Getcalendario} = AseAuth();
+  const { isAuthenticated, loading, calendario, Getcalendario } = AseAuth();
   const [usuarios, setUsuarios] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (loading) return;
-   
+
 
     if (!isAuthenticated) {
       navigate('/login');
@@ -49,13 +51,16 @@ function Financiero() {
 
   return (
     <div className="admin-layout">
-      <Nav_Finanzas/>
+      <Nav_Finanzas />
       <div className="admin-content-main">
-          <div className="calendar-view">
-            <h1>Calendario liturgico</h1> 
-              <EventCalendar calendario={calendario} /> 
-          </div>
+        <div className="calendar-view">
+          <h1>Calendario liturgico</h1>
+          <EventCalendar calendario={calendario} />
         </div>
+        <ReportesProvider>
+          <Reportes />
+        </ReportesProvider>
+      </div>
     </div>
   );
 }

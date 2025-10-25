@@ -1,16 +1,18 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 import { AseAuth } from '../context/AuthContext';
 
 // Componentes propios
-import EventCalendar from '../components/calendario'; 
+import EventCalendar from '../components/calendario';
 import Nav_Inscricion from '../components/inscricion/Nav_Inscricion';
 import GetPoblacion from '../components/GetPoblacion';
 
-import { usePoblacion } from '../context/PoblacionContext'; 
-import '../css/Poblacion_Lapso.css'; 
+import { usePoblacion } from '../context/PoblacionContext';
+import '../css/Poblacion_Lapso.css';
 import '../css/imprimir.css';
 import '../css/Calendario_Estilos.css'; // Estilos específicos para el calendario
+import { ReportesProvider } from '../context/ReportesContext';
+import Reportes from '../components/Reportes';
 
 const PROGRAMACION_DATA_EJEMPLO = [
     { fecha: '2/2/2025', liturgico: 'La Presentación del Señor (Fiesta)' },
@@ -25,7 +27,7 @@ function Inscri() {
     const calendarioData = PROGRAMACION_DATA_EJEMPLO;
     const { calendario, Getcalendario } = AseAuth();
     useEffect(() => {
-        
+
         Getcalendario();
 
 
@@ -33,12 +35,16 @@ function Inscri() {
 
     return (
         <div className="admin-layout">
-            <Nav_Inscricion /> 
+            <Nav_Inscricion />
             <div className="admin-content-main">
-                <GetPoblacion/>
+                {/* <GetPoblacion/> */}
+                <ReportesProvider>
+                    <Reportes />
+                </ReportesProvider>
+
                 <div className="calendar-view">
-                    <h1>Calendario de Programación Confirmación</h1> 
-                    <EventCalendar calendario={calendario} /> 
+                    <h1>Calendario de Programación Confirmación</h1>
+                    <EventCalendar calendario={calendario} />
                 </div>
             </div>
         </div>

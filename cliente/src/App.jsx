@@ -59,7 +59,8 @@ function App() {
                 <Administracion />
               </PoblacionProvider>
             } />
-            
+            {/* ojo aqui kabir vamos a trata de poner los reporde poblacion en todas usuarios */}
+
             <Route path='/catequesis' element={
               <PoblacionProvider>
                 <Inscri />
@@ -70,6 +71,7 @@ function App() {
               <PoblacionProvider>
                 <Buscar_poblacion />
               </PoblacionProvider>}/>
+
               <Route path='/catequesis/crear-poblacion' element={
               <PoblacionProvider>
                 <Crear_poblacion />
