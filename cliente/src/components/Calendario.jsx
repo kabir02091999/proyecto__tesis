@@ -40,29 +40,34 @@ const localizer = dateFnsLocalizer({
 });
 
 // -----------------------------------------------------------
-// 2. FUNCIÓN DE TRANSFORMACIÓN DE DATOS (Arreglo de fecha)
+// 2. FUNCIÓN DE TRANSFORMACIÓN DE DATOS (Arreglo de fecha - CORREGIDO)
 // -----------------------------------------------------------
 const formatEvents = (lapsoData) => {
-    return lapsoData
-        .filter(item => item.fecha && item.evento) 
-        .map(item => {
-            const datePart = item.fecha.substring(0, 10); 
-            const dateObjectLocal = new Date(datePart); 
-            
-            if (!isNaN(dateObjectLocal)) {
-                dateObjectLocal.setHours(12, 0, 0, 0); 
-            }
-
-            return {
-                title: item.evento,
-                allDay: true,
-                start: dateObjectLocal, 
-                end: dateObjectLocal,   
-                originalEvent: item 
-            };
-        });
+    return lapsoData
+        .filter(item => item.fecha && item.evento)
+        .map(item => {
+            const datePart = item.fecha.substring(0, 10);
+            
+            // 💡 SOLUCIÓN: Usar parse(dateString) y forzar la fecha como UTC para evitar 
+            // problemas de huso horario en eventos allDay.
+            const parts = datePart.split('-');
+            const year = parseInt(parts[0], 10);
+            const monthIndex = parseInt(parts[1], 10) - 1; // Meses en JavaScript son 0-indexados
+            const day = parseInt(parts[2], 10);
+            
+            // Crea la fecha forzando la interpretación como UTC (ej: 2025-10-26 12:00:00 UTC)
+            // Esto asegura que al convertir a la hora local, no retroceda al día anterior.
+            const dateObjectUTC = new Date(Date.UTC(year, monthIndex, day, 12)); 
+            
+            return {
+                title: item.evento,
+                allDay: true,
+                start: dateObjectUTC, // Usamos la fecha corregida en UTC
+                end: dateObjectUTC,   
+                originalEvent: item
+            };
+        });
 };
-
 // -----------------------------------------------------------
 // 3. COMPONENTE PRINCIPAL (Integrando la solución de truncamiento)
 // -----------------------------------------------------------

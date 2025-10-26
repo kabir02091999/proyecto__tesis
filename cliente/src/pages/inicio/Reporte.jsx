@@ -15,7 +15,6 @@ function ReportesPage() {
             <NavbarParroquia />
             <div style={{ backgroundColor: PAGE_BACKGROUND, minHeight: 'calc(100vh - 120px)' }}> 
                 <ReportesProvider>
-
                     <FormularioReporte />
                 </ReportesProvider>
             </div>

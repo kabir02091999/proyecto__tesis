@@ -34,7 +34,7 @@ function Get_aprobados_reprobados() {
             <form className="inscripcion-form" onSubmit={handleSubmit} >
                 
             </form>
-            <h2>Yo Consulto el Progreso del Estudiante</h2>
+            <h2>  Progreso del participante  </h2>
 
             <form className="inscripcion-form" onSubmit={handleSubmit} >
                 {/* Campo de Cédula (CI) */}

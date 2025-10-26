@@ -29,7 +29,7 @@ function Inscri() {
     useEffect(() => {
 
         Getcalendario();
-
+        
 
     }, []);
 

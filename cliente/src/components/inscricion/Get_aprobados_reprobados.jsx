@@ -74,7 +74,7 @@ function Get_aprobados_reprobados() {
 
 return (
     <div className="poblacion-lapso-container">
-        <h2>Estudiantes Evaluados (Aprobados y Reprobados)</h2>
+        <h2>participante Evaluados (Aprobados o no Aprobado)</h2>
         
         <form className="inscripcion-form" onSubmit={handleSubmit}>
             <select 
