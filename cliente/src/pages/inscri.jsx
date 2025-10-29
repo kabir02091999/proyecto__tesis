@@ -26,7 +26,6 @@ function Inscri() {
 
     }, []);
 
-    console.log(calendario)
 
     return (
         <div className="admin-layout">

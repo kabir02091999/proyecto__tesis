@@ -30,7 +30,7 @@ function Get_poblacion_Lapso() {
     };
 
     return (
-        <div className="poblacion-lapso-container">
+        <div className="poblacion-lapso-container1">
             
             {/* FORMULARIO DE BÚSQUEDA */}
             <form className="inscripcion-form" onSubmit={handleSubmit} >

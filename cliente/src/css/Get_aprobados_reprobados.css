@@ -2,6 +2,18 @@
 /* 1. Estilos para la Columna de Acción (Botones) */
 /* ================================================= */
 
+.poblacion-lapso-container2 {
+    /* 💡 Refuerzo de ancho, utiliza este valor */
+    width: 95%; /* Asegura que ocupe casi todo el ancho disponible */
+    max-width: 800px; /* Aumentado a 1200px para un gran impacto visual */
+    
+    margin: 40px auto; 
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
 /* Define la alineación para la celda que contiene los botones */
 .table-lapso .accion-celda {
     display: flex;

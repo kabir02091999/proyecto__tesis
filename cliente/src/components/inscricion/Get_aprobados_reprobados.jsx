@@ -73,7 +73,7 @@ function Get_aprobados_reprobados() {
 // Nota: La lógica de la función Get_aprobados_reprobados (arriba del return) no necesita cambios.
 
 return (
-    <div className="poblacion-lapso-container">
+    <div className="poblacion-lapso-container2">
         <h2>participante Evaluados (Aprobados o no Aprobado)</h2>
         
         <form className="inscripcion-form" onSubmit={handleSubmit}>
