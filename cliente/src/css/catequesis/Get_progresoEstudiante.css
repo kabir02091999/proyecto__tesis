@@ -1,0 +1,203 @@
+/* * ----------------------------------------------------
+ * ESTILOS PARA Get_aprobados_reprobados.jsx (Estilo Tarjeta Blanca)
+ * ----------------------------------------------------
+ */
+
+/* Contenedor Principal (Simula el fondo general del sistema) */
+.poblacion-lapso-page {
+    background-color: #f4f7fa; /* Fondo gris muy suave */
+    /* *** MODIFICACIÓN AQUÍ: Cambiamos de 100vh a 70vh *** */
+    min-height: 70vh; /* El contenedor padre ocupará al menos el 70% de la altura de la ventana */
+    padding: 40px 20px;
+    font-family: 'Inter', sans-serif;
+    /* Añadimos display flex, flex-direction column y align-items center para centrar las tarjetas */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Esto es importante para que el fondo gris abarque todo el contenido si crece más allá del 70vh */
+    justify-content: flex-start; 
+    /* Ajuste clave: Asegura que el padding no cause desbordamiento en el contenedor padre */
+    width: 100%;
+    box-sizing: border-box; 
+}
+
+/* FIX DE RESPONSIVIDAD: Contenedor para manejar el desbordamiento horizontal de la tabla */
+/* SE ELIMINA LA NECESIDAD DE ESTE WRAPPER ya que la tabla se ajustará al 100% */
+.table-wrapper {
+    /* CLAVE: Permite el desplazamiento horizontal cuando el contenido (la tabla) es más ancho que el div padre */
+    /* ESTO SE REMUEVE PARA EVITAR EL SCROLL LATERAL */
+    width: 100%; 
+    /* Mejora el desplazamiento táctil en móviles */
+    -webkit-overflow-scrolling: touch; 
+}
+
+
+/* Contenedor de Formulario (Tarjeta Blanca Flotante Superior) */
+.poblacion-lapso-container {
+    max-width: 600px;
+    /* CORRECCIÓN 1: Ajuste de ancho y margen para evitar desbordamiento en móviles */
+    width: calc(100% - 40px); /* Ocupa el 100% menos 40px (20px de margen a cada lado) */
+    margin: 0 20px 30px 20px; /* Margen superior 0, lateral 20px, inferior 30px */
+    
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+}
+
+/* Título principal */
+.poblacion-lapso-container > h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 5px;
+}
+
+/* Línea azul debajo del título */
+.title-divider {
+    width: 150px;
+    height: 2px;
+    background-color: #3b82f6; /* Azul primario */
+    margin: 0 auto 30px auto;
+    border: none;
+}
+
+/* Estilos del Formulario */
+.inscripcion-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 20px;
+    /* Centra los elementos a lo largo del eje transversal (horizontalmente) */
+    align-items: center; 
+}
+
+/* Input CI */
+.inscripcion-form input[type="text"] {
+    /* AJUSTE PARA CENTRADO: Ocupa el 100% en móvil, pero se limita a 400px en escritorio para centrarse */
+    width: 100%;
+    max-width: 400px; 
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.inscripcion-form input[type="text"]:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Botón */
+.inscripcion-form button[type="submit"] {
+    /* AJUSTE PARA CENTRADO: Ocupa el 100% en móvil, pero se limita a 400px en escritorio para centrarse */
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    border: none;
+    background-color: #3b82f6; /* Azul primario */
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.inscripcion-form button[type="submit"]:hover:not(:disabled) {
+    background-color: #2563eb; /* Azul oscuro al pasar el mouse */
+}
+
+.inscripcion-form button[type="submit"]:disabled {
+    background-color: #a8b8d9; /* Azul más claro si está deshabilitado */
+    cursor: not-allowed;
+}
+
+/* Contenedor de Resultados (Tarjeta Blanca Flotante Inferior) */
+.resultados-card {
+    max-width: 600px;
+    /* CORRECCIÓN 2: Ajuste de ancho y margen para evitar desbordamiento en móviles */
+    width: calc(100% - 40px); /* Ocupa el 100% menos 40px (20px de margen a cada lado) */
+    margin: 20px 20px; /* Margen superior/inferior 20px, lateral 20px */
+
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho */
+}
+
+/* Encabezado del Estudiante */
+.resultados-card h3 {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 20px;
+}
+
+/* Estilos de la Tabla */
+.table-lapso {
+    /* Aseguramos que ocupe el 100% de su contenedor (table-wrapper) */
+    width: 100%; 
+    border-collapse: collapse;
+    text-align: left;
+    /* REMOVIDO: Eliminamos el min-width forzado para que la tabla se ajuste automáticamente */
+}
+
+.table-lapso thead th {
+    background-color: #3b82f6; /* Azul del encabezado de la tabla */
+    color: white;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+}
+
+.table-lapso tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #333333;
+    font-size: 0.95rem;
+}
+
+.table-lapso tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Estilos de Resultado (Clases específicas para resultados) */
+.resultado-aprobado {
+    color: #10b981; /* Verde esmeralda (Aprobado) */
+    font-weight: 700;
+}
+
+.resultado-reprobado {
+    color: #ef4444; /* Rojo fuerte (Reprobado) */
+    font-weight: 700;
+}
+
+/* Mensajes de feedback */
+.error-message {
+    color: #ef4444;
+    font-weight: 500;
+    text-align: center;
+    padding: 10px;
+    background-color: #fee2e2;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+.loading-message {
+    color: #4b5563;
+    text-align: center;
+    padding: 10px;
+    margin-top: 15px;
+}

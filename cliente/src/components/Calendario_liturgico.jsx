@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { AseAuth } from '../context/AuthContext'; 
-/* import './GetPoblacionLapso.css';  */
-
 import '../css/Calendario_liturgico.css';
 
 function Calendario_Liturgico() { 
@@ -46,7 +44,7 @@ function Calendario_Liturgico() {
         const eventosValidos = eventos.filter(e => e.fecha && e.evento && e.evento.trim() !== '');
 
         if (eventosValidos.length === 0) {
-            alert("Yo necesito al menos un evento completo (Fecha y Nombre) para enviar.");
+            setSuccessMessage("Se requiere al menos un evento completo (Fecha y Nombre) para enviar.");
             return;
         }
 
@@ -55,25 +53,30 @@ function Calendario_Liturgico() {
         if (result && !result.error) {
             const countMatch = result.message.match(/\d+/);
             const count = countMatch ? countMatch[0] : 'varios';
-
-            setSuccessMessage(`¡Éxito! Yo he insertado ${count} evento(s) en el calendario.`);
+            setSuccessMessage(`¡Éxito! Se ha insertado ${count} evento(s) en el calendario.`);
             setEventos([{ fecha: '', evento: '' }]);
+        } else if (result && result.error) {
+            setSuccessMessage(`Error en la inserción: ${result.message}`);
         }
     };
-
+    
     return (
-        <div className="poblacion-lapso-container">
-            <h2>Insertar fecha del calendario liturgico</h2>
+        <div className="cl-container">
+            <h2>Insertar Fechas del Calendario Litúrgico</h2>
             
-            {errors.length > 0 && <p className="error-message">{errors.join(', ')}</p>}
+            {errors.length > 0 && <p className="cl-error-message">{errors.join(', ')}</p>}
             
-            {successMessage && <p className="loading-message" style={{backgroundColor: '#d4edda', color: '#155724', border: '1px solid #c3e6cb'}}>{successMessage}</p>}
+            {successMessage && (
+                <p className={successMessage.includes("Éxito") ? "cl-success-message" : "cl-error-message"}>
+                    {successMessage}
+                </p>
+            )}
 
             <form onSubmit={handleSubmit}>
 
-                <div className="table-lapso-container" style={{padding: '10px 20px'}}>
-                    <h3 style={{color: '#007bff'}}>Eventos que yo voy a Insertar</h3>
-                    <table className="table-lapso">
+                <div className="cl-table-wrapper">
+                    <h3 style={{color: '#007bff'}}>Eventos a Registrar</h3>
+                    <table className="cl-table">
                         <thead>
                             <tr>
                                 <th style={{width: '20%'}}>Fecha</th>
@@ -90,18 +93,16 @@ function Calendario_Liturgico() {
                                             value={item.fecha}
                                             onChange={(e) => handleChange(index, 'fecha', e.target.value)}
                                             required
-                                            style={{padding: '5px', width: '100%', boxSizing: 'border-box', border: '1px solid #ccc'}}
                                             disabled={loading}
                                         />
                                     </td>
                                     <td>
                                         <input
                                             type="text"
-                                            placeholder="Yo escribo el nombre del evento"
+                                            placeholder="Nombre del evento litúrgico" 
                                             value={item.evento}
                                             onChange={(e) => handleChange(index, 'evento', e.target.value)}
                                             required
-                                            style={{padding: '5px', width: '100%', boxSizing: 'border-box', border: '1px solid #ccc'}}
                                             disabled={loading}
                                         />
                                     </td>
@@ -110,7 +111,6 @@ function Calendario_Liturgico() {
                                             <button 
                                                 type="button" 
                                                 onClick={() => handleRemoveEvento(index)}
-                                                style={{backgroundColor: '#dc3545', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer'}}
                                                 disabled={loading}
                                             >
                                                 Eliminar
@@ -123,23 +123,22 @@ function Calendario_Liturgico() {
                     </table>
                 </div>
 
-                <div className="inscripcion-form" style={{marginTop: '20px', justifyContent: 'flex-start', gap: '10px'}}>
+                <div className="cl-actions-container">
                     <button 
                         type="button" 
                         onClick={handleAddEvento} 
                         disabled={loading}
-                        style={{backgroundColor: '#28a745', padding: '10px 15px', borderRadius: '6px', color: 'white', border: 'none', cursor: 'pointer'}}
                     >
-                        Yo Añado Otro Evento
+                        Añadir Otro Evento
                     </button>
 
                     <button type="submit" disabled={loading}>
-                        {loading ? 'Yo Estoy Insertando...' : 'Yo Inserto Todos los Eventos'}
+                        {loading ? 'Registrando Eventos...' : 'Registrar Eventos'}
                     </button>
                 </div>
             </form>
         </div>
     );
-}  
+} 
 
 export default Calendario_Liturgico;

@@ -1,26 +1,128 @@
+/* ==============================
+   🎨 ESTILOS AISLADOS - Calendario Litúrgico
+   ============================== */
 
-.poblacion-lapso-container {
-   
-    max-width: 900px; 
-    /* Yo centro el bloque horizontalmente (esto funciona con display: block) */
-    margin-left: auto;
-    margin-right: auto;
-    /* Yo mantengo el padding o estilo que ya tenías */
-    padding: 20px; 
+.cl-container {
+    max-width: 900px;
+    width: 95%;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff; /* Yo le doy un fondo blanco si el fondo del admin es diferente */
+    font-family: 'Inter', sans-serif;
 }
 
-/* Yo me aseguro que los formularios y tablas no se salgan del contenedor */
-.inscripcion-form {
-    display: flex; /* Yo mantengo el layout que ya tenías */
-    /* ... otros estilos de flexbox ... */
-}
-
-/* Yo centro los títulos */
-.poblacion-lapso-container h2 {
+.cl-container h2 {
     text-align: center;
-    margin-bottom: 25px;
     color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+}
+
+/* Tabla */
+.cl-table-wrapper {
+    margin-top: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.cl-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cl-table thead th {
+    background-color: #3b88a8;
+    color: white;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.cl-table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Inputs uniformes */
+.cl-table input {
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Botón eliminar */
+.cl-table button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cl-table button:hover {
+    background-color: #c82333;
+}
+
+/* Acciones */
+.cl-actions-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+.cl-actions-container button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, background-color 0.2s;
+    flex-grow: 1;
+    max-width: 250px;
+}
+
+.cl-actions-container button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cl-actions-container button:nth-child(1) {
+    background-color: #28a745;
+}
+.cl-actions-container button:nth-child(2) {
+    background-color: #3b82f6;
+}
+
+/* Mensajes */
+.cl-error-message {
+    color: #dc3545;
+    font-weight: 500;
+    text-align: center;
+    padding: 10px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+.cl-success-message {
+    text-align: center;
+    padding: 10px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    margin-top: 15px;
 }

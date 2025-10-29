@@ -41,24 +41,15 @@ function Inscribir_poblacion() {
     
     const handleSubmit = async (e) => {
         e.preventDefault(); 
-        
         const { lapsoId, cedula, seccion, nivel } = inscripcionData;
-
-        // Validación inicial
         if (!lapsoId || !cedula || !seccion || !nivel) {
             alert("Por favor, completa todos los campos (Lapso, Cédula, Sección y Nivel).");
             return;
         }
-        
-        // 1. Verificación de existencia de población
         const poblacionEncontrada = await getPoblacionByCI_Sync(cedula);
-
         if (poblacionEncontrada) {
             // 2. Población existe: Procede a la inscripción
             console.log("La población existe, procediendo a la inscripción...", poblacionEncontrada);
-            
-            
-        //creame un json con esta espesificaciones y me lo igualas con las variable que octengo { lapsoId, cedula, seccion, nivel } = {ID_lapso, CI , seccion, nivel}
         const datosInscripcion = {
             ID_lapso: lapsoId,
             CI: cedula,
@@ -67,11 +58,6 @@ function Inscribir_poblacion() {
         };
         console.log("Datos de Inscripción Formateados para API:", datosInscripcion);
         Inscribir_poblacion(datosInscripcion);
-        
-        // Aquí llamarías a la función que envía los datos a la API
-        // inscribirEstudiante(datosInscripcion); // Descomenta cuando tengas la función real        
-      
-
         } else {
             // 3. Población NO existe (404)
             alert("La población con la cédula ingresada no existe. Por favor, créala primero.");
@@ -111,7 +97,7 @@ function Inscribir_poblacion() {
                 
                 <input 
                     type="text" 
-                    placeholder="Cédula de Identidad del Estudiante" 
+                    placeholder="Cédula de Identidad del Participante" 
                     name="cedula" 
                     value={inscripcionData.cedula} 
                     onChange={handleChange}
@@ -121,7 +107,7 @@ function Inscribir_poblacion() {
                 
                 <input 
                     type="text" 
-                    placeholder="Sección (Ej: A, B, Única)"
+                    placeholder="Sección (Ej: 1, 2, Única)"
                     name="seccion" 
                     value={inscripcionData.seccion} // 👈 Vinculación de valor
                     onChange={handleChange}

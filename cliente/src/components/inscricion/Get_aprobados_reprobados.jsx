@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { usePoblacion } from "../../context/PoblacionContext";
 
 // 1. CSS base (Contenedores/Formulario/Tabla principal)
-import '../../css/Poblacion_Lapso.css'; 
+/* import '../../css/Poblacion_Lapso.css';  */
 // 2. CSS específico (Botones y Estados)
 import '../../css/Get_aprobados_reprobados.css'; 
 

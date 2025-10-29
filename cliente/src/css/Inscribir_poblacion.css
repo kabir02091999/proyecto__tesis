@@ -1,75 +1,131 @@
-/* --- Diseño para el Componente Inscribir_poblacion --- */
+/* ---------------------------------------------------- */
+/* --- NUEVO DISEÑO: Minimalista y Corporativo (Azul/Gris) --- */
+/* ---------------------------------------------------- */
 
-/* Contenedor del formulario: El "panel" o tarjeta */
-.inscripcion-form {
-    /* Estructura y Ordenamiento */
+/* Contenedor principal (Fondo liso y centrado) */
+.inscripcion-container {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espacio uniforme entre todos los elementos del formulario */
-    
-    /* Dimensiones y Centrado */
+    align-items: center;
+    padding: 30px;
+    background-color: #f0f4f8; /* Fondo azul muy claro */
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif; /* Cambio de fuente por una moderna */
+}
+
+/* Formulario: El panel o tarjeta principal */
+.inscripcion-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* Espaciado ajustado */
     width: 100%;
-    max-width: 450px; /* Ancho cómodo para formularios */
-    margin: 30px auto; /* Centra el formulario horizontalmente y da espacio superior/inferior */
+    max-width: 450px; /* Ligeramente más estrecho */
+    margin-top: 60px; 
     
-    /* Diseño Estético */
-    background-color: #ffffff; /* Fondo blanco */
-    padding: 30px; /* Espacio interior */
-    border-radius: 12px; /* Esquinas ligeramente redondeadas */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra suave para darle profundidad */
-    font-family: Arial, sans-serif;
+    background-color: #ffffff; 
+    padding: 40px; 
+    border-radius: 16px; /* Bordes más redondeados */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border: none; /* Elimina el borde externo */
+    box-sizing: border-box;
 }
 
 /* Título */
 .inscripcion-form h2 {
     text-align: center;
-    color: #333333;
-    margin-bottom: 5px; /* Poco espacio debajo del título, el 'gap' del formulario hace el resto */
-    font-size: 1.5rem;
+    color: #1a73e8; /* Azul primario fuerte */
+    margin-bottom: 15px;
+    font-size: 1.75rem;
+    font-weight: 600; /* Menos negrita, más limpio */
 }
 
-/* Estilos para SELECT e INPUT */
+/* ------------------------------------------------------- */
+/* Estilos de Campos (Inputs y Selects) */
+/* ------------------------------------------------------- */
+
 .inscripcion-form select,
 .inscripcion-form input[type="text"] {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #cccccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #555555;
-    transition: border-color 0.3s;
-    box-sizing: border-box; /* Crucial para que el padding no afecte el ancho */
+    padding: 13px;
+    border: 1px solid #c7d5e6; /* Borde más sutil */
+    border-radius: 8px; /* Bordes redondeados suaves */
+    font-size: 0.95rem;
+    color: #334155; /* Texto gris oscuro (casi negro) */
+    background-color: #ffffff; /* Fondo blanco */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+    
+    /* Personalización del Select */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234b5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 14px;
 }
 
-/* Feedback visual al enfocar */
+/* Focus: Borde de enfoque azul primario */
 .inscripcion-form select:focus,
 .inscripcion-form input[type="text"]:focus {
-    border-color: #007bff; /* Color primario al enfocar */
-    outline: none; /* Quita el borde de enfoque por defecto del navegador */
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Sombra de enfoque sutil */
+    border-color: #1a73e8; 
+    outline: none; 
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3); /* Anillo de enfoque menos agresivo */
+    background-color: #ffffff; 
 }
 
-/* Estilo para el botón de acción */
+/* Estilo para el botón de acción (Inscribir) */
 .inscripcion-form button[type="submit"] {
     width: 100%;
-    padding: 12px;
+    padding: 15px;
     margin-top: 10px;
     border: none;
-    background-color: #28a745; /* Verde para la acción de "Inscribir" */
+    background-color: #1a73e8; /* Botón en azul primario */
     color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-size: 1.15rem;
+    font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(26, 115, 232, 0.2);
+    transition: background-color 0.3s, transform 0.2s, opacity 0.3s;
 }
 
 .inscripcion-form button[type="submit"]:hover {
-    background-color: #218838; /* Verde ligeramente más oscuro al pasar el ratón */
-    transform: translateY(-1px); /* Efecto 3D sutil */
+    background-color: #0d60d8; /* Azul un poco más oscuro al pasar el ratón */
+    transform: translateY(-1px); 
+    box-shadow: 0 6px 15px rgba(26, 115, 232, 0.3);
 }
 
-.inscripcion-form button[type="submit"]:active {
-    background-color: #1e7e34;
-    transform: translateY(0);
+.inscripcion-form button[type="submit"]:disabled {
+    background-color: #1a73e8;
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* --- Estilos para el Mensaje de Feedback --- */
+/* Mantienen el mismo estilo de alerta, pero con la nueva fuente */
+
+.feedback-message {
+    width: 100%;
+    max-width: 450px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-message.error {
+    background-color: #fef2f2; /* Rojo más claro */
+    color: #dc2626; /* Rojo */
+    border: 1px solid #fca5a5;
+}
+
+.feedback-message.success {
+    background-color: #ecfdf5; /* Verde menta muy claro */
+    color: #059669; /* Verde esmeralda */
+    border: 1px solid #6ee7b7;
 }

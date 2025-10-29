@@ -1,0 +1,32 @@
+/* ================================================= */
+/* ESTILOS DE BOTONES DE FULLCALENDAR */
+/* ================================================= */
+
+/* Estilo para los botones en general */
+.fc .fc-button {
+    /* Color de fondo del botón inactivo */
+    background-color: #4a90e2 !important; 
+    color: #ffffff !important;         /* Texto blanco */
+    border: 1px solid #4a90e2 !important; /* Borde del mismo color */
+    box-shadow: none !important;       /* Eliminar sombras por defecto */
+    font-weight: 500;                  /* Hacer el texto más legible */
+}
+
+/* Estilo al pasar el ratón (hover) */
+.fc .fc-button:hover {
+    background-color: #357bd9 !important; /* Azul ligeramente más oscuro */
+    border-color: #357bd9 !important;
+}
+
+/* Estilo para el botón activo (la vista seleccionada: Mes, Semana, Día) */
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+    background-color: #2769c0 !important; /* Azul más oscuro para resaltar la selección */
+    border-color: #2769c0 !important;
+}
+
+/* Opcional: Estilo para los títulos de la cabecera */
+.fc-toolbar-title {
+    color: #333;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
