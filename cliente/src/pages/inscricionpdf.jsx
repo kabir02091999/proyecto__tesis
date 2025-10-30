@@ -13,6 +13,7 @@ function InscripcionPDF() {
                 
                 <Get_inscrito_pfd/>
                 
+                
             </div>
 
         </div>

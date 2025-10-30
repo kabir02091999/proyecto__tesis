@@ -36,6 +36,13 @@ const styles = {
         maxWidth: '45px', 
         height: '40px',
         lineHeight: '1.0'
+    },infoRow: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        fontSize: '10pt',
+        marginBottom: '10px',
+        borderBottom: '1px dashed #ccc',
+        paddingBottom: '5px'
     },
     thStudent: { minWidth: '180px', textAlign: 'left', paddingLeft: '6px' },
     td: {
@@ -58,7 +65,10 @@ const styles = {
 // COMPONENTE PRINCIPAL
 // ----------------------------------------------------------------------
 
-function PlanillaControlAsistencia({ inscritos = [], filtros = {}, calendario = [] , contentRef }) {
+function PlanillaControlAsistencia({ inscritos = [], filtros = {}, calendario = [] , contentRef ,filtro, lapsoSeleccionado}) {
+
+    const { nivel, seccion } = filtro || {};
+    const { inicio, fin, tipo_inscripcion } = lapsoSeleccionado || {};
 
     const attendanceDates = useMemo(() => {
         if (calendario.length === 0) {
@@ -127,9 +137,22 @@ function PlanillaControlAsistencia({ inscritos = [], filtros = {}, calendario = 
                 <img src={logo} alt="Logo Parroquia Divino Maestro" style={styles.logo}/>
                 <div style={styles.title}>PARROQUIA DIVINO MAESTRO</div>
                 <div style={styles.subtitle}>SEDE UNET</div>
-                <div style={styles.subtitle}>SACRAMENTO DE LA PRIMERA CONFESIÓN / PRIMERA COMUNIÓN</div>
+                <div style={styles.subtitle}>
+                    {nivel === "3"
+                    ? "SACRAMENTO DE LA CONFIRMACIÓN"
+                    : "SACRAMENTO DE LA PRIMERA CONFESIÓN / PRIMERA COMUNIÓN"}
+                    </div>
                 <div style={styles.title}>PLANILLA DE CONTROL DE ASISTENCIA</div>
             </header>
+            <div style={styles.infoRow}>
+        <div><strong>Inicio:</strong> {inicio ? new Date(inicio).toLocaleDateString('es-VE') : 'N/A'}</div>
+        <div><strong>Fin:</strong> {fin ? new Date(fin).toLocaleDateString('es-VE') : 'N/A'}</div>
+      </div>
+
+      <div style={styles.infoRow}>
+        <div><strong>Nivel:</strong> {nivel || 'N/A'}</div>
+        <div><strong>Sección:</strong> {seccion || 'N/A'}</div>
+      </div>
 
             {/* BUCLE ANIDADO: Filas x Columnas */}
             {studentChunks.map((studentChunk, studentChunkIndex) => (
@@ -146,14 +169,14 @@ function PlanillaControlAsistencia({ inscritos = [], filtros = {}, calendario = 
                             }}
                         >
                             
-                            <div style={{ 
+                            {/* <div style={{ 
                                 ...styles.subtitle, 
                                 fontSize: '9pt', 
                                 textAlign: 'left', 
                                 fontWeight: 'bold' 
                             }}>
                                 Nivel: {filtros.nivel || 'I / II'} | {seccionNivel} - (Parte {currentChunkIndex} de {totalChunks})
-                            </div>
+                            </div> */}
                             
                             <div style={styles.tableContainer}>
                                 <table style={styles.table} className="asistencia-table"> 

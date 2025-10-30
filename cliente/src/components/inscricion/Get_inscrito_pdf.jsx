@@ -325,6 +325,10 @@ function Get_inscrito_pfd() {
       data={getLapso} 
       contentRef={contentRef}
       className="planilla-asistencia"
+      filtros={inscripcionData} // 👈 Aquí enviamos nivel y sección
+      lapsoSeleccionado={
+        Lapso.find(l => l.ID === parseInt(inscripcionData.lapsoId)) || {}
+      }
     />
   </div>
 )}
@@ -338,7 +342,11 @@ function Get_inscrito_pfd() {
       contentRef={contentRef1} 
       inscritos={inscritos} 
       filtros={inscripcionData} 
-      calendario={getLapso} 
+      calendario={getLapso}
+      filtro={inscripcionData} // 👈 Aquí enviamos nivel y sección
+      lapsoSeleccionado={
+        Lapso.find(l => l.ID === parseInt(inscripcionData.lapsoId)) || {}
+      } 
     />
   </div>
 )}
@@ -352,6 +360,9 @@ function Get_inscrito_pfd() {
       calendario={getLapso} 
       filtros={inscripcionData}     
       ref={contentRef2}
+      lapsoSeleccionado={
+        Lapso.find(l => l.ID === parseInt(inscripcionData.lapsoId)) || {}
+      }
     />
   </div>
 )}

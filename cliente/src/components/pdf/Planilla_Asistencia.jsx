@@ -141,7 +141,7 @@ const AsistenciaTableRow = ({ col1Data, col2Data, tdStyle, semanaStyle, styles }
 };
 
 
-function PlanillaAsistencia({ data, contentRef }) {
+function PlanillaAsistencia({ data, contentRef, filtros, lapsoSeleccionado  }) {
 
     const parsedData = data.map((item, index) => {
         return {
@@ -150,25 +150,36 @@ function PlanillaAsistencia({ data, contentRef }) {
         }
     })
 
+    const { nivel, seccion } = filtros || {};
+    const { inicio, fin, tipo_inscripcion } = lapsoSeleccionado || {};
+
     return (
         <div style={styles.container} id='print' ref={contentRef} className="planilla-asistencia">
 
             {/* CABECERA */}
-            <header style={styles.header}>
-                
-                <img
-                    src={imagen}
-                    alt="Logo Parroquia Divino Maestro"
+      <header style={styles.header}>
+        <img src={imagen} alt="Logo Parroquia Divino Maestro" style={styles.logo} />
+        <div style={styles.infoHeader}>{DOC_TITLES.parroquia}</div>
+        <div style={styles.infoHeader}>{DOC_TITLES.sede}</div>
+        <div style={styles.infoHeader}>
+        {nivel === "3"
+            ? "SACRAMENTO DE LA CONFIRMACIÓN"
+            : "SACRAMENTO DE LA PRIMERA CONFESIÓN / PRIMERA COMUNIÓN"}
+        </div>
+        <div style={styles.infoHeader}>{DOC_TITLES.planilla}</div>
+      </header>
 
-                    style={styles.logo}
-                />
-                <div style={styles.infoHeader}>{DOC_TITLES.parroquia.toUpperCase()}</div>
-                <div style={styles.infoHeader}>{DOC_TITLES.sede.toUpperCase()} </div>
-                <div style={styles.infoHeader}>{DOC_TITLES.sacramento.toUpperCase()} </div>
-                <div style={styles.infoHeader}>
-                    {DOC_TITLES.planilla.toUpperCase()}
-                </div>
-            </header>
+      {/* INFORMACIÓN DEL FILTRO */}
+      <div style={styles.infoRow}>
+        
+        <div><strong>Inicio:</strong> {inicio ? new Date(inicio).toLocaleDateString('es-VE') : 'N/A'}</div>
+        <div><strong>Fin:</strong> {fin ? new Date(fin).toLocaleDateString('es-VE') : 'N/A'}</div>
+      </div>
+
+      <div style={styles.infoRow}>
+        <div><strong>Nivel:</strong> {nivel || 'N/A'}</div>
+        <div><strong>Sección:</strong> {seccion || 'N/A'}</div>
+      </div>
 
             {/* TABLA DE ASISTENCIA (Estructura de 2 columnas) */}
             <table style={styles.table}>
