@@ -226,3 +226,121 @@
         font-size: 1.5rem;
     }
 }
+.grafica-container {
+    margin-top: 2rem;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.grafica-container h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+}
+@media print {
+  /* Solo aplicar dentro del componente de finanzas */
+  .finanzas-page-wrapper {
+    background: white !important;
+  }
+
+  /* ❌ Ocultar elementos no imprimibles */
+  .finanzas-page-wrapper .btn-imprimir,
+  .finanzas-page-wrapper .periodo-selector-container {
+    display: none !important;
+  }
+
+  /* 🔄 Asegurar que todo el contenido sea visible */
+  .finanzas-page-wrapper,
+  .finanzas-page-wrapper .finanzas-content-wrapper,
+  .finanzas-page-wrapper .tabla-responsive {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  /* 📋 Permitir que las tablas se dividan entre páginas */
+  .finanzas-page-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: auto !important;
+  }
+
+  .finanzas-page-wrapper thead {
+    display: table-header-group !important; /* 🔁 Repite encabezado en cada hoja */
+  }
+
+  .finanzas-page-wrapper tfoot {
+    display: table-footer-group !important;
+  }
+
+  .finanzas-page-wrapper tr,
+  .finanzas-page-wrapper td,
+  .finanzas-page-wrapper th {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* 📄 Márgenes y ajustes de impresión */
+  @page {
+    size: A4 portrait;
+    margin: 1cm;
+  }
+
+  .finanzas-page-wrapper body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+@media print {
+  /* 🔒 Limita solo al componente de finanzas */
+  .finanzas-page-wrapper {
+    background: white !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .finanzas-page-wrapper * {
+    overflow: visible !important;
+  }
+
+  /* Ocultar botones, filtros, etc. */
+  .finanzas-page-wrapper .btn-imprimir,
+  .finanzas-page-wrapper .periodo-selector-container {
+    display: none !important;
+  }
+
+  /* 🔁 Repetir encabezado de tabla y permitir salto entre páginas */
+  .finanzas-page-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: auto !important;
+  }
+
+  .finanzas-page-wrapper thead {
+    display: table-header-group !important;
+  }
+
+  .finanzas-page-wrapper tfoot {
+    display: table-footer-group !important;
+  }
+
+  .finanzas-page-wrapper tr,
+  .finanzas-page-wrapper td,
+  .finanzas-page-wrapper th {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Márgenes de página */
+  @page {
+    size: A4 portrait;
+    margin: 1cm;
+  }
+}

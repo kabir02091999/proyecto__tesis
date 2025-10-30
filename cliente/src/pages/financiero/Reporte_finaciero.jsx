@@ -8,7 +8,6 @@ function Reporte_finaciero() {
     <div className="admin-layout">
             <Nav_Finanzas/>
             <div className="admin-content-main">
-                {/* <Buscar_finansa/> */}
                 <Generar_finasas_mes/>
             </div>
         </div>
