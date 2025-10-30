@@ -5,7 +5,7 @@ import '../../css/Get_poblacion_Lapso.css';
 
 function Get_poblacion_Lapso() {
 
-    // Extraigo todo lo que necesito de mi contexto: lapsos, estados de carga y mi función de búsqueda
+    
     const { 
         Lapso, 
         loading, 
@@ -34,7 +34,7 @@ function Get_poblacion_Lapso() {
             
             {/* FORMULARIO DE BÚSQUEDA */}
             <form className="inscripcion-form" onSubmit={handleSubmit} >
-                <h2>Consultar Población por Lapso</h2>
+                <h2>Consultar Participante por Lapso</h2>
                 
                 {/* Selector de Lapso */}
                 <select 
@@ -52,7 +52,7 @@ function Get_poblacion_Lapso() {
                 </select>
                 
                 <button type="submit" disabled={loading}>
-                    {loading ? 'Cargando...' : 'Ver Población'}
+                    {loading ? 'Cargando...' : 'Ver Participante'}
                 </button>
             </form>
 
@@ -65,12 +65,12 @@ function Get_poblacion_Lapso() {
                 {error && <p className="error-message">¡Algo salió mal! {error}</p>}
                 
                 {/* 2. Muestro el estado de Carga con la nueva clase */}
-                {loading && <p className="loading-message">Buscando estudiantes, espera un momento...</p>}
+                {loading && <p className="loading-message">Buscando Participante, espera un momento...</p>}
 
                 {/* 3. Muestro la lista si tengo resultados */}
                 {poblacionPorLapso && poblacionPorLapso.length > 0 && !loading ? (
                     <div className="table-lapso-container"> 
-                        <h3>Encontré {poblacionPorLapso.length} estudiantes inscritos:</h3>
+                        <h3>Se encontro {poblacionPorLapso.length} Participante inscritos:</h3>
                         
                         {/* 🚨 INICIO DE LA TABLA 🚨 */}
                         <table className="table-lapso">
@@ -100,7 +100,7 @@ function Get_poblacion_Lapso() {
                 ) : (
                     // 4. Muestro mensaje si no hay resultados después de buscar
                     !loading && selectedLapso && poblacionPorLapso && poblacionPorLapso.length === 0 && (
-                        <p>No encontré estudiantes inscritos para el lapso seleccionado.</p>
+                        <p>No encontré Participante inscritos para el lapso seleccionado.</p>
                     )
                 )}
             </div>

@@ -31,8 +31,8 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
         { name: 'Insertar calendario liturgico', path: '/catequesis/Post-calendario-liturgico', icon: '➕' },
         { name: 'Inscribir participante en lapso', path: '/catequesis/incribir-poblacion-lapso', icon: '📝' },
         { name: 'Aprobación / No aprobado', path: '/catequesis/aprobacion-reprobacion', icon: '✅' }, 
-        { name: 'Progreso de participante', path: '/catequesis/progreso-estudiante', icon: '📈' }, 
-        { name: 'Buscar poblacion', path: '/catequesis/buscar-poblacion', icon: '🔍' },
+        { name: 'Progreso de Participante', path: '/catequesis/progreso-estudiante', icon: '📈' }, 
+        { name: 'Buscar Participante', path: '/catequesis/buscar-poblacion', icon: '🔍' },
         { name: 'Generar PDF', path: '/catequesis/pdf', icon: '📄' },
         ...(admin ? [{ 
             name: 'inicio administrador', path: '/admin', icon: '⚙'

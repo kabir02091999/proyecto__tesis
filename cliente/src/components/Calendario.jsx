@@ -48,58 +48,57 @@ const FullEventCalendar = ({ calendario }) => {
     const events = useMemo(() => formatEvents(calendario || []), [calendario]);
 
     return (
-        <div style={{ 
-            height: '600px', 
-            padding: '20px', 
-            // 💡 MEJORA 1: Estilo del contenedor
-            backgroundColor: '#f9f9f9', // Fondo más suave
-            borderRadius: '12px', // Bordes más redondeados
-            boxShadow: '0 8px 16px rgba(0,0,0,0.15)', // Sombra más profunda y moderna
-            maxWidth: '1200px', // Ancho máximo
-            margin: '20px auto' // Centrar el calendario
-        }}>
-            <FullCalendar
-                plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-                
-                initialView='dayGridMonth'
-                locale={esLocale} 
-                
-                // 💡 MEJORA 2: Estilo de la cabecera (Header)
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay' 
-                }}
-                
-                // 💡 MEJORA 3: Propiedades visuales
-                weekends={true} // Mostrar fines de semana
-                // Cambiar el texto de los botones a español claro
-                buttonText={{
-                    today: 'Hoy',
-                    month: 'Mes',
-                    week: 'Semana',
-                    day: 'Día'
-                }}
-                // Formato de los días de la semana (L, M, X...)
-                dayHeaderFormat={{ weekday: 'short' }} 
-                // Quitar los bordes entre las celdas (look más limpio)
-                dayCellContent={(arg) => arg.dayNumberText} 
-                
-                // 💡 MEJORA 4: Estilo de los Eventos y Colores
-                events={events}
-                eventDisplay='block' 
-                // Aplicar un color primario a todos los eventos
-                eventColor="#4a90e2" // Azul moderno
-                eventTextColor="#ffffff" // Texto blanco para contraste
-                eventBorderColor="#4a90e2" // Mismo borde
-                
-                initialDate={new Date()} 
-                
-                eventClick={(info) => {
-                    alert(`Evento Seleccionado:\n${info.event.title}\nFecha: ${info.event.start.toLocaleDateString('es-ES')}`);
-                }}
-            />
-        </div>
+        <div
+  style={{
+    width: "100%",
+    height: "100%",
+    maxWidth: "1200px",
+    margin: "20px auto",
+    padding: "20px",
+    backgroundColor: "#f9f9f9",
+    borderRadius: "12px",
+    boxShadow: "0 8px 16px rgba(0,0,0,0.15)",
+    boxSizing: "border-box",
+  }}
+>
+  <div style={{ width: "100%", height: "100%" }}>
+    <FullCalendar
+      plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+      initialView="dayGridMonth"
+      locale={esLocale}
+      headerToolbar={{
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay",
+      }}
+      weekends={true}
+      buttonText={{
+        today: "Hoy",
+        month: "Mes",
+        week: "Semana",
+        day: "Día",
+      }}
+      dayHeaderFormat={{ weekday: "short" }}
+      dayCellContent={(arg) => arg.dayNumberText}
+      events={events}
+      eventDisplay="block"
+      eventColor="#4a90e2"
+      eventTextColor="#ffffff"
+      eventBorderColor="#4a90e2"
+      height="auto"
+      contentHeight="auto"
+      expandRows={true}
+      aspectRatio={1.35}
+      eventClick={(info) => {
+        alert(
+          `Evento Seleccionado:\n${info.event.title}\nFecha: ${info.event.start.toLocaleDateString(
+            "es-ES"
+          )}`
+        );
+      }}
+    />
+  </div>
+</div>
     );
 };
 
