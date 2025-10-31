@@ -516,3 +516,87 @@ export const generarCalendarioLapsoController = async (req, res) => {
         });
     }
 };
+
+
+export const getInscritosDetallePorFiltro = async (req, res) => {
+    // 1. Obtener los parámetros de la URL.
+    const { lapsoId, nivel } = req.params;
+
+    // 2. Validación de parámetros
+    if (!lapsoId || !nivel) {
+        return res.status(400).json({ 
+            message: 'Debe proporcionar el ID del lapso y el nivel para la búsqueda.' 
+        });
+    }
+
+    const lapsoIdNum = parseInt(lapsoId, 10);
+    const nivelNum = parseInt(nivel, 10);
+
+    if (isNaN(lapsoIdNum) || isNaN(nivelNum)) {
+        return res.status(400).json({ 
+            message: 'El ID del lapso y el nivel deben ser números válidos.' 
+        });
+    }
+
+    try {
+        // 3. Definir la consulta SQL
+        const sqlQuery = `
+            SELECT
+                -- Datos del Inscrito (Población)
+                P.nombre,
+                P.apellidos,
+                P.ci,
+                I.nivel,
+                I.seccion,
+
+                -- Edad de Catequesis (Padres)
+                PA.edad AS edad_catequesis,
+
+                -- Datos del Representante (Priorizamos el Padre, si no, la Madre)
+                CASE
+                    -- La columna '-N_P' requiere comillas inversas (backticks)
+                    WHEN PA.\`-N_P\` IS NOT NULL AND PA.\`-N_P\` != '' THEN PA.\`-N_P\`
+                    ELSE PA.N_M
+                END AS nombre_representante,
+
+                CASE
+                    WHEN PA.NR_P IS NOT NULL AND PA.NR_P != '' THEN PA.NR_P
+                    ELSE PA.NR_M
+                END AS telefono_representante
+
+            FROM
+                inscrito AS I
+            INNER JOIN
+                poblacion AS P ON I.CI = P.ci
+            LEFT JOIN
+                padres AS PA ON I.CI = PA.ci
+
+            WHERE
+                I.ID_lapso = ?
+                AND I.nivel = ?
+            ORDER BY
+                P.apellidos, P.nombre;
+        `;
+
+        // 4. Ejecutar la consulta de forma segura
+        const [rows] = await pool.query(sqlQuery, [lapsoIdNum, nivelNum]);
+
+        // 5. Manejar el resultado
+        if (rows.length === 0) {
+            return res.status(200).json({
+                message: "No se encontraron inscritos para el lapso y nivel proporcionados.",
+                data: []
+            });
+        }
+
+        // 6. Devolver los datos
+        return res.status(200).json(rows);
+
+    } catch (error) {
+        console.error('Error al obtener inscritos detallados por lapso y nivel:', error);
+        return res.status(500).json({ 
+            message: 'Error interno del servidor al realizar la búsqueda detallada.',
+            error: error.message
+        });
+    }
+};

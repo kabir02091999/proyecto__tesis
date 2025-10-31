@@ -298,7 +298,7 @@ function CrearPoblacion() {
 
                         <label>Número de Hermanos:</label>
                         <input type="number" name="NR_Her" value={datosPadres.NR_Her} onChange={handleChangePadres} min="0" />
-                        <label>Edad Promedio (Opcional):</label>
+                        <label>Edad del participante :</label>
                         <input type="number" name="edad" value={datosPadres.edad} onChange={handleChangePadres} min="0" />
 
                         <button type="button" onClick={() => setActiveTab('personales')}>Anterior</button>

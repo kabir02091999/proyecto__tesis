@@ -12,8 +12,6 @@ import Inscribir_poblacion from "../components/inscricion/Inscribir_poblacion";
 function Poblacion_Lapso() {
     const {Lapso} = usePoblacion();
     
-    // 
-
 
     return (
         // Contenedor principal que define las dos columnas

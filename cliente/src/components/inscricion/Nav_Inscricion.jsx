@@ -34,6 +34,7 @@ const Nav_Inscricion = ({ onOptionSelect }) => {
         { name: 'Progreso de Participante', path: '/catequesis/progreso-estudiante', icon: '📈' }, 
         { name: 'Buscar Participante', path: '/catequesis/buscar-poblacion', icon: '🔍' },
         { name: 'Generar PDF', path: '/catequesis/pdf', icon: '📄' },
+        { name: 'Planilla de Inscritos', path: '/catequesis/planilla-inscritos', icon: '📋' },
         ...(admin ? [{ 
             name: 'inicio administrador', path: '/admin', icon: '⚙'
         }] : [])

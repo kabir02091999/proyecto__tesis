@@ -122,6 +122,10 @@ export const deleteReporte = async (reporteId) => {
     return api.delete(`/reportes/${reporteId}`);
 };
 
+export const Planilla_Incritos_Por_Filtro = async (lapsoId, nivel) => {
+    return api.get(`/inscripcion/planilla-inscritos/${lapsoId}/${nivel}`);
+}
+
 export const obtenerTransaccionesPorPeriodo = async (mes, anio) => {
     // Usa la instancia 'api' para que se incluya el token de autenticación
     // y usa el parámetro 'params' de Axios para construir la URL con Query Params

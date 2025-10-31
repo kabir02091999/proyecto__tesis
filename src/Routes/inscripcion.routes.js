@@ -12,7 +12,8 @@ import {RegistroLapso,GetLapso,
         getEstudiantesPendientesEvaluacion,
         getProgresoEstudianteByCI,
         getInscritosPorFiltro,
-        generarCalendarioLapsoController
+        generarCalendarioLapsoController,
+        getInscritosDetallePorFiltro
         } from '../controllers/inscricion.controller.js';
 
 
@@ -42,6 +43,7 @@ router.get('/inscritos-por-filtro/:lapsoId/:seccion/:nivel',authRequired, getIns
 //sona de pdf
 router.get('/calendario-lapso/:lapsoId'/* , authRequired */, generarCalendarioLapsoController); 
 
+router.get('/planilla-inscritos/:lapsoId/:nivel'/* , authRequired */, getInscritosDetallePorFiltro);
 
 //para la crear-poblacion
  /* {

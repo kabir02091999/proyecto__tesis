@@ -10,7 +10,9 @@ import {getPoblacion,
         PostAprobacion,
         getProgresoEstudianteByCI as getProgresoEstudianteByCI1,
         getInscritosPorFiltro as getInscritosPorFiltro1,
-        obtenerCalendarioLapso as btenerCalendarioLapso} from '../api/auth';
+        obtenerCalendarioLapso as btenerCalendarioLapso,
+        Planilla_Incritos_Por_Filtro
+    } from '../api/auth';
 
 // Crear el contexto
 export const PoblacionContext = createContext();
@@ -34,7 +36,8 @@ export const PoblacionProvider = ({ children }) => {
     const [aprobadoReprobado, setAprobadoReprobado] = useState([]); // Nuevo estado para aprobado/reprobado
     const [progresoEstudiante, setProgresoEstudiante] = useState([]); // Nuevo estado para progreso del estudiante
     const [getLapso, setGetLapso] = useState([]); // Nuevo estado para progreso del estudiante
-    
+    const [PlanillaInscritos, setPlanillaInscritos] = useState([]); // Nuevo estado para planilla de inscritos
+
     const getPoblacionByCI = async (CI) => {
         setLoading(true);
         setError(null); 
@@ -197,6 +200,19 @@ export const PoblacionProvider = ({ children }) => {
         setLoading(false);
     }
 
+    const Planilla_Incritos_Por_Filtro1 = async (lapsoId, nivel) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await Planilla_Incritos_Por_Filtro(lapsoId, nivel);
+            const data = response.data;
+            setPlanillaInscritos(data); // Actualiza el estado con los datos obtenidos
+        } catch (err) {
+            setError("Error al obtener la planilla de inscritos por filtro.");
+            console.error('Error al obtener la planilla de inscritos por filtro:', err);
+        }
+        setLoading(false);
+    }
 
     // Llamar a fetchLapso cuando el componente se monte o cuando actuLapso cambie
      useEffect(() => {
@@ -205,7 +221,7 @@ export const PoblacionProvider = ({ children }) => {
 
 
     return (
-        <PoblacionContext.Provider value={{getLapso , obtenerCalendarioLapso, getInscritosPorFiltro,progresoEstudiante,getProgresoEstudianteByCI,Post_Aprobacion,aprobadoReprobado,aprobado_reprobado ,getPoblacionByLapso,poblacionPorLapso , Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
+        <PoblacionContext.Provider value={{PlanillaInscritos,Planilla_Incritos_Por_Filtro1,getLapso , obtenerCalendarioLapso, getInscritosPorFiltro,progresoEstudiante,getProgresoEstudianteByCI,Post_Aprobacion,aprobadoReprobado,aprobado_reprobado ,getPoblacionByLapso,poblacionPorLapso , Inscribir_poblacion, getPoblacionByCI_Sync ,ErrorGetPoblacion, poblacion, loading, error, actuLapso, setActuLapso, getPoblacionByCI, createPoblacion , Lapso , setLapso}}> 
             {children}
         </PoblacionContext.Provider>
     );

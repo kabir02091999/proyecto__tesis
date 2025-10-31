@@ -35,6 +35,8 @@ import Paguina from './components/contenido/Paguina'
 import CalendarioPageCon from './pages/contenido/CalendarioPageCon'
 import CalendarioPageFin from './pages/financiero/calendarioPageFin'
 
+import Pagina_Planilla_Inscritos from './pages/catequesis/Pagina_Planilla_incritos'
+
 function App() {
 
   return (
@@ -106,6 +108,11 @@ function App() {
               <Route path='/catequesis/pdf' element={
                 <PoblacionProvider>
                   <InscripcionPDF/>
+                </PoblacionProvider>}/>
+
+                <Route path='/catequesis/planilla-inscritos' element={
+                <PoblacionProvider>
+                  <Pagina_Planilla_Inscritos/>
                 </PoblacionProvider>}/>
 
             <Route path='/financiero' element={
