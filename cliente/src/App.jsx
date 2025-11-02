@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { AuthProvider } from './context/AuthContext'
-import { PoblacionProvider } from './context/PoblacionContext' // Lo necesitamos
-import { FinancieroProvider  } from './context/finacieroContext' // Lo necesitamos
+import { PoblacionProvider } from './context/PoblacionContext' 
+import { FinancieroProvider  } from './context/finacieroContext' 
 
 //paginas
 import Login from './pages/login'
@@ -52,16 +52,14 @@ function App() {
 
           {/* <Route path='/prueva1234' element={ <Paguina/> } /> */}
 
-          {/* 2. Rutas Protegidas: ProtectedRoute actúa como layout/padre */}
           <Route element={<ProtectedRoute />}>
-            
-            
+     
             <Route path='/admin' element={
               <PoblacionProvider>
                 <Administracion />
               </PoblacionProvider>
             } />
-            {/* ojo aqui kabir vamos a trata de poner los reporde poblacion en todas usuarios */}
+            
 
             <Route path='/catequesis' element={
               <PoblacionProvider>
@@ -109,7 +107,7 @@ function App() {
                 <PoblacionProvider>
                   <InscripcionPDF/>
                 </PoblacionProvider>}/>
-
+                {/* probar que tenga muschos usurios */}
                 <Route path='/catequesis/planilla-inscritos' element={
                 <PoblacionProvider>
                   <Pagina_Planilla_Inscritos/>

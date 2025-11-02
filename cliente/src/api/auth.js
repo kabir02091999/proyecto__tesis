@@ -21,8 +21,6 @@ export const setAuthToken = (token) => {
     }
 };
 
-// Función para el inicio de sesión.
-// Ahora solo se enfoca en la petición y llama a setAuthToken.
 export const login = async (user) => {
     const response = await api.post(`/login`, user);
     if (response.data.token) {
@@ -46,8 +44,6 @@ export const createUsuario = async (usuarioData) => {
 export const verifyToken = async () => {
     return api.post(`/verifyToken`);
 };
-
-/* aqui general */
 
 export const crearCalendarioLiturgicos = async (calendarioData) => {
     return api.post(`/crear-calendario`, calendarioData);

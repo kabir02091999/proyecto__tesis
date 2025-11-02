@@ -26,7 +26,7 @@ function Contenido() {
       <div className="admin-content-main">
         <h1>Contenido de Catequesis</h1>
         <div className="calendar-view">
-          <h1>Calendario de Programación Confirmación</h1>
+          
           <EventCalendar calendario={calendario} />
         </div>
         <ReportesProvider>

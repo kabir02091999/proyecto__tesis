@@ -36,7 +36,7 @@ function Inscri() {
                 </ReportesProvider>
 
                 <div className="calendar-view">
-                    <h1>Calendario de Programación Confirmación</h1>
+                    
                     <EventCalendar calendario={calendario} />
                 </div>
             </div>

@@ -55,11 +55,10 @@ function Planilla_inscritos() {
     return (
         <div className="planilla-insctos-page">
             <div className="planilla-insctos-container">
-                <h1>Planilla de Inscritos</h1>
                 <hr className="title-divider" />
 
                 <form className="inscripcion-form" onSubmit={handleSubmit}>
-                    <h2>Filtrar Inscritos por Lapso y Nivel</h2>
+                    <h2>Planilla de Inscritos por Lapso y Nivel</h2>
 
                     <select
                         name="lapsoId"
