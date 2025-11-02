@@ -66,7 +66,7 @@ const crear_padres_aux = async (datos, ci_hijo) => {
         return { status: 400, ok: false, mensaje: 'datos incompletos' }
     }
     await pool.query(
-        `INSERT INTO padres (ci, N_M, ci_M, NR_M, ocupacion_M, N_P, ci_P, NR_P, ocupacion_P, casados, Pareja_echo, viven_junto, NR_Her, edad)
+        `INSERT INTO padres (ci, N_M, ci_M, NR_M, ocupacion_M, \`-N_P\`, ci_P, NR_P, ocupacion_P, casados, Pareja_echo, viven_junto, NR_Her, edad)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
             ci_hijo, // CI del hijo/a, FK a 'poblacion'
@@ -74,7 +74,7 @@ const crear_padres_aux = async (datos, ci_hijo) => {
             ci_M || null,
             NR_M || null,
             ocupacion_M || null,
-            N_P || null,
+            N_P || null, // El valor de la variable N_P (sin guion) se inserta en la columna \`-N_P\`
             ci_P || null,
             NR_P || null,
             ocupacion_P || null,
