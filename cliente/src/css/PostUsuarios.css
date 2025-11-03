@@ -1,76 +1,114 @@
 .usuarios-form-container {
   display: flex;
   justify-content: center;
-  /* Centra el formulario horizontalmente */
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  align-items: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f0f4ff, #dfe9f3);
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  max-width: 800px;
+
 }
 
-/* Estilos de la tarjeta del formulario (este SÍ usa flex para sus elementos internos) */
 .usuarios-form {
-  background: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 40px 45px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   width: 100%;
-  max-width: 500px;
-  display: flex; /* Este SÍ es importante para apilar los inputs */
-  flex-direction: column; /* Apila los inputs verticalmente */
-  gap: 20px; /* Espacio entre los inputs */
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: fadeIn 0.8s ease-in-out;
 }
 
-/* --- El resto del CSS sigue igual --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .usuarios-form h2 {
   text-align: center;
+  color: #1f3c88;
+  margin-bottom: 10px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 6px;
   color: #333;
-  margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .usuarios-form input,
 .usuarios-form select {
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 16px;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  box-sizing: border-box; /* Asegura que el padding se incluya en el ancho */
+  padding: 12px 14px;
+  border: 1.8px solid #d0d7e2;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  background-color: #fdfdfd;
+  color: #333;
 }
 
 .usuarios-form input:focus,
 .usuarios-form select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  border-color: #1f3c88;
+  box-shadow: 0 0 5px rgba(31, 60, 136, 0.3);
   outline: none;
 }
 
-.usuarios-form button {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  background-color: #28a745;
+.btn-submit {
+  background: linear-gradient(135deg, #1f3c88, #4e73df);
   color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 6px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
-.usuarios-form button:hover {
-  background-color: #218838;
+.btn-submit:hover {
+  background: linear-gradient(135deg, #365ec6, #1f3c88);
   transform: translateY(-2px);
 }
 
-.usuarios-form button:active {
-  background-color: #1e7e34;
+.btn-submit:active {
   transform: translateY(0);
 }
 
 @media (max-width: 600px) {
   .usuarios-form {
-    padding: 20px;
+    padding: 30px 25px;
+  }
+
+  .usuarios-form h2 {
+    font-size: 22px;
+  }
+
+  .btn-submit {
+    font-size: 16px;
   }
 }

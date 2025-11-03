@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { getUsuarios, deleteUsuario } from '../api/auth';
-import '../css/GetUsuario.css'; // Importa el archivo CSS
+import '../css/GetUsuario.css';
 
 function GetUsuarios() {
     const [usuarios, setUsuarios] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [usuarioAEliminar, setUsuarioAEliminar] = useState(null);
 
-    // ✅ Función para capitalizar la primera letra
+    // ✅ Capitalizar primera letra
     const capitalize = (text) => {
         if (!text) return '';
         return text
@@ -28,27 +30,32 @@ function GetUsuarios() {
         fetchUsuarios();
     }, []);
 
-    // 💡 Función para eliminar usuario
-    const handleDelete = async (userId, nombreCompleto) => {
-        const isConfirmed = window.confirm(
-            `¿Estás seguro de que quieres eliminar al usuario "${nombreCompleto}"?\n¡Esta acción es irreversible!`
-        );
+    // 💡 Mostrar modal
+    const handleOpenModal = (usuario) => {
+        setUsuarioAEliminar(usuario);
+        setShowModal(true);
+    };
 
-        if (isConfirmed) {
-            try {
-                await deleteUsuario(userId);
-                setUsuarios(usuarios.filter(usuario => usuario.id !== userId));
-                alert(`Usuario ${nombreCompleto} eliminado con éxito.`);
-            } catch (err) {
-                console.error('Error al eliminar usuario:', err);
-                alert('Error al eliminar el usuario. Intente de nuevo.');
-            }
+    // 💡 Confirmar eliminación
+    const handleConfirmDelete = async () => {
+        if (!usuarioAEliminar) return;
+
+        try {
+            await deleteUsuario(usuarioAEliminar._id || usuarioAEliminar.id);
+            setUsuarios(usuarios.filter(u => (u._id || u.id) !== (usuarioAEliminar._id || usuarioAEliminar.id)));
+            alert(`✅ Usuario "${usuarioAEliminar.nombre} ${usuarioAEliminar.apellido}" eliminado correctamente.`);
+        } catch (err) {
+            console.error('Error al eliminar usuario:', err);
+            alert('❌ Ocurrió un error al eliminar el usuario.');
+        } finally {
+            setShowModal(false);
+            setUsuarioAEliminar(null);
         }
     };
 
     return (
         <div className="usuarios-container">
-            <h1>Lista de Usuarios</h1>
+            <h1>👥 Gestión de Usuarios</h1>
 
             {usuarios.length > 0 ? (
                 <div className="card-grid">
@@ -63,25 +70,41 @@ function GetUsuarios() {
                                     <h3>{nombre} {apellido}</h3>
                                     <p><strong>Email:</strong> {usuario.email}</p>
                                     <p>
-                                        <strong>Tipo:</strong>{' '}
+                                        <strong>Rol:</strong>{' '}
                                         <span className={`user-role ${usuario.tipoUsuario}`}>
-                                            {usuario.tipoUsuario}
+                                            {capitalize(usuario.tipoUsuario)}
                                         </span>
                                     </p>
                                 </div>
 
                                 <button
                                     className="delete-button"
-                                    onClick={() => handleDelete(usuario._id || usuario.id, nombreCompleto)}
+                                    onClick={() => handleOpenModal(usuario)}
                                 >
-                                    Eliminar Usuario
+                                    🗑️ Eliminar
                                 </button>
                             </div>
                         );
                     })}
                 </div>
             ) : (
-                <p className="no-users-message">No se encontraron usuarios.</p>
+                <p className="no-users-message">No hay usuarios registrados.</p>
+            )}
+
+            {/* ✅ Modal de confirmación */}
+            {showModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h2>Confirmar Eliminación</h2>
+                        <p>¿Seguro que deseas eliminar al usuario <strong>{usuarioAEliminar?.nombre} {usuarioAEliminar?.apellido}</strong>?</p>
+                        <p className="modal-warning">Esta acción no se puede deshacer.</p>
+
+                        <div className="modal-buttons">
+                            <button className="confirm-button" onClick={handleConfirmDelete}>Sí, eliminar</button>
+                            <button className="cancel-button" onClick={() => setShowModal(false)}>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );
