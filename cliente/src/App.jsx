@@ -35,6 +35,8 @@ import Paguina from './components/contenido/Paguina'
 import CalendarioPageCon from './pages/contenido/CalendarioPageCon'
 import CalendarioPageFin from './pages/financiero/calendarioPageFin'
 
+import CrearUsuario from './pages/contenido/CrearUsuario'
+
 import Pagina_Planilla_Inscritos from './pages/catequesis/Pagina_Planilla_incritos'
 
 function App() {
@@ -151,6 +153,12 @@ function App() {
 
                 <CalendarioPageCon/>
                              
+            } />
+
+            <Route path='/contenido/crear-usuario' element={
+              <PoblacionProvider>
+                <CrearUsuario/>
+              </PoblacionProvider>
             } />
 
             <Route path='/contenido/subida' element={

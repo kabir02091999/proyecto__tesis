@@ -3,6 +3,7 @@ import axios from 'axios';
 import { getBanner, getHistorias } from '../../api/auth';
 import { AseAuth } from '../../context/AuthContext';
 import EventCalendario from '../../components/calendario';
+import { FaInstagram } from 'react-icons/fa'; // Importación del ícono de Instagram
 
 const MISION_PARROQUIA = 'Ser la voz y el motor del desarrollo comunitario, promoviendo la participación ciudadana, la transparencia y la mejora continua de los servicios. Trabajamos por una parroquia moderna, justa y con un futuro próspero para todos sus habitantes.';
 const VISION_PARROQUIA = 'Consolidar a nuestra parroquia como un modelo de gestión local y bienestar social, donde cada ciudadano se sienta valorado y tenga acceso a oportunidades de crecimiento integral, manteniendo un fuerte sentido de identidad y patrimonio cultural.';
@@ -35,6 +36,11 @@ const styles = {
     padding: '20px 0',
     marginTop: '50px',
     fontSize: '0.9em',
+    // Asegura que los elementos en el footer estén centrados si se añade más contenido
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   mainBanner: {
     position: 'relative',
@@ -152,9 +158,14 @@ const styles = {
     borderRadius: '10px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
     overflow: 'hidden',
-    transition: 'transform 0.3s ease',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Añadida transición para el hover
     cursor: 'pointer',
     border: '1px solid #eee',
+  },
+  // Nuevo estilo para el efecto de crecer/elevar al pasar el ratón
+  historiaCardHover: {
+    transform: 'scale(1.03)',
+    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)',
   },
   historiaImagen: {
     width: '100%',
@@ -174,13 +185,18 @@ const styles = {
     whiteSpace: 'nowrap',
   },
   historiaTexto: {
-    fontSize: '0.9em',
-    lineHeight: '1.4',
-    color: '#666',
-    margin: 0,
-    maxHeight: '4.2em',
-    overflow: 'hidden',
-  },
+    fontSize: '0.9em',
+    lineHeight: '1.4',
+    color: '#666',
+    margin: 0,
+    maxHeight: '4.2em', // Mantenemos una altura máxima visible por defecto
+    overflow: 'hidden',
+    transition: 'max-height 0.5s ease-out, white-space 0.5s ease-out', // Añadir transición
+    whiteSpace: 'normal', // Permitir saltos de línea normales
+  },historiaTextoCompleto: {
+    maxHeight: '300px', // Un valor grande para asegurar que se vea todo el texto
+    whiteSpace: 'normal', 
+  },
   carruselButton: {
     position: 'absolute',
     top: '50%',
@@ -239,6 +255,7 @@ const Paguina = () => {
   const carruselRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [storiesToShow, setStoriesToShow] = useState(STORIES_TO_SHOW);
+  const [hoveredCardId, setHoveredCardId] = useState(null); // Estado para manejar el hover
   const [bannerData, setBannerData] = useState({ imagen: '', titulo: 'Cargando Contenido...' });
   const [historias, setHistorias] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -332,15 +349,36 @@ const Paguina = () => {
             <button style={{ ...styles.carruselButton, ...styles.prevButton, ...(currentSlide === 0 && styles.buttonDisabled) }} onClick={handlePrev} disabled={currentSlide === 0}>{'<'}</button>
             <div ref={carruselRef} style={styles.carruselHistorias}>
               {historias.length > 0 ? (
-                historias.map((historia) => (
-                  <div key={historia.indice || historia.id_contenido_historia} style={styles.historiaCard}>
-                    <img src={historia.foto} alt={historia.titulo} style={styles.historiaImagen} onError={(e) => { e.target.src = getStoryImageUrl(null); }} />
-                    <div style={styles.historiaContenido}>
-                      <h3 style={styles.historiaTitulo}>{historia.titulo}</h3>
-                      <p style={styles.historiaTexto}>{historia.contenido}</p>
-                    </div>
-                  </div>
-                ))
+                historias.map((historia) => {
+                  const id = historia.indice || historia.id_contenido_historia;
+                  const isHovered = hoveredCardId === id;
+                  const cardStyle = {
+                    ...styles.historiaCard,
+                    ...(isHovered ? styles.historiaCardHover : {}),
+                  };
+
+                  return (
+                    <div 
+                      key={id} 
+                      style={cardStyle}
+                      onMouseEnter={() => setHoveredCardId(id)}
+                      onMouseLeave={() => setHoveredCardId(null)}
+                    >
+                      <img src={historia.foto} alt={historia.titulo} style={styles.historiaImagen} onError={(e) => { e.target.src = getStoryImageUrl(null); }} />
+                      <div style={styles.historiaContenido}>
+                        <h3 style={styles.historiaTitulo}>{historia.titulo}</h3>
+                        {/* LÓGICA CORREGIDA AQUÍ: */}
+                        <p style={{
+                            ...styles.historiaTexto,
+                            ...(isHovered ? styles.historiaTextoCompleto : {})
+                        }}>
+                          {historia.contenido}
+                        </p>
+                        {/* FIN LÓGICA CORREGIDA */}
+                      </div>
+                  </div>
+                  );
+                })
               ) : (
                 <p style={styles.loadingMessage}>No hay historias disponibles en este momento.</p>
               )}
@@ -357,30 +395,47 @@ const Paguina = () => {
         </section>
 
         <div
-  style={{
-    position: "relative",
-    zIndex: 1,
-    backgroundColor: "white",
-    marginTop: "50px",
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 0 15px rgba(0,0,0,0.1)",
-    width: "100%",
-    height: "auto",
-    maxWidth: "1200px",
-    marginLeft: "auto",
-    marginRight: "auto",
-    boxSizing: "border-box",
-    overflow: "hidden",
-  }}
->
-  <div style={{ width: "100%", height: "100%" }}>
-    <EventCalendario calendario={calendario} />
-  </div>
-</div>
+          style={{
+            position: "relative",
+            zIndex: 1,
+            backgroundColor: "white",
+            marginTop: "50px",
+            padding: "20px",
+            borderRadius: "10px",
+            boxShadow: "0 0 15px rgba(0,0,0,0.1)",
+            width: "100%",
+            height: "auto",
+            maxWidth: "1200px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            boxSizing: "border-box",
+            overflow: "hidden",
+          }}
+        >
+          <div style={{ width: "100%", height: "100%" }}>
+            <EventCalendario calendario={calendario} />
+          </div>
+        </div>
       </main>
 
       <footer style={styles.siteFooter}>
+        {/* Implementación del ícono FaInstagram y corrección del enlace <a> */}
+        <a
+          href="https://www.instagram.com/divino_maestro_unet/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: 'white', // Color blanco para el enlace para que contraste con el footer negro
+            textDecoration: 'none',
+            fontSize: '1.2em', // Tamaño del texto del enlace
+            display: 'flex', // Permite alinear el ícono y el texto
+            alignItems: 'center',
+            marginBottom: '10px' // Separación del párrafo inferior
+          }}
+        >
+          <FaInstagram style={{ fontSize: '1.5em', marginRight: '8px' }} />
+          <span>Divino Maestro UNET síganos</span>
+        </a>
         <p>&copy; {new Date().getFullYear()} Parroquia Digital. Contenido administrable.</p>
       </footer>
     </div>
