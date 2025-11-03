@@ -1,0 +1,29 @@
+/* src/css/NotFound.css */
+.not-found-container {
+  text-align: center;
+  padding: 100px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.not-found-container h1 {
+  font-size: 80px;
+  color: #d9534f;
+}
+
+.not-found-container p {
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+.btn-inicio {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-inicio:hover {
+  background-color: #0056b3;
+}

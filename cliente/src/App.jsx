@@ -34,7 +34,7 @@ import Subida from './pages/contenido/subida'
 import Paguina from './components/contenido/Paguina'
 import CalendarioPageCon from './pages/contenido/CalendarioPageCon'
 import CalendarioPageFin from './pages/financiero/calendarioPageFin'
-
+import NotFound from './pages/NotFound'
 import CrearUsuario from './pages/contenido/CrearUsuario'
 
 import Pagina_Planilla_Inscritos from './pages/catequesis/Pagina_Planilla_incritos'
@@ -170,8 +170,9 @@ function App() {
             <Route path='/contenido/paguina' element={
                 < ContenidoConfiguracion/>             
             } />
-
+            
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </AuthProvider>
