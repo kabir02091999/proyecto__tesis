@@ -11,16 +11,27 @@ function PostUsuarios(props) {
     tipoUsuario: 'administrador',
   });
 
+  const [showModal, setShowModal] = useState(false); // Estado para mostrar el modal
+  const [isSubmitting, setIsSubmitting] = useState(false); // Evita doble envío
+
+  // Manejo del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  // Al presionar el botón, muestra el modal en lugar de enviar directamente
+  const handleSubmit = (e) => {
     e.preventDefault();
+    setShowModal(true);
+  };
+
+  // Confirmar envío al backend
+  const handleConfirmSubmit = async () => {
+    setIsSubmitting(true);
     try {
       await createUsuario(formData);
       setFormData({
@@ -30,8 +41,12 @@ function PostUsuarios(props) {
         contrasena: '',
         tipoUsuario: 'administrador',
       });
+      setShowModal(false);
     } catch (error) {
-      console.error("Error al crear el usuario:", error);
+      console.error('Error al crear el usuario:', error);
+      alert('❌ Error al crear el usuario');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -102,10 +117,49 @@ function PostUsuarios(props) {
           </select>
         </div>
 
-        <button type="submit" className="btn-submit">✅ Crear Usuario</button>
+        <button type="submit" className="btn-submit">
+          ✅ Crear Usuario
+        </button>
       </form>
+
+      {/* === Modal de Confirmación === */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()} // evita cerrar al hacer clic dentro
+          >
+            <h3>Confirmar Envío</h3>
+            <p>¿Deseas crear este usuario ?</p>
+            <ul>
+              <li><strong>Nombre:</strong> {formData.nombre}</li>
+              <li><strong>Apellido:</strong> {formData.apellido}</li>
+              <li><strong>Email:</strong> {formData.email}</li>
+              <li><strong>Tipo:</strong> {formData.tipoUsuario}</li>
+            </ul>
+
+            <div className="modal-buttons">
+              <button
+                className="btn-confirmar"
+                onClick={handleConfirmSubmit}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Enviando...' : 'Confirmar'}
+              </button>
+              <button
+                className="btn-cerrar"
+                onClick={() => setShowModal(false)}
+                disabled={isSubmitting}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default PostUsuarios;
+

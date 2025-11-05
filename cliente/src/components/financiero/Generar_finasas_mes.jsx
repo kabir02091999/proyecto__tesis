@@ -145,7 +145,7 @@ function Generar_finasas_mes() {
                             <p>{formatCurrency(totalEgresos)}</p>
                         </div>
                         <div className={`total-card saldo ${saldoTotal >= 0 ? 'positivo' : 'negativo'}`}>
-                            <h4>Saldo Neto</h4>
+                            <h4>Saldo Disponible</h4>
                             <p>{formatCurrency(saldoTotal)}</p>
                         </div>
                     </div>

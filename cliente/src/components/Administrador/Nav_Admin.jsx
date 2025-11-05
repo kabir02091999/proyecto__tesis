@@ -15,9 +15,9 @@ const Nav_Admin = () => {
 
     const navItems = [
         { name: 'Inicio', path: '/admin', icon: '🏠'  },
-        { name: 'catequesis', path: '/catequesis', icon: '📝' },
-        { name: 'contenido', path: '/contenido', icon: '📈' },
-        { name: 'financiero', path: '/financiero', icon: '⚖️' },
+        { name: 'Catequesis', path: '/catequesis', icon: '📝' },
+        { name: 'Contenido', path: '/contenido', icon: '📈' },
+        { name: 'Financiero', path: '/financiero', icon: '⚖️' },
         
     ];
     
@@ -58,7 +58,7 @@ const Nav_Admin = () => {
              onClick={handleLogout}
              className="nav-item-button logout-button" // Puedes agregar un CSS específico: .logout-button
           >
-              <span role="img" aria-label="Cerrar cuenta">🔙</span> Cerrar cuenta
+              <span role="img" aria-label="Cerrar cuenta">🔙</span> Cerrar Cuenta
           </button>
       </div>
 

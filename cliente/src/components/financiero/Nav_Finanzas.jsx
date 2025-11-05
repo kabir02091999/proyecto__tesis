@@ -28,9 +28,9 @@ const Nav_Finanzas = () => {
         { name: 'Inicio', path: '/financiero', icon: '🏠',  },
         { name: 'Registrar Transacciones', path: '/financiero/registrar-transacciones', icon: '📝' },
         { name: 'Reporte de Ingresos/Egresos', path: '/financiero/reportes', icon: '📈' }, 
-        { name: 'Calendario', path: '/financiero/Post-calendario-liturgico', icon: '🔍' },
+        { name: 'Calendario Liturgico', path: '/financiero/Post-calendario-liturgico', icon: '🔍' },
         ...(admin ? [{ 
-            name: 'inicio administrador', path: '/admin', icon: '⚙'
+            name: 'Inicio Administrador', path: '/admin', icon: '⚙'
         }] : [])
     ];
     
@@ -71,7 +71,7 @@ const Nav_Finanzas = () => {
              onClick={handleLogout}
              className="nav-item-button logout-button" // Puedes agregar un CSS específico: .logout-button
           >
-              <span role="img" aria-label="Cerrar cuenta">🔙</span> Cerrar cuenta
+              <span role="img" aria-label="Cerrar cuenta">🔙</span> Cerrar Cuenta
           </button>
       </div>
 
